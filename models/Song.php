@@ -1,21 +1,33 @@
 <?php
 class Song {
     private ?int $id;
+    private string $title;
+    private string $duration;
     private string $url;
-    private Artist $artistId;
-    private Media $mediaId;
+    private Album $albumId;
 
-    public function __construct(string $url, Artist $artistId, Media $mediaId) {
+    public function __construct(string $title, string $duration, string $url, Album $albumId) {
         $this->id = null;
+        $this->title = $title;
+        $this->duration = $duration;
         $this->url = $url;
-        $this->artistId = $artistId;
-        $this->mediaId = $mediaId;
+        $this->albumId = $albumId;
     }
 
-    ////////////  Getters //////////// 
+    ////////////  Getters ////////////
     public function getId(): ?int 
     {
         return $this->id;
+    }
+
+    public function getTitle(): string 
+    {
+        return $this->title;
+    }
+
+    public function getDuration(): string 
+    {
+        return $this->duration;
     }
 
     public function getUrl(): string 
@@ -23,34 +35,36 @@ class Song {
         return $this->url;
     }
 
-    public function getArtistId(): int 
+    public function getAlbumId(): Album 
     {
-        return $this->artistId;
+        return $this->albumId;
     }
 
-    public function getMediaId(): Media 
-    {
-        return $this->mediaId;
-    }
     //////////// Setters ////////////
     public function setId(?int $id) : void
     {
         $this->id =$id;
     }
     
-    public function setUrl(string $url) : void 
+    public function setTitle(string $title): void 
+    {
+        $this->title = $title;
+    }
+
+    public function setDuration(string $duration): void 
+    {
+        $this->duration = $duration;
+    }
+
+    public function setUrl(string $url): void 
     {
         $this->url = $url;
     }
 
-    public function setArtistId(Artist $artistId) : void
+    public function setAlbumId(int $albumId): void 
     {
-        $this->artistId = $artistId;
-    }
-    
-    public function setMediaId(Media $mediaId) : void
-    {
-        $this->mediaId = $mediaId;
+        $this->albumId = $albumId;
     }
 }
+
 ?>
