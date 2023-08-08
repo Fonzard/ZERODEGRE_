@@ -43,16 +43,18 @@ Private :
 /admin/:artist-id/edit ArtistController:edit
 /admin/:artist-id/delete ArtistController:delete
 
-/admin/user AdminController:user
-/admin/user-add UserController:add
-/admin/:user-id/edit UserController:edit
-/admin/:user-id/delete UserController:delete
+
+            Je ne suis pas sur de les utiliser / Je n'ai pas créé de templates
+                        /admin/user AdminController:user
+                        /admin/user-add UserController:add
+                        /admin/:user-id/edit UserController:edit
+                        /admin/:user-id/delete UserController:delete
 
 /admin/product AdminController:product
 /admin/product-add ProductController:add
 /admin/:product-id/edit ProductController:edit
 /admin/:product-id/delete ProductController:delete
-/admin/:product-id/out-of-stock ProductController:??? Est ce utile ??
+                        /admin/:product-id/out-of-stock ProductController:??? Est ce utile ??
 
 /admin/media AdminController:media
 /admin/media-add MediaController:add
