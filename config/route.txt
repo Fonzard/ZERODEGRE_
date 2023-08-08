@@ -1,0 +1,60 @@
+/ HomeController:index
+
+/register AuthController:register
+/login  AuthController:login
+/logout AuthController:logout
+
+/shop   ProductController:index
+/shop/:product-id ??? ProductController:product
+
+/post PostController:index
+/post/:post-id PostController:post
+
+/song SongController:index
+/song/:song-id SongController:song
+Réfléchir à une fonction son individuel ??
+
+/artist/ ArtistController:index
+/artist/:artist-id ArtistController:artist
+
+/category CategoryController:index ??? Ne sers que pour le header et le footer
+
+Private : 
+
+/admin  AdminController:index  === dashboard
+
+/admin/category ?? AdminController:category ??
+/admin/category-add CategoryController:add
+/admin/:category-id/edit CategoryController:edit
+/admin/:category-id/delete CategoryController:delete
+
+/admin/post AdminController:post
+/admin/post-add PostController:add
+/admin/:post-id/edit PostController:edit
+/admin/:post-id/delete PostController:delete
+
+/admin/song AdminController:song
+/admin/song-add SongController:add
+/admin/:song-id/edit SongController:edit ???? Utile ??
+/admin/:song-id/delete SongController:delete
+
+/admin/artist AdminController:artist
+/admin/artist-add ArtistController:add
+/admin/:artist-id/edit ArtistController:edit
+/admin/:artist-id/delete ArtistController:delete
+
+/admin/user AdminController:user
+/admin/user-add UserController:add
+/admin/:user-id/edit UserController:edit
+/admin/:user-id/delete UserController:delete
+
+/admin/product AdminController:product
+/admin/product-add ProductController:add
+/admin/:product-id/edit ProductController:edit
+/admin/:product-id/delete ProductController:delete
+/admin/:product-id/out-of-stock ProductController:??? Est ce utile ??
+
+/admin/media AdminController:media
+/admin/media-add MediaController:add
+/admin/:media-id/edit MediaController:edit
+/admin/:media-id/delete MediaController:delete
