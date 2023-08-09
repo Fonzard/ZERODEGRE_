@@ -6,12 +6,10 @@ class Album {
     private Artist $artistId;
     private Media $mediaId;
 
-    public function __construct(string $title, string $artist, int $year, Artist $artistId, Media $mediaId) {
+    public function __construct(string $title, int $year, Media $mediaId) {
         $this->id = null;
         $this->title = $title;
-        $this->artist = $artist;
         $this->year = $year;
-        $this->artistId = $artistId;
         $this->mediaId = $mediaId;
     }
 
@@ -26,11 +24,6 @@ class Album {
 
     public function getYear(): int {
         return $this->year;
-    }
-    
-    public function getArtistId(): Artist 
-    {
-        return $this->artistId;
     }
     
     public function getMediaId(): Media 
@@ -49,10 +42,6 @@ class Album {
 
     public function setYear(int $year): void {
         $this->year = $year;
-    }
-    
-    public function setArtistId(Artist $artistId): void {
-        $this->artistId = $artistId;
     }
     
     public function setMediaId(Media $mediaId): void {

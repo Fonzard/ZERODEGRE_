@@ -5,16 +5,14 @@ class User {
     private string $lastName;
     private string $email;
     private string $password;
-    private date $inscriptionDate;
     private Roles $roleId; // Est ce que je dois pas plutôt le déclarer en Roles au lieu de int
 
-    public function __construct(string $firstName, string $lastName, string $email, string $password, date $inscriptionDate, Roles $roleId) {
+    public function __construct(string $firstName, string $lastName, string $email, string $password, Roles $roleId) {
         $this->id = null;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->email = $email;
         $this->password = $password;
-        $this->inscriptionDate = $inscriptionDate;
         $this->roleId = $roleId; 
     }
 
@@ -42,11 +40,6 @@ class User {
     public function getPassword() : string
     {
         return $this->password;
-    }
-
-    public function getInscriptionDate() : date
-    {
-        return $this->inscriptionDate;
     }
 
     public function getRoleId() : int
@@ -78,11 +71,6 @@ class User {
     public function setPassword(string $password) : void
     {
         $this->password = $password;
-    }
-
-    public function setInscriptionDate(date $inscriptionDate) : void
-    {
-        $this->inscriptionDate = $inscriptionDate;
     }
 
     public function setRoleId(Roles $roleId) : void
