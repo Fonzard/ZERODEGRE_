@@ -1,0 +1,18 @@
+<header>
+    <nav>
+        <ul>
+            <li><a href="index.php?route=register">Register</a></li>
+            <li><a href="">Label</a></li>
+            <li><a href="">Mixtape</a></li>
+            <li><a href="">Blog</a></li>
+            <li><a href="">Merch</a></li>
+            <?php 
+            if(isset($_SESSION['user'])){
+            ?>
+            <li><a href="index.php?route=logout">Deconnexion</a></li> 
+            <?php } else { ?>
+            <li><a href="index.php?route=login">Connexion</a></li>
+            <?php } ?>
+        </ul>
+    </nav>
+</header>

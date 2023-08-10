@@ -31,6 +31,6 @@ require "./controller/PostController.php";
 require "./controller/ProductController.php";
 require "./controller/SongController.php";
 
-require "./service/Router.php";
+require "./services/router.php";
 
 ?>

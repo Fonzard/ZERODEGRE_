@@ -1,17 +1,20 @@
 <?php 
-require"AbstractManager.php";
 
 class UserManager extends AbstractManager {
     
-    public function getUserByEmail(string $email) : ?User
+    public function getUserByEmail(string $email) : ? User
     {
         $class = "User";
         $query = ("SELECT * FROM users WHERE users.email = :email");
         $parameters = array(":email" => $email);
         
-        $result = array();
-        $result = $this->getResult($query, $parameters, $class);
-        $result->setId($result["id"]);
+        // $result = array();
+        $result = $this->getResult($query, $parameters, $class, true);
+        var_dump($result);
+        
+        // if($result !== null){
+        //     $result->setId($result["id"]);
+        // }
         return $result;
     }
     public function getUserById(int $id) : ?User
@@ -20,44 +23,53 @@ class UserManager extends AbstractManager {
         $query = ("SELECT * FROM users WHERE users.id = :id");
         $parameters = array(":id" => $id);
         
+        $result = $this->getResult($query, $parameters, $class, true);
         
-        $result = array();
-        $result = $this->getResult($query, $parameters, $class);
-        $result->setId($result["id"]);
+        if($result !== null){
+            $result->setId($result["id"]);
+        }
+        
         return $result;
     }
-    public function getUserByFirstName(User $firstName) : ?User 
+    public function getUserByFirstName(string $firstName) : ?User 
     {
         $class = "User";
-        $query = ("SELECT * FROM users WHERE users.id = :first_name");
+        $query = ("SELECT * FROM users WHERE users.first_name = :first_name");
         $parameters = array(":first_name" => $firstName);
         
         $result = array();
-        $result = $this->getResult($query, $parameters, $class);
-        $result->setId($result["id"]);
+        $result = $this->getResult($query, $parameters, $class,true);
+        if($result !== null){
+            $result->setId($result["id"]);
+        }
         return $result;
     }
-    public function getUserByLastName(User $lastName) : ?User 
+    public function getUserByLastName(string $lastName) : ?User 
     {
         $class = "User";
-        $query = ("SELECT * FROM users WHERE users.id = :last_name");
+        $query = ("SELECT * FROM users WHERE users.last_name = :last_name");
         $parameters = array(":last_name" => $lastName);
         
         $result = array();
-        $result = $this->getResult($query, $parameters, $class);
-        $result->setId($result["id"]);
+        $result = $this->getResult($query, $parameters, $class, true);
+        if($result !== null){
+            $result->setId($result["id"]);
+        }
         return $result;
     }
     //Je suis pas sur du fonctionnement de cette fonction 
     public function createUser(User $user) : ?User
     {
-        $query = ("INSERT INTO users(id, first_name, last_name, email, password) VALUES (null, :first_name, :last_name, :email, :password), :roleId");
-        $parameters = array("first_name" => $user->getLastName(), "last_name" => $user->getFirstName(), "email" => $user->getEmail(), "password" => $user->getPassword(), "roleId" => $user->getRoleId);
+        $query = ("INSERT INTO users(first_name, last_name, email, password, role_id) VALUES (:first_name, :last_name, :email, :password, :role_id)");
+        $parameters = array("first_name" => $user->getLastName(), "last_name" => $user->getFirstName(), "email" => $user->getEmail(), "password" => $user->getPassword(), "role_id" => $user->getRoleId());
         
         $this->getQuery($query, $parameters);
         
+        // Obtenez l'ID inséré
+        $lastInsertId = $this->connectToDatabase()->lastInsertId();
+        
         // A vérifier !!!
-        $user->setId($this->connectToDatabase()->lastInsertId());
+        $user->setId($lastInsertId);
         return $user;
     }
 } 

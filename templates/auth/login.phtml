@@ -1,0 +1,34 @@
+<main id="login">   
+    <h2>Connexion</h2>
+    <form action="index.php?route=login" method="post">
+        <p class="form-errors">
+            <?php
+                if(isset($data['errors'])) {
+                     echo $data["errors"][0];
+                }
+            ?>
+        </p>
+        <p class="register-done">
+            <?php
+                if(isset($data['register'])) {
+                    echo $data['register'][0];
+                }
+            ?>
+        </p>
+        <fieldset>
+            <label for="login-form">Email</label>
+            <input type="text" id="login-email" name="login-email">
+        </fieldset>
+        <fieldset>
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" name="login-password">
+        </fieldset>
+        <fieldset>
+            <button type="submit">
+                Connexion
+            </button>
+        </fieldset>
+        <input type="hidden" name="login-form" id="login-form" value="login"/>
+        <a href="index.php?route=register">Inscription</a>
+    </form> 
+</main> 

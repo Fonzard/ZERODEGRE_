@@ -1,19 +1,19 @@
 <?php
 class User {
     private ?int $id;
-    private sting $firstName;
-    private string $lastName;
+    private string $first_name;
+    private string $last_name;
     private string $email;
     private string $password;
-    private Roles $roleId; // Est ce que je dois pas plutôt le déclarer en Roles au lieu de int
+    private ?int $role_id; // Est ce que je dois pas plutôt le déclarer en Roles au lieu de int
 
-    public function __construct(string $firstName, string $lastName, string $email, string $password, Roles $roleId) {
+    public function __construct(string $first_name, string $last_name, string $email, string $password, ?int $role_id) {
         $this->id = null;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
+        $this->first_name = $first_name;
+        $this->last_name = $last_name;
         $this->email = $email;
         $this->password = $password;
-        $this->roleId = $roleId; 
+        $this->role_id = $role_id; 
     }
 
     ////////////  Getters //////////// 
@@ -24,12 +24,12 @@ class User {
 
     public function getFirstName() : string
     {
-        return $this->firstName;
+        return $this->first_name;
     }
 
     public function getLastName() : string
     {
-        return $this->lastName;
+        return $this->last_name;
     }
 
     public function getEmail() : string
@@ -44,7 +44,7 @@ class User {
 
     public function getRoleId() : int
     {
-        return $this->roleId;
+        return $this->role_id;
     }
 
     //////////// Setters ////////////
@@ -53,14 +53,14 @@ class User {
         $this->id =$id;
     }
     
-    public function setFirstName(string $firstName) : void 
+    public function setFirstName(string $first_name) : void 
     {
-        $this->firstName = $firstName;
+        $this->first_name = $first_name;
     }
 
-    public function setLastName(string $lastName) : void
+    public function setLastName(string $last_name) : void
     {
-        $this->lastName = $lastName;
+        $this->last_name = $last_name;
     }
 
     public function setEmail(string $email) : void
@@ -73,9 +73,9 @@ class User {
         $this->password = $password;
     }
 
-    public function setRoleId(Roles $roleId) : void
+    public function setRoleId(int $role_id) : void
     {
-        $this->roleId = $roleId;
+        $this->role_id = $role_id;
     }
 
 }

@@ -1,14 +1,14 @@
 / HomeController:index
 
-/register AuthController:register
-/login  AuthController:login
-/logout AuthController:logout
+auth/register AuthController:register
+auth/login  AuthController:login
+auth/logout AuthController:logout
 
 /shop   ProductController:index
-/shop/:product-id ??? ProductController:product
+/shop/:product-id ??? ProductController:showProduct
 
 /post PostController:index
-/post/:post-id PostController:post
+/post/:post-id PostController:showPost
 
 /song SongController:index
 /song/:song-id SongController:song
