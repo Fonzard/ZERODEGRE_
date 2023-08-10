@@ -1,5 +1,5 @@
 <?php
-class PostController extends Controller
+class PostController extends AbstractController
 {
     public function show($params)
     {

@@ -23,40 +23,43 @@ Private :
 
 /admin  AdminController:index  === dashboard
 
-/admin/category ?? AdminController:category ??
-/admin/category-add CategoryController:add
-/admin/:category-id/edit CategoryController:edit
-/admin/:category-id/delete CategoryController:delete
 
 /admin/post AdminController:post
 /admin/post-add PostController:add
 /admin/:post-id/edit PostController:edit
 /admin/:post-id/delete PostController:delete
+/admin/post-manage-category 
+/admin/post-manage-media 
 
-/admin/song AdminController:song
-/admin/song-add SongController:add
-/admin/:song-id/edit SongController:edit ???? Utile ??
-/admin/:song-id/delete SongController:delete
+/admin/album AlbumController:song
+/admin/album-add AlbumController:add
+/admin/:album-id/edit AlbumController:edit ???? Utile ??
+/admin/:album-id/delete AlbumController:delete
+/admin/album-manage-media 
+
 
 /admin/artist AdminController:artist
 /admin/artist-add ArtistController:add
 /admin/:artist-id/edit ArtistController:edit
 /admin/:artist-id/delete ArtistController:delete
-
+/admin/artist-manage-media 
 
             Je ne suis pas sur de les utiliser / Je n'ai pas créé de templates
                         /admin/user AdminController:user
                         /admin/user-add UserController:add
                         /admin/:user-id/edit UserController:edit
-                        /admin/:user-id/delete UserController:delete
+                        /admin/:user-id/delete AdminController:deleteUser
 
 /admin/product AdminController:product
 /admin/product-add ProductController:add
 /admin/:product-id/edit ProductController:edit
 /admin/:product-id/delete ProductController:delete
+/admin/product-manage-category 
+/admin/product-manage-media 
+
                         /admin/:product-id/out-of-stock ProductController:??? Est ce utile ??
 
-/admin/media AdminController:media
-/admin/media-add MediaController:add
-/admin/:media-id/edit MediaController:edit
-/admin/:media-id/delete MediaController:delete
+                        /admin/media AdminController:media
+                        /admin/media-add MediaController:add
+                        /admin/:media-id/edit MediaController:edit
+                        /admin/:media-id/delete MediaController:delete

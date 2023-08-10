@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Administration - Gestion des Utilisateurs</title>
+</head>
+<body>
+    <h1>Gestion des Utilisateurs</h1>
+    <p class="delete-user-success">
+        <?php
+            if(isset($data['deleteUserSuccess'])) {
+                echo $data['deleteUserSuccess'][0];
+            }
+        ?>
+        </p>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--Ne pas oublier de préciser la clés ['user']-->
+            <?php foreach ($data['users'] as $user) { ?>
+                <tr>
+                    <td><?php echo $user->getId(); ?></td>
+                    <td><?php echo $user->getFirstName(); ?></td>
+                    <td><?php echo $user->getLastName(); ?></td>
+                    <td><?php echo $user->getEmail(); ?></td>
+                    <td><?php echo $user->getRoleId(); ?></td>
+                    <td>
+                        <a href="#">Modifier</a>
+                        <a href="#">Supprimer</a>
+                    </td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+    
+    <a href="#">Ajouter un utilisateur</a>
+    
+    <a href="index.php">Retour à l'accueil</a>
+</body>
+</html>
