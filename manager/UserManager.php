@@ -86,5 +86,14 @@ class UserManager extends AbstractManager {
         
         $this->getQuery($query, $parameters, true);
     }
+    
+    public function edit(User $user) : void
+    {
+        
+        $query =("UPDATE users SET first_name = :first_name, last_name = :last_name, email = :email, password = :password, role_id = :role_id WHERE users.id = :id");
+        $parameters = array("first_name" => $user->getFirstName, "last_name" => $user->getLastName, "email" => $user->getEmail, "password" => $user->getPassword, "role_id" => $user->getRoleId, "id" => $user->getId);
+        
+        $this->getQuery($query, $parameters);
+    }
 } 
 ?>

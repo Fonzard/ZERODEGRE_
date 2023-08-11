@@ -9,116 +9,70 @@ class AuthController extends AbstractController{
         $this->manager = new UserManager("francisrouxel_zero_degre", "3306", "db.3wa.io", "francisrouxel", "acadbb28886b6985666cd7eff4651f1d");
     }
     
-    public function register() : void
+    public function register(): void
     {
-        if(isset($_POST["register-form"]) && $_POST["register-form"] === "register")
-        {
-            // check if the email already exists
-            if($this->manager->getUserByEmail($_POST["register-email"]) === null)
-            {
-                //Check if the email is not too characterful
-                if(strlen($_POST["register-email"]) < 50)
-                {
-                    //check if the email is well written
-                    if(filter_var($_POST["register-email"], FILTER_VALIDATE_EMAIL))
-                    {
-                        // check if the firstname already exists
-                        if($this->manager->getUserByFirstName($_POST["register-firstName"]) === null)
-                        {
-                            //Check if the firstname is not too characterful
-                            if(strlen($_POST["register-firstName"]) < 50)
-                            {
-                                // check if the lastname already exists
-                                if($this->manager->getUserByLastName($_POST["register-lastName"]) === null)
-                                {
-                                    //Check if the lastname is not too characterful
-                                    if(strlen($_POST["register-lastName"]) < 50)
-                                    {
-                                        // check if the passwords match
-                                        if($_POST["register-password"] === $_POST["register-confirm-password"])
-                                        {
-                                            //Check if the password is not too characterful
-                                            if(strlen($_POST["register-password"]) < 50)
-                                            {
-                                                $password = password_hash($_POST["register-password"], PASSWORD_BCRYPT);
-                                                $email = $_POST["register-email"];
-                                                $firstName = $_POST["register-firstName"];
-                                                $lastName = $_POST["register-lastName"];
-                                                
-                                                //A modifier pour gérer admin ou non
-                                                $roleId = "1";
-                        
-                                                $user = $this->manager->createUser(new User($firstName, $lastName, $email, $password, $roleId));
-                                                
-                                                // manually log the user
-                                                $_SESSION["user"] = $user->getId();
-                        
-                                                // redirect to the homepage
-                                                $this->render("auth/login", [
-                                                        "register" => ["Le compte à bien été créé"
-                                                        ]
-                                                    ]);
-                                            } else {
-                                                $this->render("auth/register", [
-                                                    "errors" => [
-                                                        "Le mot de passe ne de doit pas dépasser 50 caractères"
-                                                    ]
-                                                ]);   
-                                            }
-                                        } else {
-                                            $this->render("auth/register", [
-                                                "errors" => [
-                                                    "les mots de passe ne correspondent pas"
-                                                ]
-                                            ]);
-                                        }
-                                    } else {
-                                        $this->render("auth/register", [
-                                                "errors" => [
-                                                    "Le nom ne de doit pas dépasser 50 caractères"
-                                                ]
-                                            ]);
-                                    }   
-                                } else {
-                                    $this->render("auth/register", [
-                                            "errors" => [
-                                                "Un utilisateur avec ce nom de famille existe déjà"
-                                            ]
-                                        ]);
-                                }
-                            } else {
-                                $this->render("auth/register", [
-                                    "errors" => [
-                                        "Le prénom ne doit pas dépasser 50 caractères"
-                                    ]
-                                ]);
-                            }
-                        } else {
-                            $this->render("auth/register", [
-                                "errors" => [
-                                    "un utilisateur avec ce prénom existe déjà"
-                                ]
-                            ]);
-                        }
-                    } else {
-                        $this->render("auth/register", [
-                            "errors" => [
-                                "L'email n'est pas écrit correctement"
-                            ]
-                        ]);
-                    }
-                } else {
-                    $this->render("auth/register", [
-                        "errors" => [
-                            "L'email ne doit pas dépasser 50 caractères"
-                        ]
-                    ]);
-                }    
+        if (isset($_POST["register-form"]) && $_POST["register-form"] === "register") {
+            $email = $_POST["register-email"];
+            $firstName = $_POST["register-firstName"];
+            $lastName = $_POST["register-lastName"];
+            $password = $_POST["register-password"];
+            $confirmPassword = $_POST["register-confirm-password"];
+            $roleId = "1"; // À modifier pour gérer admin ou non
+            
+            $errors = [];
+            
+            if ($this->manager->getUserByEmail($email)) {
+                $errors[] = "Un utilisateur avec cet email existe déjà";
+            }
+            
+            if (strlen($email) >= 50) {
+                $errors[] = "L'email ne doit pas dépasser 50 caractères";
+            }
+            
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors[] = "L'email n'est pas écrit correctement";
+            }
+            
+            if ($this->manager->getUserByFirstName($firstName)) {
+                $errors[] = "Un utilisateur avec ce prénom existe déjà";
+            }
+            
+            if (strlen($firstName) >= 50) {
+                $errors[] = "Le prénom ne doit pas dépasser 50 caractères";
+            }
+            
+            if ($this->manager->getUserByLastName($lastName)) {
+                $errors[] = "Un utilisateur avec ce nom de famille existe déjà";
+            }
+            
+            if (strlen($lastName) >= 50) {
+                $errors[] = "Le nom ne doit pas dépasser 50 caractères";
+            }
+            
+            if ($password !== $confirmPassword) {
+                $errors[] = "Les mots de passe ne correspondent pas";
+            }
+            
+            if (strlen($password) >= 50) {
+                $errors[] = "Le mot de passe ne doit pas dépasser 50 caractères";
+            }
+            
+            if (!$errors) {
+                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+                
+                $user = new User($firstName, $lastName, $email, $hashedPassword, $roleId);
+                $this->manager->createUser($user);
+                
+                // Manually log the user
+                $_SESSION["user"] = $user->getId();
+                
+                // Redirect to the homepage
+                $this->render("auth/login", [
+                    "register" => ["Le compte a bien été créé"]
+                ]);
             } else {
                 $this->render("auth/register", [
-                    "errors" => [
-                        "un utilisateur avec cet email existe déjà"
-                    ]
+                    "errors" => $errors
                 ]);
             }
         } else {

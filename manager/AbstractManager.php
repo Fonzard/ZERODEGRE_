@@ -1,51 +1,52 @@
 <?php 
 abstract class AbstractManager {
     
-    protected PDO $db;
-    private string $dbName;
-    private string $port;
-    private string $host;
-    private string $username;
-    private string $password;
-    
-    public function __construct(string $dbName, string $port, string $host, string $username, string $password){
-       
-        $this->dbName = $dbName;
-        $this->port = $port;
-        $this->host = $host;
-        $this->username = $username;
-        $this->password = $password;
-        
-    }
+    protected PDO $connex;
 
-    public function connectToDatabase(){
+    
+    public function __construct(){
+       
+        $dbInfo = $this->getDatabaseInfo();
+        
+        $connexionString = "mysql:host=".$dbInfo['host'].";port=3306;dbname=".$dbInfo['db_name'];
         
         try {
-            
-            $connexionString = "mysql:host=$this->host;port=$this->port;dbname=$this->dbName";
-            $connex = new PDO($connexionString, $this->username, $this->password);
-            $query = $connex;
-            return $connex;
-        
-        
+            $this->connex = new PDO($connexionString, $dbInfo['username'], $dbInfo['password']);
         } catch (PDOException $e) {
-            echo "Erreur de connexion à la base de données : " . $e->getMessage();// Comprendre cette ligne A Revoir
-            return null;
+            die("Erreur de connexion à la base de données : " . $e->getMessage());
+        }
+       
+    }
+
+    public function getDatabaseInfo() : array 
+    {
+        $info = array();
+        
+        //Lis le contenu du document ligne par ligne
+        $lines = file("./config/database.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        
+        //Parcours les lignes 
+        foreach($lines as $line)
+        {
+            //Sépare la ligne en deux parties : la clé et la valeur
+            list($key, $value) = explode('=', $line);
+            
+            //Stock la clé et la valeur dans le tableau $info
+            $info[$key] = $value;
         }
         
-        
+        return $info;
     }
     
     // Faut il en faire deux fetch / fetchAll ????
     // Normalement singleResult résout le problème 
     public function getQuery($query, $parameters = array(), $singleResult = false) {
         
-        $connex = $this->connectToDatabase();
         
         try {
             
             // Préparation de la requête 
-            $stmt = $connex->prepare($query);
+            $stmt = $this->connex->prepare($query);
             
             // Execution de la requête avec les paramètres
             $stmt->execute($parameters);
@@ -60,8 +61,6 @@ abstract class AbstractManager {
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 
             }
-            //Coupure de la connexion   
-            $connex = null;
             
             return $result;
             
