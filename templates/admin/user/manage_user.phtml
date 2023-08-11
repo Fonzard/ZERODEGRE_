@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Administration - Gestion des Utilisateurs</title>
-</head>
-<body>
-    <h1>Gestion des Utilisateurs</h1>
+<section id="manage-user">
+    <h2>Gestion des Utilisateurs</h2>
     <p class="delete-user-success">
         <?php
             if(isset($data['deleteUserSuccess'])) {
@@ -13,6 +7,27 @@
             }
         ?>
         </p>
+    <p class="edit-user-success">
+        <?php
+            if(isset($data['editUserSuccess'])) {
+                echo $data['editUserSuccess'][0];
+            }
+        ?>
+    </p>
+    <!--Fenetre Modale Delete-->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <p>Êtes-vous sûr de vouloir supprimer cet utilisateur ?</p>
+            <button id="confirmDelete" >Confirmer</button>
+            <button id="cancelDelete">Annuler</button>
+        </div>
+    </div>
+    <!--Affiche le formulaire d'edition si un id est selectionné -->
+    <?php if (isset($_GET['edit']) && isset($_GET['id'])) : 
+        require "./admin/user/edit.phtml";
+    ?>
+    
+    <?php  else : ?>
     <table>
         <thead>
             <tr>
@@ -24,25 +39,27 @@
             </tr>
         </thead>
         <tbody>
-            <!--Ne pas oublier de préciser la clés ['user']-->
-            <?php foreach ($data['users'] as $user) { ?>
+    <!--Ne pas oublier de préciser la clés ['user']-->
+    <?php foreach ($data['users'] as $user) : ?>
                 <tr>
-                    <td><?php echo $user->getId(); ?></td>
-                    <td><?php echo $user->getFirstName(); ?></td>
-                    <td><?php echo $user->getLastName(); ?></td>
-                    <td><?php echo $user->getEmail(); ?></td>
-                    <td><?php echo $user->getRoleId(); ?></td>
+                    <td><?= $user->getId(); ?></td>
+                    <td><?= $user->getFirstName(); ?></td>
+                    <td><?= $user->getLastName(); ?></td>
+                    <td><?= $user->getEmail(); ?></td>
+                    <td><?= $user->getRoleId(); ?></td>
                     <td>
-                        <a href="#">Modifier</a>
-                        <a href="#">Supprimer</a>
+                        <a href="index.php?route=admin/user/edit&id=<?= $user->getId(); ?>" class="edit-user-btn">Modifier</a>
+                        <a href="index.php?route=admin/user/manage_user/delete&id=<?= $user->getId(); ?>" class="delete-user-btn" data-user-id="<?= $user->getId(); ?>">Supprimer</a>
                     </td>
                 </tr>
-            <?php } ?>
+            <?php endforeach; ?>
+            <?php endif; ?>
+            
+            
         </tbody>
     </table>
     
     <a href="#">Ajouter un utilisateur</a>
     
-    <a href="index.php">Retour à l'accueil</a>
-</body>
-</html>
+    <a href="index.php?route=homepage">Retour à l'accueil</a>
+</section>

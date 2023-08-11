@@ -47,7 +47,7 @@ Private :
             Je ne suis pas sur de les utiliser / Je n'ai pas créé de templates
                         /admin/user AdminController:user
                         /admin/user-add UserController:add
-                        /admin/:user-id/edit UserController:edit
+                        /admin/user/edit&id= AdminController:editUSer
                         /admin/:user-id/delete AdminController:deleteUser
 
 /admin/product AdminController:product

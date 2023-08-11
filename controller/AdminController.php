@@ -20,22 +20,98 @@ class AdminController extends AbstractController{
         $template = "admin/dashboard";
         require "templates/layout.phtml";
     }
-    
+    ////// MANAGE USER
     public function manageUser()
     {
         $users = $this->userManager->getAllUsers();
         $this->render("admin/user/manage_user", ["users" => $users]);
     }
     
-    public function deleteUser($userId)
+    public function deleteUser(int $userId)
     {
         // if(!$this->isAdmin()){
             //redirige vers une page d'erreur ou de refus 
         // }
         
-        $userManager->delete($userId);
-        $this->render("admin/user/manage_user", ["users" => $users,
-                                                "deleteUserSuccess" => ["L'user à bien été supprimé"]]);
+        $this->userManager->delete($userId);
+        $this->render("admin/user/manage_user", ["deleteUserSuccess" => ["L'user à bien été supprimé"]]);
+    }
+    
+    public function editUser($userId)
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["edit-form"] === "edit") {
+            $email = $_POST["edit-email"];
+            $firstName = $_POST["edit-firstName"];
+            $lastName = $_POST["edit-lastName"];
+            $password = $_POST["edit-password"];
+            $confirmPassword = $_POST["edit-confirm-password"];
+            $roleId = $_POST["edit-roleId"];
+            
+            $errors = [];
+    
+            if ($this->userManager->getUserByEmail($email)) {
+                $errors[] = "Un utilisateur avec cet email existe déjà";
+            }
+    
+            if (strlen($email) > 50) {
+                $errors[] = "L'email ne doit pas dépasser 50 caractères";
+            }
+    
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors[] = "L'email n'est pas écrit correctement";
+            }
+    
+            if ($this->userManager->getUserByFirstName($firstName)) {
+                $errors[] = "Un utilisateur avec ce prénom existe déjà";
+            }
+    
+            if (strlen($firstName) > 50) {
+                $errors[] = "Le prénom ne doit pas dépasser 50 caractères";
+            }
+    
+            if ($this->userManager->getUserByLastName($lastName)) {
+                $errors[] = "Un utilisateur avec ce nom de famille existe déjà";
+            }
+    
+            if (strlen($lastName) > 50) {
+                $errors[] = "Le nom ne doit pas dépasser 50 caractères";
+            }
+    
+            if ($password !== $confirmPassword) {
+                $errors[] = "Les mots de passe ne correspondent pas";
+            }
+    
+            if (strlen($password) > 50) {
+                $errors[] = "Le mot de passe ne doit pas dépasser 50 caractères";
+            }
+    
+            if (!$errors) {
+                
+                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+                
+                $user = $this->userManager->getUserById($userId);
+                $user->setFirstName($firstName);
+                $user->setLastName($lastName);
+                $user->setEmail($email);
+                $user->setPassword($hashedPassword);
+                $user->setRoleId($roleId);
+                
+                $this->userManager->edit($user);
+                
+                // Redirect to the manage user
+                $this->render("admin/user/manage_user", [
+                    "editUserSuccess" => ["L'utilisateur a bien été modifié"]
+                ]);
+            } else {
+                $this->render("admin/user/edit", [
+                    "errors" => $errors
+                ]);
+            }
+        } else {
+            $this->render("admin/user/edit", []);
+        }
+    }
+
     
     public function managePost()
     {
