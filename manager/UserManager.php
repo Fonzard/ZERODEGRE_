@@ -8,7 +8,7 @@ class UserManager extends AbstractManager {
         $query = ("SELECT * FROM users");
         $parameters = null;
         
-        $results = $this->getResults($query, $parameters, $class, false);
+        $results = $this->getResult($query, $parameters, $class);
         var_dump($results);
         
         return $results;
