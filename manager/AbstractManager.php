@@ -12,6 +12,7 @@ abstract class AbstractManager {
         
         try {
             $this->connex = new PDO($connexionString, $dbInfo['username'], $dbInfo['password']);
+             echo "Connexion à la base de données établie.";
         } catch (PDOException $e) {
             die("Erreur de connexion à la base de données : " . $e->getMessage());
         }
@@ -50,18 +51,14 @@ abstract class AbstractManager {
             
             // Execution de la requête avec les paramètres
             $stmt->execute($parameters);
-           
             //Vérifie si il y a besoin de fetch ou fetchAll
             if ($singleResult){
                 
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                
             } else {
                 
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                
             }
-            
             return $result;
             
         } catch (PDOException $e) {
@@ -79,7 +76,7 @@ abstract class AbstractManager {
         $resultsTab = array();
         
         //Si il n'y aucune résultat renvoyer null
-        if (empty($results)) {
+        if ($results === null || empty($results)) {
             return null;
         }
         
@@ -109,6 +106,7 @@ abstract class AbstractManager {
                     $constructorArguments[] = null;
                     
                 }
+              
             }
     
             // Créer une instance de la classe en utilisant les arguments du constructeur
@@ -118,14 +116,12 @@ abstract class AbstractManager {
             if ($isSingleResult)
             {
                 return $resultInstance; //Si on traite le résultat seul, le return direct
+                var_dump($resultInstance);
             }
             
             $resultsTab[] = $resultInstance;
         }
         
-        if ($isSingleResult) {
-            return null; // Retourner null si aucun résultat trouvé pour le cas de traitement unique
-        }
         
         return $resultsTab;
     }

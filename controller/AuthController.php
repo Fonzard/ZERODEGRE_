@@ -6,9 +6,11 @@ class AuthController extends AbstractController{
     
     public function __construct()
     {
-        $this->manager = new UserManager("francisrouxel_zero_degre", "3306", "db.3wa.io", "francisrouxel", "acadbb28886b6985666cd7eff4651f1d");
+        $this->manager = new UserManager();
+        // "francisrouxel_zero_degre", "3306", "db.3wa.io", "francisrouxel", "acadbb28886b6985666cd7eff4651f1d"
     }
     
+
     public function register(): void
     {
         if (isset($_POST["register-form"]) && $_POST["register-form"] === "register") {
@@ -20,10 +22,7 @@ class AuthController extends AbstractController{
             $roleId = "1"; // À modifier pour gérer admin ou non
             
             $errors = [];
-            
-            if ($this->manager->getUserByEmail($email)) {
-                $errors[] = "Un utilisateur avec cet email existe déjà";
-            }
+        
             
             if (strlen($email) >= 50) {
                 $errors[] = "L'email ne doit pas dépasser 50 caractères";
@@ -33,16 +32,8 @@ class AuthController extends AbstractController{
                 $errors[] = "L'email n'est pas écrit correctement";
             }
             
-            if ($this->manager->getUserByFirstName($firstName)) {
-                $errors[] = "Un utilisateur avec ce prénom existe déjà";
-            }
-            
             if (strlen($firstName) >= 50) {
                 $errors[] = "Le prénom ne doit pas dépasser 50 caractères";
-            }
-            
-            if ($this->manager->getUserByLastName($lastName)) {
-                $errors[] = "Un utilisateur avec ce nom de famille existe déjà";
             }
             
             if (strlen($lastName) >= 50) {

@@ -1,16 +1,10 @@
 <section id="manage-user">
     <h2>Gestion des Utilisateurs</h2>
-    <p class="delete-user-success">
+    <p class="message">
         <?php
-            if(isset($data['deleteUserSuccess'])) {
-                echo $data['deleteUserSuccess'][0];
-            }
-        ?>
-        </p>
-    <p class="edit-user-success">
-        <?php
-            if(isset($data['editUserSuccess'])) {
-                echo $data['editUserSuccess'][0];
+            if(isset($_SESSION['message'])) {
+                echo "<p>" .$_SESSION['message'] ."</p>";
+                unset($_SESSION['message']); // Effacer le message pour qu'il ne s'affiche pas à chaque rafraîchissement
             }
         ?>
     </p>
@@ -48,8 +42,8 @@
                     <td><?= $user->getEmail(); ?></td>
                     <td><?= $user->getRoleId(); ?></td>
                     <td>
-                        <a href="index.php?route=admin/user/edit&id=<?= $user->getId(); ?>" class="edit-user-btn">Modifier</a>
-                        <a href="index.php?route=admin/user/manage_user/delete&id=<?= $user->getId(); ?>" class="delete-user-btn" data-user-id="<?= $user->getId(); ?>">Supprimer</a>
+                        <a href="index.php?route=admin_user_edit&id=<?= $user->getId(); ?>" class="edit-user-btn">Modifier</a>
+                        <a href="index.php?route=admin_user_delete&id=<?= $user->getId(); ?>" class="delete-user-btn" data-user-id="<?= $user->getId(); ?>">Supprimer</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

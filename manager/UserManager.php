@@ -8,7 +8,7 @@ class UserManager extends AbstractManager {
         $query = ("SELECT * FROM users");
         $parameters = null;
         
-        $results = $this->getResult($query, $parameters, $class);
+        $results = $this->getResult($query, $parameters, $class, false);
         var_dump($results);
         
         return $results;
@@ -30,10 +30,10 @@ class UserManager extends AbstractManager {
         $parameters = array(":id" => $id);
         
         $result = $this->getResult($query, $parameters, $class, true);
-        
-        if($result !== null){
-            $result->setId($result["id"]);
-        }
+        var_dump($result);
+        // if($result !== null){
+        //     $result->setId($result->getId());
+        // }
         
         return $result;
     }
@@ -91,7 +91,7 @@ class UserManager extends AbstractManager {
     {
         
         $query =("UPDATE users SET first_name = :first_name, last_name = :last_name, email = :email, password = :password, role_id = :role_id WHERE users.id = :id");
-        $parameters = array("first_name" => $user->getFirstName, "last_name" => $user->getLastName, "email" => $user->getEmail, "password" => $user->getPassword, "role_id" => $user->getRoleId, "id" => $user->getId);
+        $parameters = array("first_name" => $user->getFirstName(), "last_name" => $user->getLastName(), "email" => $user->getEmail(), "password" => $user->getPassword(), "role_id" => $user->getRoleId(), "id" => $user->getId());
         
         $this->getQuery($query, $parameters);
     }

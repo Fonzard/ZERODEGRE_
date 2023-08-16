@@ -1,6 +1,6 @@
 <main id="edit-user">  
     <h2>Modifier un utilisateur</h2>
-    <form action="index.php?route=admin/user/edit&id=<?= $user->getId(); ?>" method="post">
+    <form action="index.php?route=admin_user_edit&id=<?= $_GET['id'] ?>" method="post">
         <p class="form-errors">
             <?php
                 if(isset($data['errors']))
@@ -39,7 +39,7 @@
         </fieldset>
         <fieldset>
             <label for="edit-roleId">
-                 Confirmer le mot de passe 
+                 Modifier le rôle
             </label>
             <select name="edit-roleId" id="edit-roleId">
                 <option value="1">User</option>
@@ -48,7 +48,7 @@
         </fieldset>
         <fieldset>
             <button type="submit">
-                Créer un compte
+                Modifier le compte
             </button>
         </fieldset>
          <input type="hidden" name="edit-form" value="edit"/>

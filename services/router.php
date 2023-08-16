@@ -26,19 +26,18 @@ class Router {
         
         if(isset($_GET["route"])) {
                 
-                // ADMIN
-                if($_GET["route"] === "admin/user/manage_user")
+                // ADMIN / Ajouter Contrôle d'accès ADMIN
+                if($_GET["route"] === "admin_user_manage_user")
                 {
                 $this->adminController->manageUser();
                 }
 
-                
-                if ($_GET["route"] === "admin/user/manage_user/delete&id=" && isset($_GET['id']))
+                if ($_GET["route"] === "admin_user_delete" && isset($_GET['id']))
                 {
                     $this->adminController->deleteUser($_GET['id']);
                     $this->adminController->manageUser();
                 }
-                if($_GET["route"] === "admin/user/edit&id=" && isset($_GET['id']))
+                if($_GET["route"] === "admin_user_edit" && isset($_GET['id']))
                 {
                     $this->adminController->editUser($_GET['id']);
                 }

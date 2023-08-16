@@ -34,10 +34,12 @@ class AdminController extends AbstractController{
         // }
         
         $this->userManager->delete($userId);
-        $this->render("admin/user/manage_user", ["deleteUserSuccess" => ["L'user à bien été supprimé"]]);
+        $_SESSION['message'] = "L'utilisateur a bien été supprimé";
+                header("Location: /ZERODEGRE_/index.php?route=admin_user_manage_user");
+        // $this->render("admin/user/manage_user", ["deleteUserSuccess" => ["L'utilisateur à bien été supprimé"]]);
     }
     
-    public function editUser($userId)
+    public function editUser()
     {
         if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["edit-form"] === "edit") {
             $email = $_POST["edit-email"];
@@ -49,10 +51,6 @@ class AdminController extends AbstractController{
             
             $errors = [];
     
-            if ($this->userManager->getUserByEmail($email)) {
-                $errors[] = "Un utilisateur avec cet email existe déjà";
-            }
-    
             if (strlen($email) > 50) {
                 $errors[] = "L'email ne doit pas dépasser 50 caractères";
             }
@@ -61,16 +59,8 @@ class AdminController extends AbstractController{
                 $errors[] = "L'email n'est pas écrit correctement";
             }
     
-            if ($this->userManager->getUserByFirstName($firstName)) {
-                $errors[] = "Un utilisateur avec ce prénom existe déjà";
-            }
-    
             if (strlen($firstName) > 50) {
                 $errors[] = "Le prénom ne doit pas dépasser 50 caractères";
-            }
-    
-            if ($this->userManager->getUserByLastName($lastName)) {
-                $errors[] = "Un utilisateur avec ce nom de famille existe déjà";
             }
     
             if (strlen($lastName) > 50) {
@@ -89,7 +79,8 @@ class AdminController extends AbstractController{
                 
                 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
                 
-                $user = $this->userManager->getUserById($userId);
+                $user = $this->userManager->getUserById($_GET["id"]);
+                
                 $user->setFirstName($firstName);
                 $user->setLastName($lastName);
                 $user->setEmail($email);
@@ -99,9 +90,11 @@ class AdminController extends AbstractController{
                 $this->userManager->edit($user);
                 
                 // Redirect to the manage user
-                $this->render("admin/user/manage_user", [
-                    "editUserSuccess" => ["L'utilisateur a bien été modifié"]
-                ]);
+                $_SESSION['editUserSuccess'] = "L'utilisateur a bien été modifié";
+                header("Location: /ZERODEGRE_/index.php?route=admin_user_manage_user");
+
+               
+
             } else {
                 $this->render("admin/user/edit", [
                     "errors" => $errors
