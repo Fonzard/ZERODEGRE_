@@ -13,7 +13,7 @@ class AdminController extends AbstractController{
         // $this->albumManager = new AlbumManager();
         // $this->postManager = new PostManager();
         // $this->productManager = new ProductManager();
-        $this->userManager = new UserManager("francisrouxel_zero_degre", "3306", "db.3wa.io", "francisrouxel", "acadbb28886b6985666cd7eff4651f1d");
+        $this->userManager = new UserManager();
     }
     public function index() 
     {

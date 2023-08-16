@@ -1,29 +1,38 @@
+// Fenetre Modale Delete User
+// Récupérer les éléments nécessaires
+const openModalLinks = document.querySelectorAll('.open-modal');
+const closeModalButtons = document.querySelectorAll('.modal .close, .modal #cancel-delete');
 
-// Fenetre modale delete
-document.addEventListener('DOMContentLoaded', function() {
-    const deleteLinks = document.querySelectorAll('.delete-user-link');
-    const deleteModal = document.getElementById('deleteModal');
-    const confirmDeleteButton = document.getElementById('confirmDelete');
-    const cancelDeleteButton = document.getElementById('cancelDelete');
-    let userIdToDelete = null;
+// Fonction pour ouvrir la fenêtre modale
+function openModal(event) {
+    const userId = event.target.getAttribute('data-user-id');
+    const modal = document.getElementById('deleteModal');
+    modal.style.display = 'block';
 
-    deleteLinks.forEach(function(link) {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-            userIdToDelete = link.getAttribute('data-user-id');
-            deleteModal.style.display = 'block';
-        });
-    });
+    // Définir l'URL de confirmation de suppression avec l'ID de l'utilisateur
+    const confirmButton = modal.querySelector('#confirm-delete');
+    confirmButton.setAttribute('href', `index.php?route=admin_user_delete&id=${userId}`);
+}
 
-    confirmDeleteButton.addEventListener('click', function() {
-        if (userIdToDelete !== null) {
-            // Rediriger vers le script PHP de suppression en passant l'ID de l'utilisateur
-            window.location.href = `index.php?route=admin/user/delete&id=${userIdToDelete}`;
-        }
-    });
+// Fonction pour fermer la fenêtre modale
+function closeModal() {
+    const modal = document.getElementById('deleteModal');
+    modal.style.display = 'none';
+}
 
-    cancelDeleteButton.addEventListener('click', function() {
-        deleteModal.style.display = 'none';
-    });
+// Attacher les gestionnaires d'événements aux liens et boutons
+openModalLinks.forEach(link => {
+    link.addEventListener('click', openModal);
 });
 
+closeModalButtons.forEach(button => {
+    button.addEventListener('click', closeModal);
+});
+
+// Fermer la fenêtre modale si l'utilisateur clique en dehors d'elle
+window.addEventListener('click', event => {
+    const modal = document.getElementById('deleteModal');
+    if (event.target === modal) {
+        closeModal();
+    }
+});

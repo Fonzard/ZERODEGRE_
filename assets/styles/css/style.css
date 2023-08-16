@@ -1,4 +1,4 @@
-main .modal {
+#manage-user .modal {
   display: none;
   position: fixed;
   top: 0;
@@ -8,7 +8,7 @@ main .modal {
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 3;
 }
-main .modal-content {
+#manage-user .modal-content {
   background-color: white;
   width: 300px;
   padding: 20px;
