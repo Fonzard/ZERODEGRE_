@@ -12,10 +12,9 @@ abstract class AbstractManager {
         
         try {
             $this->connex = new PDO($connexionString, $dbInfo['username'], $dbInfo['password']);
-             echo "Connexion à la base de données établie.";
         } catch (PDOException $e) {
             die("Erreur de connexion à la base de données : " . $e->getMessage());
-        }
+        }   
        
     }
 

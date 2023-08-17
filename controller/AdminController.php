@@ -37,9 +37,11 @@ class AdminController extends AbstractController{
                 $userId = $_GET['id'];
                 $this->userManager->delete($userId);
                 
-                //Récuperer la nouvelle liste d'user
-                // $newUserList = $this->userManager->getAllUsers();
-                // echo json_encode($newUserList);
+                // Récuperer la nouvelle liste d'user
+                $newUserList = $this->userManager->getAllUsers();
+                // var_dump($newUserList);
+                // Il faut le transformer en tableau associatif OBLIGé !!!!!
+                echo json_encode($newUserList);
         } else {
                 echo json_encode(array("error" => "L'utilisateur n'a pas été supprimé"));
         }

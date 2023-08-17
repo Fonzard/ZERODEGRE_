@@ -32,6 +32,10 @@ class AuthController extends AbstractController{
                 $errors[] = "L'email n'est pas écrit correctement";
             }
             
+            if ($this->manager->getUserByEmail($email) !== null) {
+                $errors[] = "L'email existe déjà";
+            }
+            
             if (strlen($firstName) >= 50) {
                 $errors[] = "Le prénom ne doit pas dépasser 50 caractères";
             }

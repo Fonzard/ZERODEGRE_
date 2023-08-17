@@ -2,14 +2,13 @@
 
 class UserManager extends AbstractManager {
     
-    public function getAllUsers() : ? array
+    public function getAllUsers() : array
     {
         $class = "User";
         $query = ("SELECT * FROM users");
         $parameters = null;
         
         $results = $this->getResult($query, $parameters, $class, false);
-        var_dump($results);
         
         return $results;
     }
@@ -20,7 +19,6 @@ class UserManager extends AbstractManager {
         $parameters = array(":email" => $email);
         
         $result = $this->getResult($query, $parameters, $class, true);
-        var_dump($result);
         return $result;
     }
     public function getUserById(int $id) : ?User
@@ -30,7 +28,6 @@ class UserManager extends AbstractManager {
         $parameters = array(":id" => $id);
         
         $result = $this->getResult($query, $parameters, $class, true);
-        var_dump($result);
         // if($result !== null){
         //     $result->setId($result->getId());
         // }

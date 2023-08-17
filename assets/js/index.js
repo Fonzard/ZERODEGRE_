@@ -46,6 +46,7 @@ document.getElementById("confirm-delete").addEventListener("click", function(){
     const userId = deleteBtn.getAttribute('data-user-id');
     modal.style.display = 'none';
     console.log("ID envoyé depuis JavaScript :", userId);
+    
     const requestData = {
         userId : userIdToDelete 
     };
@@ -54,35 +55,27 @@ document.getElementById("confirm-delete").addEventListener("click", function(){
         method: "GET", 
     })
     .then(response => response.json()) // Converti la réponse en Objet JSON
-    .then(data => {
-        if (Array.isArray(data))
-        {
-            echo("yoooo")
-            const userTableBody = document.getElementById("userTableBody");
-            userTableBody.innerHTML = '' // Vide le contenu actuel du tableau
+    .then((data) => {
+        const userTableBody = document.getElementById("userTableBody");
+        userTableBody.innerHTML = ''; // Vide le contenu actuel du tableau
+        console.log(data);
             
-            //Remplir le tableau avec les nouvelles données des users
-            data.newUserList.forEach(user => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${user.id}</td>
-                    <td>${user.firstName}</td>
-                    <td>${user.lastName}</td>
-                    <td>${user.email}</td>
-                    <td>${user.roleId}</td>
-                    <td>
-                        <a href="index.php?route=admin_user_edit&id=${user.id}" class="edit-user-btn">Modifier</a>
-                        <a class="open-modal" data-user-id="${user.id}">Supprimer</a>
-                    </td>
-                `;
-                userTableBody.appendChild(row);
-            })
-        }
-    })
-    .catch(error => {
-        console.error("Une erreur c'est produite :", error.error);
-    })
-    
-});
-
-//Vider le html avec un inner je sais plus quoi et demander au fetch de remplir le tableau avec les nouvelles données de la BDD
+        //Remplir le tableau avec les nouvelles données des users
+        data.forEach(user => {
+            console.log(user);
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${user.id}</td>
+                <td>${user.firstName}</td>
+                <td>${user.lastName}</td>
+                <td>${user.email}</td>
+                <td>${user.roleId}</td>
+                <td>
+                    <a href="index.php?route=admin_user_edit&id=${user.id}" class="edit-user-btn">Modifier</a>
+                    <a class="open-modal" data-user-id="${user.id}">Supprimer</a>
+                </td>
+            `;
+            userTableBody.appendChild(row);
+        })
+    })  
+})
