@@ -20,25 +20,31 @@ class AdminController extends AbstractController{
         $template = "admin/dashboard";
         require "templates/layout.phtml";
     }
-    ////// MANAGE USER
+    ////// MANAGE USER //////
     public function manageUser()
     {
         $users = $this->userManager->getAllUsers();
         $this->render("admin/user/manage_user", ["users" => $users]);
     }
     
-    public function deleteUser(int $userId)
+    public function deleteUser()
     {
         // if(!$this->isAdmin()){
             //redirige vers une page d'erreur ou de refus 
         // }
-        
-        $this->userManager->delete($userId);
-        $_SESSION['message'] = "L'utilisateur a bien été supprimé";
-                header("Location: /ZERODEGRE_/index.php?route=admin_user_manage_user");
-        // $this->render("admin/user/manage_user", ["deleteUserSuccess" => ["L'utilisateur à bien été supprimé"]]);
+        if(isset($_GET['id']))
+        {
+                $userId = $_GET['id'];
+                $this->userManager->delete($userId);
+                
+                //Récuperer la nouvelle liste d'user
+                // $newUserList = $this->userManager->getAllUsers();
+                // echo json_encode($newUserList);
+        } else {
+                echo json_encode(array("error" => "L'utilisateur n'a pas été supprimé"));
+        }
     }
-    
+
     public function editUser()
     {
         if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["edit-form"] === "edit") {

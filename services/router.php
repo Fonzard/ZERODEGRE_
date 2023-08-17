@@ -35,7 +35,6 @@ class Router {
                 if ($_GET["route"] === "admin_user_delete" && isset($_GET['id']))
                 {
                     $this->adminController->deleteUser($_GET['id']);
-                    $this->adminController->manageUser();
                 }
                 if($_GET["route"] === "admin_user_edit" && isset($_GET['id']))
                 {

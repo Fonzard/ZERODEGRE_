@@ -2,7 +2,7 @@
 
 class UserManager extends AbstractManager {
     
-    public function getAllUsers() : array
+    public function getAllUsers() : ? array
     {
         $class = "User";
         $query = ("SELECT * FROM users");
@@ -72,7 +72,7 @@ class UserManager extends AbstractManager {
         $this->getQuery($query, $parameters);
         
         // Obtenez l'ID inséré
-        $lastInsertId = $this->connectToDatabase()->lastInsertId();
+        $lastInsertId = $this->connex->lastInsertId();
         
         // A vérifier !!!
         $user->setId($lastInsertId);
