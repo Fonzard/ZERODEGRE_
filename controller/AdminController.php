@@ -39,23 +39,23 @@ class AdminController extends AbstractController{
                 
                 // Récuperer la nouvelle liste d'user
                 $newUserList = $this->userManager->getAllUsers();
-                // var_dump($newUserList);
-                // Il faut le transformer en tableau associatif OBLIGé !!!!!
+              
                 echo json_encode($newUserList);
         } else {
-                echo json_encode(array("error" => "L'utilisateur n'a pas été supprimé"));
+                echo json_encode(array("errors" => "L'utilisateur n'a pas été supprimé"));
         }
     }
 
     public function editUser()
     {
-        if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["edit-form"] === "edit") {
-            $email = $_POST["edit-email"];
-            $firstName = $_POST["edit-firstName"];
-            $lastName = $_POST["edit-lastName"];
+        if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["edit-form"] === "edit") 
+        {
+            $email = $this->clean($_POST["edit-email"]);
+            $firstName = $this->clean($_POST["edit-firstName"]);
+            $lastName = $this->clean($_POST["edit-lastName"]);
             $password = $_POST["edit-password"];
             $confirmPassword = $_POST["edit-confirm-password"];
-            $roleId = $_POST["edit-roleId"];
+            $roleId = $this->clean($_POST["edit-roleId"]);
             
             $errors = [];
     
@@ -79,9 +79,8 @@ class AdminController extends AbstractController{
                 $errors[] = "Les mots de passe ne correspondent pas";
             }
     
-            if (strlen($password) > 50) {
-                $errors[] = "Le mot de passe ne doit pas dépasser 50 caractères";
-            }
+            $passwordErrors = $this->validatePassword($password);
+            $errors = array_merge($errors, $passwordErrors);
     
             if (!$errors) {
                 
@@ -98,7 +97,7 @@ class AdminController extends AbstractController{
                 $this->userManager->edit($user);
                 
                 // Redirect to the manage user
-                $_SESSION['editUserSuccess'] = "L'utilisateur a bien été modifié";
+                $_SESSION['message'] = "L'utilisateur a bien été modifié";
                 header("Location: /ZERODEGRE_/index.php?route=admin_user_manage_user");
 
                
@@ -112,7 +111,6 @@ class AdminController extends AbstractController{
             $this->render("admin/user/edit", []);
         }
     }
-
     
     public function managePost()
     {
@@ -136,6 +134,17 @@ class AdminController extends AbstractController{
     {
         $albums = $this->albumManager->getAllAlbums();
         $this->render("admin/album/manage_album", ["albums" => $albums]);
+    }
+    
+    //Gestion des pages d'erreurs
+    public function manageError($errorCode)
+    {
+        if ($errorCode === 403)
+        {
+            $this->render("error/403", []);
+        }elseif ($errorCode === 404) {
+            $this->render("error/404", []);
+        }
     }
 }
 ?>

@@ -7,19 +7,19 @@ class AuthController extends AbstractController{
     public function __construct()
     {
         $this->manager = new UserManager();
-        // "francisrouxel_zero_degre", "3306", "db.3wa.io", "francisrouxel", "acadbb28886b6985666cd7eff4651f1d"
     }
     
 
     public function register(): void
     {
-        if (isset($_POST["register-form"]) && $_POST["register-form"] === "register") {
-            $email = $_POST["register-email"];
-            $firstName = $_POST["register-firstName"];
-            $lastName = $_POST["register-lastName"];
+        if (isset($_POST["register-form"]) && $_POST["register-form"] === "register") 
+        {
+            $email = $this->clean($_POST["edit-email"]);
+            $firstName = $this->clean($_POST["edit-firstName"]);
+            $lastName = $this->clean($_POST["edit-lastName"]);
             $password = $_POST["register-password"];
             $confirmPassword = $_POST["register-confirm-password"];
-            $roleId = "1"; // À modifier pour gérer admin ou non
+            $roleId = "1"; 
             
             $errors = [];
         
@@ -48,9 +48,10 @@ class AuthController extends AbstractController{
                 $errors[] = "Les mots de passe ne correspondent pas";
             }
             
-            if (strlen($password) >= 50) {
-                $errors[] = "Le mot de passe ne doit pas dépasser 50 caractères";
-            }
+            $passwordErrors = $this->validatePassword($password);
+            
+            //Merge the two error arrays
+            $errors = array_merge($errors, $passwordErrors);
             
             if (!$errors) {
                 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
@@ -63,7 +64,7 @@ class AuthController extends AbstractController{
                 
                 // Redirect to the homepage
                 $this->render("auth/login", [
-                    "register" => ["Le compte a bien été créé"]
+                    "message" => ["Le compte a bien été créé"]
                 ]);
             } else {
                 $this->render("auth/register", [
@@ -75,54 +76,52 @@ class AuthController extends AbstractController{
         }
     }
     
-    public function login() : void 
+    public function login(): void 
     {
-        if( isset($_POST["login-form"]) && $_POST["login-form"] === "login")
+        $errors = []; // Créer un tableau pour stocker les erreurs
+    
+        if (isset($_POST["login-form"]) && $_POST["login-form"] === "login") 
         {
-            $email = $_POST["login-email"];
+            $email = $this->clean($_POST["login-email"]);
             $password = $_POST["login-password"];
-            
-            //Check if the user exist
+    
+            //Check if the user exists
             $user = $this->manager->getUserByEmail($email);
-
-            if($user !== null)
+    
+            if ($user !== null) 
             {
-                //Check if the password is good 
-                if(password_verify($password, $user->getPassword()))
+                //Check if the password is correct 
+                if (password_verify($password, $user->getPassword())) 
                 {
                     //Log the user    
                     $_SESSION["user"] = $user->getId();
-                    
+    
                     //Redirect to homepage
                     $this->render("partials/homepage", [
-                            "loginSuccess" => ["Vous êtes bien connecté"
-                            ]
-                        ]);
-                } else {
-                    
-                    $this->render("auth/login", [
-                            "errors" => [
-                                    "Mot de passe incorrects"
-                                ]
-                        ]);
-                }
-            } else {
-                // and you get an error
-                $this->render("auth/login", [
-                    "errors" => [
-                        "Aucun compte avec cet email"
-                    ]
-                ]);
-            }
-        } else {
-            
-            $this->render("auth/login", [ 
-                "errors" => [
-                        "bug firstStep"
-                        ]
+                        "message" => ["Vous êtes bien connecté"]
                     ]);
+                } 
+                else 
+                {
+                    $errors[] = "Mot de passe incorrect";
+                }
+            } 
+            else 
+            {
+                $errors[] = "Aucun compte avec cet email";
+            }
+        } 
+        else 
+        {
+            $errors[] = "Il faut remplir toutes les cases du formulaire";
         }
+    
+        // Render the view with errors array
+        $this->render("auth/login", [
+            "errors" => $errors
+        ]);
     }
+
     
     public function logout()
     {

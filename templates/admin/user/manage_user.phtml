@@ -31,14 +31,14 @@
         <tbody id="userTableBody">
     <?php foreach ($data['users'] as $user) : ?>
                 <tr>
-                    <td><?= $user->getId(); ?></td>
-                    <td><?= $user->getFirstName(); ?></td>
-                    <td><?= $user->getLastName(); ?></td>
-                    <td><?= $user->getEmail(); ?></td>
-                    <td><?= $user->getRoleId(); ?></td>
+                    <td><?= htmlspecialchars($user->getId()); ?></td>
+                    <td><?= htmlspecialchars($user->getFirstName()); ?></td>
+                    <td><?= htmlspecialchars($user->getLastName()); ?></td>
+                    <td><?= htmlspecialchars($user->getEmail()); ?></td>
+                    <td><?= htmlspecialchars($user->getRoleId()); ?></td>
                     <td>
-                        <a href="index.php?route=admin_user_edit&id=<?= $user->getId(); ?>" class="edit-user-btn">Modifier</a>
-                        <a class="open-modal" data-user-id="<?= $user->getId(); ?>">Supprimer</a>
+                        <a href="index.php?route=admin_user_edit&id=<?= htmlspecialchars($user->getId()); ?>" class="edit-user-btn">Modifier</a>
+                        <a class="open-modal" data-user-id="<?= htmlspecialchars($user->getId()); ?>">Supprimer</a>
                     </td>
                 </tr>
     <?php endforeach; ?>

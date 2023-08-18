@@ -1,15 +1,8 @@
 <main id="homepage">
     <p class="register-done">
         <?php
-            if(isset($data['loginSuccess'])) {
-                echo $data['loginSuccess'][0];
-            }
-        ?>
-    </p>
-    <p class="logout-done">
-        <?php
-            if(isset($data['logoutSuccess'])) {
-                echo $data['logoutSuccess'][0];
+            if(isset($data['message'])) {
+                echo $data['message'][0];
             }
         ?>
     </p>
