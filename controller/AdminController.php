@@ -4,15 +4,17 @@ class AdminController extends AbstractController{
     // private ArtistManager $artistManager;
     // private AlbumManager $albumManager;
     // private PostManager $postManager;
-    // private ProductManager $productManager;
+    private CategoryManager $categoryManager;
+    private ProductManager $productManager;
     private UserManager $userManager;
     
     public function __construct()
     {
         // $this->artistManager = new ArtistManager();
         // $this->albumManager = new AlbumManager();
+        $this->categoryManager = new CategoryManager();
         // $this->postManager = new PostManager();
-        // $this->productManager = new ProductManager();
+        $this->productManager = new ProductManager();
         $this->userManager = new UserManager();
     }
     public function index() 
@@ -98,7 +100,7 @@ class AdminController extends AbstractController{
                 
                 // Redirect to the manage user
                 $_SESSION['message'] = "L'utilisateur a bien été modifié";
-                header("Location: /ZERODEGRE_/index.php?route=admin_user_manage_user");
+                header("Location: /ZERODEGRE_/index.php?route=admin_user");
 
                
 
@@ -107,11 +109,8 @@ class AdminController extends AbstractController{
                     "errors" => $errors
                 ]);
             }
-        } else {
-            $this->render("admin/user/edit", []);
-        }
+        } 
     }
-    
     public function managePost()
     {
         $posts = $this->postManager->getAllPosts();
@@ -121,6 +120,7 @@ class AdminController extends AbstractController{
     public function manageProduct()
     {
         $products = $this->productManager->getAllProducts();
+        var_dump($products);
         $this->render("admin/product/manage_product", ["products" => $products]);
     }
     

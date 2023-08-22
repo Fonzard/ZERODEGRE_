@@ -2,77 +2,95 @@
 
 class ProductController extends AbstractController{
 
-    private UserManager $manager;
+    private ProductManager $pm;
+    private MediaManager $mm;
     
     public function __construct()
     {
-        $this->manager = new UserManager();
+        $this->pm = new ProductManager();
+        $this->mm =new MediaManager();
     }
  
     public function createProduct() : void 
     {
-        if (isset($_POST["register-form"]) && $_POST["register-form"] === "register") 
+        if (isset($_POST["product-form"]) && $_POST["product-form"] === "submit") 
         {
             $name = $this->clean($_POST["product-name"]);
             $price = $this->clean($_POST["product-price"]);
             $description = $this->clean($_POST["product-description"]);
-            $quantity = $_POST["product-quantity"];
-            $categotyId = $_POST["product-categoryId"];
-            $mediaId = $_POST["product-mediaId"];
+            $quantity = $this->clean($_POST["product-quantity"]);
+            $categoryId = $_POST["product-categoryId"];
+            $url = $this->clean($_POST["product-url"]);
+            $altText = $this->clean($_POST["product-altText"]);
             
-            $errors = [];
+            //Instancier un média 
+            $media = new Media($url, $altText);
+            $this->mm->insertMedia($media);
+            $mediaId = $media->getId();
+            
+            $product = new Product ($name, $price, $description, $quantity, $categoryId, $mediaId);
+            $this->pm->create($product);
+            
+            //Peut être changer la route 
+            header("location: /ZERODEGRE_/index.php?route=admin_product");
+            $_SESSION['message'] = "Le produit". $name ." a bien été créé";
+        } 
+    }
+    
+    public function editProduct() : void
+    {
         
+        if (isset($_POST["product-edit-form"]) && $_POST["product-edit-form"] === "submit") 
+        {
+            $name = $this->clean($_POST["product-name"]);
+            $price = $this->clean($_POST["product-price"]);
+            $description = $this->clean($_POST["product-description"]);
+            $quantity = $this->clean($_POST["product-quantity"]);
+            $categotyId = $this->clean($_POST["product-categoryId"]);
+            $url = $this->clean($_POST["product-url"]);
+            $altText = $this->clean($_POST["product-altText"]);
             
-            if (strlen($email) >= 50) {
-                $errors[] = "L'email ne doit pas dépasser 50 caractères";
-            }
+            $product = $this->pm->getProductById($_GET["id"]);
             
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $errors[] = "L'email n'est pas écrit correctement";
-            }
+            //Editer un média 
+            //A faire
+            $mediaId = $this->mm->getMediaIdByUrl($url);
             
-            if ($this->manager->getUserByEmail($email) !== null) {
-                $errors[] = "L'email existe déjà";
-            }
+            $product->setName($name);
+            $product->setPrice($price);
+            $product->setDescription($description);
+            $product->setQuantity($quantity);
+            $product->setCategoryId($categoryId);
+            $product->setMediaId($mediaId);
             
-            if (strlen($firstName) >= 50) {
-                $errors[] = "Le prénom ne doit pas dépasser 50 caractères";
-            }
+            $this->pm->edit($product);
             
-            if (strlen($lastName) >= 50) {
-                $errors[] = "Le nom ne doit pas dépasser 50 caractères";
-            }
-            
-            if ($password !== $confirmPassword) {
-                $errors[] = "Les mots de passe ne correspondent pas";
-            }
-            
-            $passwordErrors = $this->validatePassword($password);
-            
-            //Merge the two error arrays
-            $errors = array_merge($errors, $passwordErrors);
-            
-            if (!$errors) {
-                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+           
+            $_SESSION['message'] = "Le produit ". $name ." a bien été modifié";
+            header("Location: /ZERODEGRE_/index.php?route=admin_product");
                 
-                $user = new User($firstName, $lastName, $email, $hashedPassword, $roleId);
-                $this->manager->createUser($user);
+        } 
+    }
+    
+    public function deleteUser()
+    {
+        // if(!$this->isAdmin()){
+            //redirige vers une page d'erreur ou de refus 
+        // }
+        if(isset($_GET['id']))
+        {
+                $productId = $_GET['id'];
+                $this->pm->delete($productId);
                 
-                // Manually log the user
-                $_SESSION["user"] = $user->getId();
-                
-                // Redirect to the homepage
-                $this->render("auth/login", [
-                    "message" => ["Le compte a bien été créé"]
-                ]);
-            } else {
-                $this->render("auth/register", [
-                    "errors" => $errors
-                ]);
-            }
+                // Récuperer la nouvelle liste d'user
+                $newProductList = $this->pm->getAllProducts();
+              
+                echo json_encode($newProductList);
         } else {
-            $this->render("auth/register", []);
+                echo json_encode(array("errors" => "L'utilisateur n'a pas été supprimé"));
         }
     }
+    
+    
     
 }

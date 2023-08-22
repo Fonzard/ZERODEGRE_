@@ -121,7 +121,7 @@ abstract class AbstractManager {
             $resultsTab[] = $resultInstance;
         }
         
-        
+        var_dump($resultsTab);
         return $resultsTab;
     }
 

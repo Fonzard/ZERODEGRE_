@@ -1,0 +1,55 @@
+<section id="manage-product">
+    <h2>Gestion des produits</h2>
+    <p class="message">
+        <?php
+            if(isset($_SESSION['message'])) {
+                echo "<p>" .$_SESSION['message'] ."</p>";
+                unset($_SESSION['message']); // Effacer le message pour qu'il ne s'affiche pas à chaque rafraîchissement
+            }
+        ?>
+    </p>
+
+    <!--Fenetre Modale Delete-->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <p>Êtes-vous sûr de vouloir supprimer ce produit ?</p>
+            <button id="confirm-delete">Confirmer</button>
+            <button id="cancel-delete">Annuler</button>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Quantité</th>
+                <th>Catégorie</th>
+                <th>Média</th>
+            </tr>
+        </thead>
+        <tbody id="userTableBody">
+    <?php foreach ($data['products'] as $product) : ?>
+                <tr>
+                    <td><?= htmlspecialchars($product->getId()); ?></td>
+                    <td><?= htmlspecialchars($product->getName()); ?></td>
+                    <td><?= htmlspecialchars($product->getPrice()); ?></td>
+                    <td><?= htmlspecialchars($product->getDescription()); ?></td>
+                    <td><?= htmlspecialchars($product->getQuantity()); ?></td>
+                    <td><?= htmlspecialchars($product->getCategoryId()); ?></td> <!--Faire apparaitre le nom des catégories -->
+                    <td><?= htmlspecialchars($product->getMediaId()); ?></td>   <!--Faire apparaitre le nom des img -->
+                    <td>
+                        <a href="index.php?route=admin_product_edit&id=<?= htmlspecialchars($product->getId()); ?>" class="edit-btn">Modifier</a>
+                        <a class="open-modal" data-user-id="<?= htmlspecialchars($product->getId()); ?>">Supprimer</a>
+                    </td>
+                </tr>
+    <?php endforeach; ?>
+        </tbody>
+    </table>
+    
+    <a href="index.php?route=admin_product_create">Ajouter un produit</a>
+    
+    <a href="index.php?route=homepage">Retour à l'accueil</a>
+</section>

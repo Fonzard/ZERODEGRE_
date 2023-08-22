@@ -4,15 +4,14 @@ class ProductManager extends AbstractManager {
     
     public function getAllProducts() : array
     {
+
         $class = "Product";
         $query = ("SELECT * FROM products");
-        $parameters = null;
-        
-        $results = $this->getResult($query, $parameters, $class, false);
+        $results = $this->getResult($query, null, $class, false);
         
         return $results;
     }
-    
+
     public function getProductByName(string $name) : ? User
     {
         $class = "Product";
@@ -23,14 +22,14 @@ class ProductManager extends AbstractManager {
         return $result;
     }
     
-    public function getProductsById(int $id) : ?User
+    public function getProductById(int $id) : ?User
     {
         $class = "Product";
         $query = "SELECT * FROM products WHERE products.id = :id";
         $parameters = array(":id" => $id);
         
         $result = $this->getResult($query, $parameters, $class, true);
-        
+        var_dump($result);
         return $result;
     }
     
@@ -44,19 +43,6 @@ class ProductManager extends AbstractManager {
         
         return $results;
         
-    }
-    
-    public function getProductsByCategory($productId)
-    {
-        $class = "Category";
-                //REVOIR la requête !!!!!!
-        $query = "SELECT p.* FROM products p
-              WHERE p.categories_id = :category_id";
-        $parameters = array(":category_id" => $categoryId);
-        
-        $result = $this->getResult($query, $parameters, $class, false);
-        
-        return $results;
     }
     
     public function create(Product $product) : ?Product

@@ -9,9 +9,9 @@ class CategoryManager extends AbstractManager {
         $class = "Category";
         $query = "SELECT * FROM categories_products";
         $results = $this->getResult($query, null, $class, false);
-        
         return $results;
     }
+    
     
     public function createCategoriesProducts(Category $category)
     {

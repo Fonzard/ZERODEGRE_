@@ -28,9 +28,6 @@ class UserManager extends AbstractManager {
         $parameters = array(":id" => $id);
         
         $result = $this->getResult($query, $parameters, $class, true);
-        // if($result !== null){
-        //     $result->setId($result->getId());
-        // }
         
         return $result;
     }
@@ -60,13 +57,13 @@ class UserManager extends AbstractManager {
         }
         return $result;
     }
-    //Je suis pas sur du fonctionnement de cette fonction 
+    
     public function createUser(User $user) : ?User
     {
         $query = ("INSERT INTO users(first_name, last_name, email, password, role_id) VALUES (:first_name, :last_name, :email, :password, :role_id)");
         $parameters = array("first_name" => $user->getLastName(), "last_name" => $user->getFirstName(), "email" => $user->getEmail(), "password" => $user->getPassword(), "role_id" => $user->getRoleId());
         
-        $this->getQuery($query, $parameters);
+        $this->getQuery($query, $parameters, true);
         
         // Obtenez l'ID inséré
         $lastInsertId = $this->connex->lastInsertId();

@@ -1,10 +1,10 @@
 <main id="product-user">  
-    <h2>Modifier un utilisateur</h2>
-    <form action="index.php?route=admin_product_create&id=<?= $_GET['id'] ?>" method="post">
+    <h2>Créer un produit</h2>
+    <form action="index.php?route=admin_product_create" method="post">
         <p class="form-errors">
             <?php
-                if(isset($data['errors']))
-                    echo $data["errors"][0];
+                if(isset($data["message"]))
+                    echo $data["message"][0];
             ?>
         </p>
         <fieldset>
@@ -33,25 +33,27 @@
         </fieldset>
         <fieldset>
             <label for="product-categoryId">
-                 Choisir la/les catégorie.s
+                 Choisir la catégorie
             </label>
             <!--Offrir la possibilité de créer un categorie sous forme de fenetre modale ??-->
             <select name="product-categoryId" id="product-categoryId">
-                <option value="1">User</option>
-                <option value="2">Admin</option>
+                <?php foreach($data['categories'] as $category) : ?>
+                <option value="<?=$category->getId()?>"> <?= $category->getName(); ?> </option>
+                <?php endforeach; ?>
             </select>
         </fieldset>
         <fieldset>
             <label for="product-mediaId">
                  Ajouter des médias 
             </label>
-            <input type="text" name="product-mediaId" id="product-mediaId" placeholder="Chemin/de/l'image">
+            <input type="text" name="product-url" id="product-url" placeholder="Chemin/de/l'image">
+            <input type="text" name="product-altText" id="product-altText" placeholder="Text alternatif"/>
         </fieldset>
         <fieldset>
             <button type="submit">
                 Créer le produit
             </button>
         </fieldset>
-         <input type="hidden" name="product-form" value="product"/>
+         <input type="hidden" name="product-form" value="submit"/>
     </form>
 </main> 

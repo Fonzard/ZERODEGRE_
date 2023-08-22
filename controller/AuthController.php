@@ -9,7 +9,6 @@ class AuthController extends AbstractController{
         $this->manager = new UserManager();
     }
     
-
     public function register(): void
     {
         if (isset($_POST["register-form"]) && $_POST["register-form"] === "register") 
@@ -113,7 +112,7 @@ class AuthController extends AbstractController{
         } 
         else 
         {
-            $errors[] = "Il faut remplir toutes les cases du formulaire";
+            $errors[] = "";
         }
     
         // Render the view with errors array
