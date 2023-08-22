@@ -1,0 +1,56 @@
+<main id="product-user">  
+    <h2>Modifier un utilisateur</h2>
+    <form action="index.php?route=admin_product_edit&id=<?= $_GET['id'] ?>" method="post">
+        <p class="form-errors">
+            <?php
+                if(isset($data['errors']))
+                    echo $data["errors"][0];
+            ?>
+        </p>
+        <fieldset>
+            <label for="product-name">
+                Nom du produit
+            </label>
+            <input type="text" name="product-name" id="product-name"/>
+        </fieldset>
+        <fieldset>
+            <label for="product-price">
+                Prix
+            </label>
+            <input type="number" name="product-price" id="product-price"/>
+        </fieldset>
+        <fieldset>
+            <label for="product-description">
+                Description
+            </label>
+            <input type="textarea" name="product-description" id="product-description"/>
+        </fieldset>
+        <fieldset>
+            <label for="product-quantity">
+                Quantité
+            </label>
+            <input type="number" name="product-quantity" id="product-quantity"/>
+        </fieldset>
+        <fieldset>
+            <label for="product-categoryId">
+                 Choisir la/les catégorie.s
+            </label>
+            <select name="product-categoryId" id="product-categoryId">
+                <option value="1">User</option>
+                <option value="2">Admin</option>
+            </select>
+        </fieldset>
+        <fieldset>
+            <label for="product-mediaId">
+                 Ajouter des médias 
+            </label>
+            <input type="text" name="product-mediaId" id="product-mediaId" placeholder="Chemin/de/l'image">
+        </fieldset>
+        <fieldset>
+            <button type="submit">
+                Modifier le produit
+            </button>
+        </fieldset>
+         <input type="hidden" name="product-form" value="product"/>
+    </form>
+</main> 

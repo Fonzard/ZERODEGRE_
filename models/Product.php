@@ -17,7 +17,7 @@ class Product {
         $this->categoryId = $categoryId;
         $this->mediaId = $mediaId;
     }
-    
+
     ////////////  Getters ////////////
     public function getId(): ?int 
     {
@@ -84,7 +84,6 @@ class Product {
     {
         $this->categoryId = $categoryId;
     }
-    
     public function setMediaId(Media $mediaId) : void
     {
         $this->mediaId = $mediaId;
