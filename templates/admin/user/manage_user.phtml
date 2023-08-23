@@ -1,4 +1,4 @@
-<section id="manage-admin">
+<section id="manage">
     <h2>Gestion des Utilisateurs</h2>
     <p class="message">
         <?php
@@ -35,7 +35,11 @@
                     <td><?= htmlspecialchars($user->getFirstName()); ?></td>
                     <td><?= htmlspecialchars($user->getLastName()); ?></td>
                     <td><?= htmlspecialchars($user->getEmail()); ?></td>
-                    <td><?= htmlspecialchars($user->getRoleId()); ?></td>
+                    <?php if($user->getRoleId() === 2) : ?>
+                    <td>Admin</td>
+                    <?php else : ?>
+                    <td>User</td>
+                    <?php endif; ?>
                     <td>
                         <a href="/ZERODEGRE_/admin/user/edit&id=<?= htmlspecialchars($user->getId()); ?>" class="edit-user-btn">Modifier</a>
                         <a class="open-modal" data-user-id="<?= htmlspecialchars($user->getId()); ?>">Supprimer</a>

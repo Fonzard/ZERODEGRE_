@@ -93,11 +93,7 @@ class UserManager extends AbstractManager {
     public function getUserRoleName($roleId) 
     {
         
-        $query = "
-                SELECT roles.name
-                FROM roles
-                WHERE roles.id = :roleId
-                ";
+        $query = "SELECT roles.name FROM roles WHERE roles.id = :roleId";
         $parameters = array(':roleId' => $roleId);
         
         $result = $this->getQuery($query, $parameters, true);
