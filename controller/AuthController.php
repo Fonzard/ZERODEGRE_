@@ -94,10 +94,12 @@ class AuthController extends AbstractController{
                 {
                     //Log the user    
                     $_SESSION["user"] = $user->getId();
-                    $_SESSION["role"] = $user->getRoleId();
-                    var_dump($_SESSION["role"]);
-                    if(isset($_SESSION) && $_SESSION["role"] === 2)
+                    $roleName = $this->manager->getUserRoleName($user->getRoleId());
+                    $_SESSION["role"] = $roleName['name'];
+                    
+                    if(isset($_SESSION) && $_SESSION["role"] === "Admin")
                     {
+                        echo ("weshhhhhh");
                         header("location: /ZERODEGRE_/admin/user");
                     } else {
                         $this->render("partials/homepage", [

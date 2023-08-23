@@ -89,5 +89,24 @@ class UserManager extends AbstractManager {
         
         $this->getQuery($query, $parameters);
     }
+    //A tester
+    public function getUserRoleName($roleId) 
+    {
+        
+        $query = "
+                SELECT roles.name
+                FROM roles
+                WHERE roles.id = :roleId
+                ";
+        $parameters = array(':roleId' => $roleId);
+        
+        $result = $this->getQuery($query, $parameters, true);
+        if ($result)
+        {
+            return $result;
+        } else {
+            return null;
+        }
+    }
 } 
 ?>

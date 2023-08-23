@@ -45,9 +45,8 @@ class Router {
             {
                 $routeAndParams["route"] = "logout";  
                 
-            } else if (isset($_SESSION["role"]) && $_SESSION["role"] === 2) 
+            } else if (isset($_SESSION["role"]) && $_SESSION["role"] === "Admin") 
             { 
-                // isset($_SESSION["role"]) && $_SESSION["role"] === "2"
                 if ($tab[1] === "user" && !isset($tab[2])) 
                 {
                     $routeAndParams["route"] = "admin/user";
@@ -113,7 +112,7 @@ class Router {
             } else if ($routeAndParams["route"] === "logout") 
             {
                 $this->authController->logout();
-            } else if (isset($_SESSION["role"]) && $_SESSION["role"] === 2) 
+            } else if (isset($_SESSION["role"]) && $_SESSION["role"] === "Admin") 
             {
                 // ADMIN / USER \\
                 if ($routeAndParams["route"] === "admin/user") 
