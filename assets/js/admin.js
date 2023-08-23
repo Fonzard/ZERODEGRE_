@@ -40,25 +40,24 @@ window.addEventListener('click', event => {
 document.getElementById("confirm-delete").addEventListener("click", function(){
     
     //Pourquoi a nouveau getAttribute data-user-id ????
-    const productId = confirmBtn.getAttribute('data-user-id');
     modal.style.display = 'none';
-    console.log("ID envoyé depuis JavaScript :", productId);
+    console.log("ID envoyé depuis JavaScript :", productIdToDelete);
     const requestData = {
-        userId : productIdToDelete 
+        productIdToDelete : productIdToDelete 
     };
 
-    fetch(`index.php?route=admin_product_delete&id=${productId}`, {
+    fetch(`index.php?route=admin_product_delete&id=${productIdToDelete}`, {
         method: "GET", 
     })
     .then(response => response.json()) // Converti la réponse en Objet JSON
     .then((data) => {
 
-        userTableBody.innerHTML = ''; // Vide le contenu actuel du tableau
+        productTableBody.innerHTML = ''; // Vide le contenu actuel du tableau
         console.log(data);
             
         //Remplir le tableau avec les nouvelles données des users
         data.forEach(product => {
-            console.log(user);
+            console.log(product);
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${product.id}</td>
@@ -73,7 +72,7 @@ document.getElementById("confirm-delete").addEventListener("click", function(){
                     <a class="open-modal" data-user-id="${product.id}">Supprimer</a>
                 </td>
             `;
-            userTableBody.appendChild(row);
+            productTableBody.appendChild(row);
         })
     })  
 })

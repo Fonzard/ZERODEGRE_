@@ -2,7 +2,7 @@
 session_start();
 
 require "config/autoload.php";
-var_dump($_SESSION['role']);
+
 $router = new Router();  
   
 if(isset($_GET["path"]))  
