@@ -102,15 +102,17 @@ class AdminController extends AbstractController{
                 $_SESSION['message'] = "L'utilisateur a bien été modifié";
                 header("Location: /ZERODEGRE_/index.php?route=admin_user");
 
-               
-
             } else {
-                $this->render("admin/user/edit", [
-                    "errors" => $errors
-                ]);
+                 $this->render("admin/user/edit", [
+                     "errors" => $errors
+                     ]);
             }
-        } 
+            
+        } else {
+                $this->render("admin/user/edit", []);
+        }
     }
+    
     public function managePost()
     {
         $posts = $this->postManager->getAllPosts();

@@ -13,9 +13,9 @@ class AuthController extends AbstractController{
     {
         if (isset($_POST["register-form"]) && $_POST["register-form"] === "register") 
         {
-            $email = $this->clean($_POST["edit-email"]);
-            $firstName = $this->clean($_POST["edit-firstName"]);
-            $lastName = $this->clean($_POST["edit-lastName"]);
+            $email = $this->clean($_POST["register-email"]);
+            $firstName = $this->clean($_POST["register-firstName"]);
+            $lastName = $this->clean($_POST["register-lastName"]);
             $password = $_POST["register-password"];
             $confirmPassword = $_POST["register-confirm-password"];
             $roleId = "1"; 
@@ -51,7 +51,7 @@ class AuthController extends AbstractController{
             
             //Merge the two error arrays
             $errors = array_merge($errors, $passwordErrors);
-            
+
             if (!$errors) {
                 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
                 
