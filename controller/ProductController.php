@@ -32,7 +32,7 @@ class ProductController extends AbstractController{
             $this->pm->create($product);
             
             //Peut être changer la route 
-            header("location: /ZERODEGRE_/index.php?route=admin_product");
+            header("location: /ZERODEGRE_/admin/product");
             $_SESSION['message'] = "Le produit". $name ." a bien été créé";
         } 
     }
@@ -67,7 +67,7 @@ class ProductController extends AbstractController{
             
            
             $_SESSION['message'] = "Le produit ". $name ." a bien été modifié";
-            header("Location: /ZERODEGRE_/index.php?route=admin_product");
+            header("Location: /ZERODEGRE_/admin/product");
                 
         } 
     }

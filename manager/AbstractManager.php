@@ -115,13 +115,13 @@ abstract class AbstractManager {
             if ($isSingleResult)
             {
                 return $resultInstance; //Si on traite le résultat seul, le return direct
-                var_dump($resultInstance);
+                // var_dump($resultInstance);
             }
             
             $resultsTab[] = $resultInstance;
         }
         
-        var_dump($resultsTab);
+        // var_dump($resultsTab);
         return $resultsTab;
     }
 

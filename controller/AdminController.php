@@ -100,7 +100,7 @@ class AdminController extends AbstractController{
                 
                 // Redirect to the manage user
                 $_SESSION['message'] = "L'utilisateur a bien été modifié";
-                header("Location: /ZERODEGRE_/index.php?route=admin_user");
+                header("Location: /ZERODEGRE_/admin/user");
 
             } else {
                  $this->render("admin/user/edit", [
@@ -122,7 +122,6 @@ class AdminController extends AbstractController{
     public function manageProduct()
     {
         $products = $this->productManager->getAllProducts();
-        var_dump($products);
         $this->render("admin/product/manage_product", ["products" => $products]);
     }
     
@@ -144,7 +143,7 @@ class AdminController extends AbstractController{
         if ($errorCode === 403)
         {
             $this->render("error/403", []);
-        }elseif ($errorCode === 404) {
+        } elseif ($errorCode === 404) {
             $this->render("error/404", []);
         }
     }

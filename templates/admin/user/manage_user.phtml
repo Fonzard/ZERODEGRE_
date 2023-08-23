@@ -37,7 +37,7 @@
                     <td><?= htmlspecialchars($user->getEmail()); ?></td>
                     <td><?= htmlspecialchars($user->getRoleId()); ?></td>
                     <td>
-                        <a href="index.php?route=admin_user_edit&id=<?= htmlspecialchars($user->getId()); ?>" class="edit-user-btn">Modifier</a>
+                        <a href="/ZERODEGRE_/admin/user/edit&id=<?= htmlspecialchars($user->getId()); ?>" class="edit-user-btn">Modifier</a>
                         <a class="open-modal" data-user-id="<?= htmlspecialchars($user->getId()); ?>">Supprimer</a>
                     </td>
                 </tr>
@@ -47,6 +47,6 @@
     
     <a href="#">Ajouter un utilisateur</a>
     
-    <a href="index.php?route=homepage">Retour à l'accueil</a>
+    <a href="/ZERODEGRE_/homepage">Retour à l'accueil</a>
 </section>
     <script type="text/javascript" src="./assets/js/index.js"></script>

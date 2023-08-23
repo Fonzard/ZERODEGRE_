@@ -1,6 +1,6 @@
 <main id="edit-product">  
     <h2>Modifier un produit</h2>
-    <form action="index.php?route=admin_product_edit&id=<?= $_GET['id'] ?>" method="post">
+    <form action="/ZERODEGRE_/admin/product/edit&id=<?= $_GET['id'] ?>" method="post">
         <p class="form-errors">
             <?php
                 if(isset($data['message']))
@@ -56,3 +56,4 @@
          <input type="hidden" name="product-edit-form" value="submit"/>
     </form>
 </main> 
+

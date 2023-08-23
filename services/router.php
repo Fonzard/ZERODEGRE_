@@ -22,77 +22,128 @@ class Router {
         $this->postController = new PostController();
         $this->productController = new ProductController();
     }
+    private function splitRouteAndParameters(string $route) : array  
+    {  
+        $routeAndParams = [];  
+        $routeAndParams["route"] = null;  
+        $routeAndParams["userId"] = null;  
+        $routeAndParams["productId"] = null;  
+      
+        if(strlen($route) > 0) // si la chaine de la route n'est pas vide (donc si ça n'est pas la home)  
+        {  
+            $tab = explode("/", $route);  
+      
+            if($tab[0] === "register") 
+            {  
+                $routeAndParams["route"] = "register";
+                 
+            }  else if($tab[0] === "login")
+            {
+                $routeAndParams["route"] = "login";  
+                
+            } else if($tab[0] === "logout")
+            {
+                $routeAndParams["route"] = "logout";  
+                
+            } else if (isset($_SESSION["role"]) && $_SESSION["role"] === 2) 
+            { 
+                // isset($_SESSION["role"]) && $_SESSION["role"] === "2"
+                if ($tab[1] === "user" && !isset($tab[2])) 
+                {
+                    $routeAndParams["route"] = "admin/user";
+                    
+                } elseif ($tab[1] === "user" && $tab[2] === "edit" && isset($_GET["id"])) 
+                {
+                    $routeAndParams["route"] = "admin/user/edit";
+                    $routeAndParams["userId"] = $_GET["id"];
+                    
+                } elseif ($tab[1] === "user" && $tab[2] === "delete" && isset($_GET["id"])) 
+                {
+                    $routeAndParams["route"] = "admin/user/delete";
+                    $routeAndParams["userId"] = $_GET["id"];
+                    
+                } elseif ($tab[1] === "product" && !isset($tab[2])) 
+                {
+                    $routeAndParams["route"] = "admin/product";
+                    
+                } elseif ($tab[1] === "product" && $tab[2] === "create") 
+                {
+                    $routeAndParams["route"] = "admin/product/create";
+                    
+                } elseif ($tab[1] === "product" && $tab[2] === "edit" && isset($_GET['id'])) 
+                {
+                    $routeAndParams["route"] = "admin/product/edit";
+                    $routeAndParams["productId"] = $_GET["id"];
+                    
+                } elseif ($tab[1] === "product" && $tab[2] === "delete" && isset($_GET["id"])) 
+                {
+                    $routeAndParams["route"] = "admin/user/delete";
+                    $routeAndParams["productId"] = $_GET["id"];
+                    
+                }
+            }
+        }  
+        else  
+        {  
+            $routeAndParams["route"] = "";  
+        }  
+      
+        return $routeAndParams;  
+    }
     
     public function checkRoute() : void
     {
-        
-        if(isset($_GET["route"])) 
+        if (isset($_GET["path"])) 
         {
+            $routeAndParams = $this->splitRouteAndParameters($_GET["path"]);
             
-                // ADMIN / Ajouter Contrôle d'accès ADMIN
-                if($_GET["route"] === "admin_user")
+            if(empty($routeAndParams["route"]))
+            {
+                $this->homeController->index();
+            }
+            if ($routeAndParams["route"] === "homepage") 
+            {
+                $this->homeController->index();
+            } else if ($routeAndParams["route"] === "register") 
+            {
+                $this->authController->register();
+            } else if ($routeAndParams["route"] === "login") 
+            {
+                $this->authController->login();
+            } else if ($routeAndParams["route"] === "logout") 
+            {
+                $this->authController->logout();
+            } else if (isset($_SESSION["role"]) && $_SESSION["role"] === 2) 
+            {
+                // ADMIN / USER \\
+                if ($routeAndParams["route"] === "admin/user") 
                 {
                     $this->adminController->manageUser();
-                }
-
-                if ($_GET["route"] === "admin_user_delete" && isset($_GET['id']))
+                } elseif ($routeAndParams["route"] === "admin/user/edit" && isset($_GET["id"])) 
                 {
-                    $this->adminController->deleteUser($_GET['id']);
-                }
-                if($_GET["route"] === "admin_user_edit" && isset($_GET['id']))
+                    $this->adminController->editUser($_GET['id']);
+                } elseif ($routeAndParams["route"] === "admin/user/delete" && isset($_GET["id"])) 
                 {
                     $this->adminController->editUser($_GET['id']);
                 }
-                if($_GET["route"] === "admin_product")
+                // ADMIN / PRODUCT \\
+                elseif ($routeAndParams["route"] === "admin/product") 
                 {
                     $this->adminController->manageProduct();
-                }
-                if($_GET["route"] === "admin_product_create")
+                } elseif ($routeAndParams["route"] === "admin/product/create") 
                 {
-                    $this->categoryController->manageCategoryProduct();
+                    $this->categoryController->manageCategoryProduct(true);
                     $this->productController->createProduct();
-                }
-                if($_GET["route"] === "admin_product_edit" && isset($_GET["id"]))
+                } elseif ($routeAndParams["route"] === "admin/product/edit" && isset($_GET['id'])) 
                 {
-                    $this->categoryController->manageCategoryProduct();
+                    $this->categoryController->manageCategoryProduct(false);
                     $this->productController->editProduct($_GET['id']);
                 }
-                
-                if($_GET["route"] === "homepage")
-                {
-                    $this->homeController->index();
-                }
-                if($_GET["route"] === "register")
-                {
-                    $this->authController->register();
-                }
-                if($_GET["route"] === "login")
-                {
-                    $this->authController->login();
-                }
-                if($_GET["route"] === "logout")
-                {
-                    $this->authController->logout();
-                }
-                // if($_GET["route"] === "post")
-                // {
-                //     $this->postController->index();
-                //     $routeFound = true;
-                // }
-                // if($_GET["route"] === "post/show")
-                // {
-                //     $this->postController->showPost($_GET);
-                //     $routeFound = true;
-                // }
-                
-                //ERREUR
-                if($_GET["route"] === "403")
-                {
-                    $this->adminController->manageError(403);
-                }
-        } else {
-            $this->homeController->index();
+            }
         }
     }
+    
+    
+    
 }
 ?>

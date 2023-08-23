@@ -94,11 +94,16 @@ class AuthController extends AbstractController{
                 {
                     //Log the user    
                     $_SESSION["user"] = $user->getId();
-    
-                    //Redirect to homepage
-                    $this->render("partials/homepage", [
+                    $_SESSION["role"] = $user->getRoleId();
+                    var_dump($_SESSION["role"]);
+                    if(isset($_SESSION) && $_SESSION["role"] === 2)
+                    {
+                        header("location: /ZERODEGRE_/admin/user");
+                    } else {
+                        $this->render("partials/homepage", [
                         "message" => ["Vous êtes bien connecté"]
                     ]);
+                    }
                 } 
                 else 
                 {
@@ -126,7 +131,7 @@ class AuthController extends AbstractController{
     {
         //Se renseigner sur le fonctionnement 
         session_destroy();
-        header("location: index.php?route=homepage");
+        header("location:/ZERODEGRE_/homepage");
         // $this->render("partials/homepage", [
         //     "logoutSuccess" => ["Vous êtes bien deconnecté"
         //             ]

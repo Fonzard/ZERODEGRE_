@@ -1,9 +1,9 @@
 <main id="login">   
     <h2>Connexion</h2>
-    <form action="index.php?route=login" method="post">
+    <form action="login" method="post">
         <p class="form-errors">
             <?php
-                if(isset($data['errors'])) {
+                if(!empty($data['errors'])) {
                      echo $data["errors"][0];
                 }
             ?>
@@ -29,6 +29,6 @@
             </button>
         </fieldset>
         <input type="hidden" name="login-form" id="login-form" value="login"/>
-        <a href="index.php?route=register">Inscription</a>
+        <a href="register">Inscription</a>
     </form> 
 </main> 

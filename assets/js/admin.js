@@ -4,16 +4,16 @@ const openModalLinks = document.querySelectorAll('.open-modal');
 const closeModalButtons = document.querySelectorAll('.modal, .modal #cancel-delete');
 const modal = document.getElementById('deleteModal');
 const confirmBtn = document.getElementById('confirm-delete');
-const userTableBody = document.getElementById("userTableBody");
+const productTableBody = document.getElementById("tableBody");
 
-let userIdToDelete;
+let productIdToDelete;
 // Fonction pour ouvrir la fenêtre modale
 function openModal(event) {
-    userIdToDelete = event.target.getAttribute('data-user-id');
+    productIdToDelete = event.target.getAttribute('data-user-id');
     modal.style.display = 'block';
 
     // Définir l'URL de confirmation de suppression avec l'ID de l'utilisateur
-    confirmBtn.setAttribute('data-user-id', userIdToDelete);
+    confirmBtn.setAttribute('data-user-id', productIdToDelete);
 } 
 
 // Fonction pour fermer la fenêtre modale
@@ -39,14 +39,15 @@ window.addEventListener('click', event => {
 
 document.getElementById("confirm-delete").addEventListener("click", function(){
     
-    const userId = confirmBtn.getAttribute('data-user-id');
+    //Pourquoi a nouveau getAttribute data-user-id ????
+    const productId = confirmBtn.getAttribute('data-user-id');
     modal.style.display = 'none';
-    console.log("ID envoyé depuis JavaScript :", userId);
+    console.log("ID envoyé depuis JavaScript :", productId);
     const requestData = {
-        userId : userIdToDelete 
+        userId : productIdToDelete 
     };
 
-    fetch(`/ZERODEGRE_/admin/user/delete?id=${userId}`, {
+    fetch(`index.php?route=admin_product_delete&id=${productId}`, {
         method: "GET", 
     })
     .then(response => response.json()) // Converti la réponse en Objet JSON
@@ -56,18 +57,20 @@ document.getElementById("confirm-delete").addEventListener("click", function(){
         console.log(data);
             
         //Remplir le tableau avec les nouvelles données des users
-        data.forEach(user => {
+        data.forEach(product => {
             console.log(user);
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${user.id}</td>
-                <td>${user.firstName}</td>
-                <td>${user.lastName}</td>
-                <td>${user.email}</td>
-                <td>${user.roleId}</td>
+                <td>${product.id}</td>
+                <td>${product.name}</td>
+                <td>${product.price}</td>
+                <td>${product.description}</td>
+                <td>${product.quantity}</td>
+                <td>${product.categoryId}</td>
+                <td>${product.mediaId}</td>
                 <td>
-                    <a href="/ZERODEGRE_/admin/user/edit?id=${user.id}" class="edit-user-btn">Modifier</a>
-                    <a class="open-modal" data-user-id="${user.id}">Supprimer</a>
+                    <a href="index.php?route=admin_product_edit&id=${product.id}" class="edit-btn">Modifier</a>
+                    <a class="open-modal" data-user-id="${product.id}">Supprimer</a>
                 </td>
             `;
             userTableBody.appendChild(row);

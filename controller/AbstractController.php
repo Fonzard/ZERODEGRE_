@@ -11,8 +11,8 @@ abstract class AbstractController {
     
     protected function clean(string $string)
     {
-        $clear = htmlspecialchars($string);
-        return $clear;
+        $clearCode = htmlspecialchars($string);
+        return $clearCode;
     }
     
     protected function validatePassword($password): array
@@ -45,25 +45,25 @@ abstract class AbstractController {
     
     
     //Je ne suis pas du tout sur de cette function 
-    protected function viewUserInfo($userId)
-    {
-        // Vérifier si l'utilisateur est connecté
-        if (!isset($_SESSION["user"])) {
-            // Rediriger l'utilisateur vers une page de connexion ou afficher un message d'erreur
-            header("location: index.php?route=homepage");
-        }
+    // protected function viewUserInfo($userId)
+    // {
+    //     // Vérifier si l'utilisateur est connecté
+    //     if (!isset($_SESSION["user"])) {
+    //         // Rediriger l'utilisateur vers une page de connexion ou afficher un message d'erreur
+    //         header("location: index.php?route=homepage");
+    //     }
     
-        // Vérifier si l'utilisateur connecté est le même que celui dont les informations sont demandées
-        if ($_SESSION["user"] !== $userId) {
-            // Rediriger l'utilisateur vers une page d'accès interdit ou afficher un message d'erreur
-            header("location: index.php?route=403");
+    //     // Vérifier si l'utilisateur connecté est le même que celui dont les informations sont demandées
+    //     if ($_SESSION["user"] !== $userId) {
+    //         // Rediriger l'utilisateur vers une page d'accès interdit ou afficher un message d'erreur
+    //         header("location: index.php?route=403");
             
-        }
+    //     }
     
-        // Si toutes les vérifications sont passées, afficher les informations de l'utilisateur
-        // A vérifier 
-        header("location: index.php?route=homepage");
-    }
+    //     // Si toutes les vérifications sont passées, afficher les informations de l'utilisateur
+    //     // A vérifier 
+    //     header("location: index.php?route=homepage");
+    // }
 
 }
 ?>

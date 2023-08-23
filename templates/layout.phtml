@@ -8,19 +8,23 @@
 <body>
     
     <?php 
-        // if($template !== "auth/login" && $template !== "auth/register")
-        // {
+        if(isset($_SESSION["role"]) && $_SESSION["role"] === 2)
+        {
+            require 'templates/admin/partials/_header.phtml';
+        } else {
             require 'templates/partials/_header.phtml';
-        // }
+        }
     ?>
     <?php require "templates/$template.phtml"; ?>
     
     <?php 
-    if($template !== "auth/login" && $template !== "auth/register")
-    {
-        require 'partials/_footer.phtml';
-    }
+        // if(isset($_SESSION["role"]) && $_SESSION["role"] === 2)
+        // {
+           
+        // } else {
+            require 'partials/_footer.phtml';
+        // }
         ?>
-    <script type="text/javascript" src="./assets/js/index.js"></script>
+    <!--<script type="text/javascript" src="./assets/js/index.js"></script>-->
 </body>
 </html>

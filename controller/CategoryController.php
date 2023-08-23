@@ -12,12 +12,11 @@ class CategoryController extends AbstractController{
     public function manageCategoryProduct()
     {
         $categories = $this->cm->getAllCategoriesProducts();
-        
-        if($_GET["route"] === "admin_product_create")
+        if(true)
         {
             $this->render("admin/product/create", ["categories" => $categories]);   
         }
-        if($_GET["route"] === "admin_product_edit" && isset($_GET["id"]))
+        else
         {
             $this->render("admin/product/edit", ["categories" => $categories]);   
         }

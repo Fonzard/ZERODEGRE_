@@ -1,65 +1,28 @@
-/ HomeController:index
+Page d'accueil :
 
-auth/register AuthController:register
-auth/login  AuthController:login
-auth/logout AuthController:logout
+/
 
-/shop   ProductController:index
-/shop/:product-id ??? ProductController:showProduct
+Route pour l'authentification :
 
-/post PostController:index
-/post/:post-id PostController:showPost
+/register
 
-/song SongController:index
-/song/:song-id SongController:song
-Réfléchir à une fonction son individuel ??
+/login
 
-/artist/ ArtistController:index
-/artist/:artist-id ArtistController:artist
+/logout
 
-/category CategoryController:index ??? Ne sers que pour le header et le footer
+ADMIN 
 
-Private : 
+/admin
 
-/admin  AdminController:index  === dashboard
+Route pour admin user :
 
+/admin/user
+/admin/user/edit?id
+/admin/user/delete?id
 
-/admin/post AdminController:post
-/admin/post-add PostController:add
-/admin/:post-id/edit PostController:edit
-/admin/:post-id/delete PostController:delete
-/admin/post-manage-category 
-/admin/post-manage-media 
+Route pour admin product :
 
-/admin/album AlbumController:song
-/admin/album-add AlbumController:add
-/admin/:album-id/edit AlbumController:edit ???? Utile ??
-/admin/:album-id/delete AlbumController:delete
-/admin/album-manage-media 
-
-
-/admin/artist AdminController:artist
-/admin/artist-add ArtistController:add
-/admin/:artist-id/edit ArtistController:edit
-/admin/:artist-id/delete ArtistController:delete
-/admin/artist-manage-media 
-
-            Je ne suis pas sur de les utiliser / Je n'ai pas créé de templates
-                        /admin/user AdminController:user
-                        /admin/user-add UserController:add
-                        /admin/user/edit&id= AdminController:editUSer
-                        /admin/:user-id/delete AdminController:deleteUser
-
-/admin/product AdminController:product
-/admin/product-add ProductController:add
-/admin/:product-id/edit ProductController:edit
-/admin/:product-id/delete ProductController:delete
-/admin/product-manage-category 
-/admin/product-manage-media 
-
-                        /admin/:product-id/out-of-stock ProductController:??? Est ce utile ??
-
-                        /admin/media AdminController:media
-                        /admin/media-add MediaController:add
-                        /admin/:media-id/edit MediaController:edit
-                        /admin/:media-id/delete MediaController:delete
+/admin/product
+/admin/product/create
+/admin/product/edit?id
+/admin/product/delete?id
