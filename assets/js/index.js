@@ -46,7 +46,7 @@ document.getElementById("confirm-delete").addEventListener("click", function(){
         userId : userIdToDelete 
     };
 
-    fetch(`/ZERODEGRE_/admin/user/delete?id=${userId}`, {
+    fetch(`/ZERODEGRE_/admin/user/delete&id=${userId}`, {
         method: "GET", 
     })
     .then(response => response.json()) // Converti la réponse en Objet JSON
@@ -66,7 +66,7 @@ document.getElementById("confirm-delete").addEventListener("click", function(){
                 <td>${user.email}</td>
                 <td>${user.roleId}</td>
                 <td>
-                    <a href="/ZERODEGRE_/admin/user/edit?id=${user.id}" class="edit-user-btn">Modifier</a>
+                    <a href="/ZERODEGRE_/admin/user/edit&id=${user.id}" class="edit-user-btn">Modifier</a>
                     <a class="open-modal" data-user-id="${user.id}">Supprimer</a>
                 </td>
             `;

@@ -2,7 +2,6 @@
 
 class CategoryManager extends AbstractManager {
     
-    //A vérifier
     //Générale CategoriesProducts
     public function getAllCategoriesProducts()
     {
@@ -12,6 +11,16 @@ class CategoryManager extends AbstractManager {
         return $results;
     }
     
+    public function getCategoriesName($categoryId) 
+    {
+        
+        $query = "SELECT categories_products.name FROM categories_products WHERE categories_products.id = :categoryId";
+        $parameters = array(':categoryId' => $categoryId);
+        
+        $result = $this->getQuery($query, $parameters, true);
+        return $result;
+
+    }
     
     public function createCategoriesProducts(Category $category)
     {

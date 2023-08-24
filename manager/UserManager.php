@@ -89,7 +89,7 @@ class UserManager extends AbstractManager {
         
         $this->getQuery($query, $parameters);
     }
-    //A tester
+
     public function getUserRoleName($roleId) 
     {
         

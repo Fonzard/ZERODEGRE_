@@ -14,6 +14,7 @@ class AdminController extends AbstractController{
         // $this->albumManager = new AlbumManager();
         $this->categoryManager = new CategoryManager();
         // $this->postManager = new PostManager();
+        $this->mediaManager = new MediaManager();
         $this->productManager = new ProductManager();
         $this->userManager = new UserManager();
     }
@@ -31,9 +32,6 @@ class AdminController extends AbstractController{
     
     public function deleteUser()
     {
-        // if(!$this->isAdmin()){
-            //redirige vers une page d'erreur ou de refus 
-        // }
         if(isset($_GET['id']))
         {
                 $userId = $_GET['id'];
@@ -122,7 +120,22 @@ class AdminController extends AbstractController{
     public function manageProduct()
     {
         $products = $this->productManager->getAllProducts();
-        $this->render("admin/product/manage_product", ["products" => $products]);
+        //Récupère le nom des catégories pour l'afficher
+        $categoriesNames = [];
+        foreach ($products as $product){
+            $categoryId = $product->getCategoryId();
+            $categoryName = $this->categoryManager->getCategoriesName($categoryId);
+            $categoriesNames[] = $categoryName;
+        }
+        
+        //Récupère la description des médias pourl'afficher
+        $mediasNames = [];
+        foreach ($products as $product){
+            $mediaId = $product->getMediaId();
+            $mediaDesc = $this->mediaManager->getMediaDescription($mediaId);
+            $mediasDesc[] = $mediaDesc;
+        }
+        $this->render("admin/product/manage_product", ["products" => $products, "categoriesNames" => $categoriesNames, "mediasDesc" => $mediasDesc]);
     }
     
     public function manageArtist()

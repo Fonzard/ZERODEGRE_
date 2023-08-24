@@ -107,11 +107,10 @@ abstract class AbstractManager {
                 }
               
             }
-    
+           
             // Créer une instance de la classe en utilisant les arguments du constructeur
             $resultInstance = $reflectionClass->newInstanceArgs($constructorArguments);
             $resultInstance->setId($result['id']);
-            
             if ($isSingleResult)
             {
                 return $resultInstance; //Si on traite le résultat seul, le return direct

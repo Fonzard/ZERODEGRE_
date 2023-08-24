@@ -22,7 +22,6 @@ class AuthController extends AbstractController{
             
             $errors = [];
         
-            
             if (strlen($email) >= 50) {
                 $errors[] = "L'email ne doit pas dépasser 50 caractères";
             }

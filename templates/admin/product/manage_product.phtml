@@ -31,18 +31,19 @@
             </tr>
         </thead>
         <tbody id="tableBody">
-    <?php foreach ($data['products'] as $product) : ?>
+    <?php foreach ($data['products'] as $key => $product) : ?>
+       
                 <tr>
                     <td><?= htmlspecialchars($product->getId()); ?></td>
                     <td><?= htmlspecialchars($product->getName()); ?></td>
                     <td><?= htmlspecialchars($product->getPrice()); ?></td>
                     <td><?= htmlspecialchars($product->getDescription()); ?></td>
                     <td><?= htmlspecialchars($product->getQuantity()); ?></td>
-                    <td><?= htmlspecialchars($product->getCategoryId()); ?></td> <!--Faire apparaitre le nom des catégories -->
-                    <td><?= htmlspecialchars($product->getMediaId()); ?></td>   <!--Faire apparaitre le nom des img -->
+                    <td><?= $data['categoriesNames'][$key]['name']  ?></td> 
+                    <td><?= $data['mediasDesc'][$key]['alt_text'] ?></td>   
                     <td>
                         <a href="/ZERODEGRE_/admin/product/edit&id=<?= htmlspecialchars($product->getId()); ?>" class="edit-btn">Modifier</a>
-                        <a class="open-modal" data-user-id="<?= htmlspecialchars($product->getId()); ?>">Supprimer</a>
+                        <a class="open-modal" data-product-id="<?= htmlspecialchars($product->getId()); ?>">Supprimer</a>
                     </td>
                 </tr>
     <?php endforeach; ?>

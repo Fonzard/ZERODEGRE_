@@ -22,6 +22,7 @@ class Router {
         $this->postController = new PostController();
         $this->productController = new ProductController();
     }
+    
     private function splitRouteAndParameters(string $route) : array  
     {  
         $routeAndParams = [];  
@@ -76,7 +77,7 @@ class Router {
                     
                 } elseif ($tab[1] === "product" && $tab[2] === "delete" && isset($_GET["id"])) 
                 {
-                    $routeAndParams["route"] = "admin/user/delete";
+                    $routeAndParams["route"] = "admin/product/delete";
                     $routeAndParams["productId"] = $_GET["id"];
                     
                 }
@@ -123,7 +124,7 @@ class Router {
                     $this->adminController->editUser($_GET['id']);
                 } elseif ($routeAndParams["route"] === "admin/user/delete" && isset($_GET["id"])) 
                 {
-                    $this->adminController->editUser($_GET['id']);
+                    $this->adminController->deleteUser($_GET['id']);
                 }
                 // ADMIN / PRODUCT \\
                 elseif ($routeAndParams["route"] === "admin/product") 
@@ -137,6 +138,9 @@ class Router {
                 {
                     $this->categoryController->manageCategoryProduct(false);
                     $this->productController->editProduct($_GET['id']);
+                } elseif ($routeAndParams["route"] === "admin/product/delete" && isset($_GET['id'])) 
+                {
+                    $this->productController->deleteProduct($_GET['id']);
                 }
             }
         }

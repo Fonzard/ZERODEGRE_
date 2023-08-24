@@ -5,17 +5,17 @@ class Product {
     private float $price;
     private string $description;
     private int $quantity;
-    private int $category_id;
-    private int $media_id;
+    private ?int $category_id;
+    private ?int $media_id;
 
-    public function __construct(string $name, float $price, string $description, int $quantity, int $category_id, int $media_id) {
+    public function __construct(string $name, float $price, string $description, int $quantity, ?int $category_id, ?int $media_id) {
         $this->id = null;
         $this->name = $name;
         $this->price = $price;
         $this->description = $description;
         $this->quantity = $quantity;
-        $this->categoryId = $category_id;
-        $this->mediaId = $media_id;
+        $this->category_id = $category_id;
+        $this->media_id = $media_id;
     }
 
     ////////////  Getters ////////////
@@ -44,14 +44,14 @@ class Product {
         return $this->quantity;
     }
 
-    public function getCategoryId(): int 
+    public function getCategoryId(): ?int 
     {
-        return $this->categoryId;
+        return $this->category_id;
     }
     
-    public function getMediaId(): int 
+    public function getMediaId(): ?int 
     {
-        return $this->mediaId;
+        return $this->media_id;
     }
 
     //////////// Setters ////////////

@@ -3,29 +3,7 @@
 class MediaManager extends AbstractManager {
     
     // A tester 
-    // Products
-    public function getMediaByProductId($productId)
-    {
-        // $class = "Media";
-        //         //REVOIR la requête !!!!!!
-        // $query = ("SELECT p.name AS name, m.url AS url, m.alt_text AS alt_text
-        //         FROM products 
-        //         JOIN medias ON p.mediaId = m.id
-        //         WHERE p.id = :product_id");
-        // $parameters = array(":product_id" => $productId);
-        
-        // $result = $this->getResult($query, $parameters, $class, true);
-        // return $result;
-    }
-    
-    public function getMediaWithProduct($mediaId, $productId)
-    {
-        // $query = ("UPDATE products SET media_id = :media_id WHERE id = :product_id");
-        // $parameters = array("media_id" => $mediaId, "product_id" => $productId);
-        
-        // $this->getQuery($query, $parameters, true);
-    }
-    
+    // PRODUCTS \\
     public function getMediaIdByUrl($url)
     {
         $class = "Media";
@@ -34,6 +12,15 @@ class MediaManager extends AbstractManager {
         
         $result = $this->getResult($query, $parameters, $class, true);
         
+    }
+    
+    public function getMediaDescription($mediaId)
+    {
+        $query = "SELECT medias.alt_text FROM medias WHERE medias.id = :mediaId";
+        $parameters = array("mediaId" => $mediaId);
+        
+        $result = $this->getQuery($query, $parameters, true);
+        return $result;
     }
     
     //Générale 

@@ -9,11 +9,11 @@ const productTableBody = document.getElementById("tableBody");
 let productIdToDelete;
 // Fonction pour ouvrir la fenêtre modale
 function openModal(event) {
-    productIdToDelete = event.target.getAttribute('data-user-id');
+    productIdToDelete = event.target.getAttribute('data-product-id');
     modal.style.display = 'block';
 
     // Définir l'URL de confirmation de suppression avec l'ID de l'utilisateur
-    confirmBtn.setAttribute('data-user-id', productIdToDelete);
+    confirmBtn.setAttribute('data-product-id', productIdToDelete);
 } 
 
 // Fonction pour fermer la fenêtre modale
@@ -39,14 +39,13 @@ window.addEventListener('click', event => {
 
 document.getElementById("confirm-delete").addEventListener("click", function(){
     
-    //Pourquoi a nouveau getAttribute data-user-id ????
     modal.style.display = 'none';
     console.log("ID envoyé depuis JavaScript :", productIdToDelete);
     const requestData = {
         productIdToDelete : productIdToDelete 
     };
 
-    fetch(`index.php?route=admin_product_delete&id=${productIdToDelete}`, {
+    fetch(`/ZERODEGRE_/admin/product/delete&id=${productIdToDelete}`, {
         method: "GET", 
     })
     .then(response => response.json()) // Converti la réponse en Objet JSON
@@ -68,8 +67,8 @@ document.getElementById("confirm-delete").addEventListener("click", function(){
                 <td>${product.categoryId}</td>
                 <td>${product.mediaId}</td>
                 <td>
-                    <a href="index.php?route=admin_product_edit&id=${product.id}" class="edit-btn">Modifier</a>
-                    <a class="open-modal" data-user-id="${product.id}">Supprimer</a>
+                    <a href="/ZERODEGRE_/admin/product/edit&id=${product.id}" class="edit-btn">Modifier</a>
+                    <a class="open-modal" data-product-id="${product.id}">Supprimer</a>
                 </td>
             `;
             productTableBody.appendChild(row);

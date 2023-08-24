@@ -4,11 +4,10 @@ class ProductManager extends AbstractManager {
     
     public function getAllProducts() : array
     {
-
         $class = "Product";
         $query = ("SELECT * FROM products");
         $results = $this->getResult($query, null, $class, false);
-        
+        var_dump($results);
         return $results;
     }
 

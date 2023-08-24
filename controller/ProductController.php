@@ -8,7 +8,7 @@ class ProductController extends AbstractController{
     public function __construct()
     {
         $this->pm = new ProductManager();
-        $this->mm =new MediaManager();
+        $this->mm = new MediaManager();
     }
  
     public function createProduct() : void 
@@ -60,8 +60,10 @@ class ProductController extends AbstractController{
             $product->setPrice($price);
             $product->setDescription($description);
             $product->setQuantity($quantity);
-            $product->setCategoryId($categoryId);
+            $product->setCategoryId($categotyId);
             $product->setMediaId($mediaId);
+            
+            
             
             $this->pm->edit($product);
             
@@ -72,22 +74,16 @@ class ProductController extends AbstractController{
         } 
     }
     
-    public function deleteUser()
+    public function deleteProduct()
     {
-        // if(!$this->isAdmin()){
-            //redirige vers une page d'erreur ou de refus 
-        // }
         if(isset($_GET['id']))
         {
                 $productId = $_GET['id'];
                 $this->pm->delete($productId);
-                
-                // Récuperer la nouvelle liste d'user
                 $newProductList = $this->pm->getAllProducts();
-              
                 echo json_encode($newProductList);
         } else {
-                echo json_encode(array("errors" => "L'utilisateur n'a pas été supprimé"));
+                echo json_encode(array("errors" => "Le produit n'a pas été supprimé"));
         }
     }
     
