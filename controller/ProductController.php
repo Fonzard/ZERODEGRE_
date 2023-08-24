@@ -63,11 +63,8 @@ class ProductController extends AbstractController{
             $product->setCategoryId($categotyId);
             $product->setMediaId($mediaId);
             
-            
-            
             $this->pm->edit($product);
-            
-           
+
             $_SESSION['message'] = "Le produit ". $name ." a bien été modifié";
             header("Location: /ZERODEGRE_/admin/product");
                 
@@ -78,15 +75,78 @@ class ProductController extends AbstractController{
     {
         if(isset($_GET['id']))
         {
-                $productId = $_GET['id'];
-                $this->pm->delete($productId);
-                $newProductList = $this->pm->getAllProducts();
-                echo json_encode($newProductList);
+            $productId = $_GET['id'];
+            $this->pm->delete($productId);
+            $newProductList = $this->pm->getAllProducts();
+            // Ne marche pas, Prendre le temps de trouver la soluce !!!!!!!!
+                if (empty($newProductList)) {
+                    echo json_encode(array("success" => false, "message" => "Aucun produit disponible."));
+                } else {
+                    $responseData = array('success' => true, 'message' => 'Produit supprimé avec succès.', 'products' => $newProductList);
+                    echo json_encode($responseData);
+                }
         } else {
-                echo json_encode(array("errors" => "Le produit n'a pas été supprimé"));
+            echo json_encode(array("success" => false, "message" => "Le produit n'a pas été supprimé."));
         }
     }
     
     
-    
 }
+// 'success' => boolean true
+//   'message' => string 'Produit supprimé avec succès.' (length=31)
+//   'products' => 
+//     array (size=6)
+//       0 => 
+//         object(Product)[32]
+//           private ?int 'id' => int 32
+//           private string 'name' => string 'Casquette de baseball' (length=21)
+//           private ?float 'price' => float 14.99
+//           private string 'description' => string 'Casquette classique pour un style d�contract�.' (length=46)
+//           private int 'quantity' => int 200
+//           private ?int 'category_id' => int 1
+//           private ?int 'media_id' => int 1
+//       1 => 
+//         object(Product)[31]
+//           private ?int 'id' => int 53
+//           private string 'name' => string 'Chemise �l�gante' (length=16)
+//           private ?float 'price' => float 39.99
+//           private string 'description' => string 'Chemise formelle pour des occasions sp�ciales.' (length=46)
+//           private int 'quantity' => int 50
+//           private ?int 'category_id' => int 1
+//           private ?int 'media_id' => int 1
+//       2 => 
+//         object(Product)[38]
+//           private ?int 'id' => int 54
+//           private string 'name' => string 'Chaussures de sport l�g�res' (length=27)
+//           private ?float 'price' => float 59.99
+//           private string 'description' => string 'Chaussures confortables pour le sport et les loisirs.' (length=53)
+//           private int 'quantity' => int 80
+//           private ?int 'category_id' => int 1
+//           private ?int 'media_id' => int 2
+//       3 => 
+//         object(Product)[39]
+//           private ?int 'id' => int 55
+//           private string 'name' => string 'Robe de soir�e' (length=14)
+//           private ?float 'price' => float 79.95
+//           private string 'description' => string 'Robe �l�gante pour les soir�es et les �v�nements.' (length=49)
+//           private int 'quantity' => int 30
+//           private ?int 'category_id' => int 2
+//           private ?int 'media_id' => int 1
+//       4 => 
+//         object(Product)[40]
+//           private ?int 'id' => int 57
+//           private string 'name' => string 'Montre classique' (length=16)
+//           private ?float 'price' => float 129.99
+//           private string 'description' => string 'Montre intemporelle pour un style sophistiqu�.' (length=46)
+//           private int 'quantity' => int 40
+//           private ?int 'category_id' => int 1
+//           private ?int 'media_id' => int 1
+//       5 => 
+//         object(Product)[41]
+//           private ?int 'id' => int 58
+//           private string 'name' => string 'Chemise �l�gante' (length=16)
+//           private ?float 'price' => float 39.99
+//           private string 'description' => string 'Chemise formelle pour des occasions sp�ciales.' (length=46)
+//           private int 'quantity' => int 50
+//           private ?int 'category_id' => int 1
+//           private ?int 'media_id' => int 1

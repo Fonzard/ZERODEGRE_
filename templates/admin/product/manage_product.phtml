@@ -43,7 +43,7 @@
                     <td><?= $data['mediasDesc'][$key]['alt_text'] ?></td>   
                     <td>
                         <a href="/ZERODEGRE_/admin/product/edit&id=<?= htmlspecialchars($product->getId()); ?>" class="edit-btn">Modifier</a>
-                        <a class="open-modal" data-product-id="<?= htmlspecialchars($product->getId()); ?>">Supprimer</a>
+                        <a class="open-modal" data-entity-id="<?= htmlspecialchars($product->getId()); ?>" data-entity-type="product">Supprimer</a>
                     </td>
                 </tr>
     <?php endforeach; ?>
@@ -54,4 +54,4 @@
     
     <a href="/ZERODEGRE_/homepage">Retour à l'accueil</a>
 </section>
-<script type="text/javascript" src="./../assets/js/admin.js"></script>
+<script type="text/javascript" src="./../assets/js/admin_modal.js"></script>

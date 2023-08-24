@@ -7,7 +7,7 @@ class ProductManager extends AbstractManager {
         $class = "Product";
         $query = ("SELECT * FROM products");
         $results = $this->getResult($query, null, $class, false);
-        var_dump($results);
+        // var_dump($results);
         return $results;
     }
 

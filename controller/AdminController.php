@@ -34,15 +34,19 @@ class AdminController extends AbstractController{
     {
         if(isset($_GET['id']))
         {
-                $userId = $_GET['id'];
-                $this->userManager->delete($userId);
-                
-                // Récuperer la nouvelle liste d'user
-                $newUserList = $this->userManager->getAllUsers();
-              
-                echo json_encode($newUserList);
+            $userId = $_GET['id'];
+            $this->userManager->delete($userId);
+            $newUserList = $this->userManager->getAllUsers();
+            
+                    if (empty($newUserList)) {
+                        echo json_encode(array("success" => false, "message" => "Aucun Utilisateur disponible."));
+                    } else {
+                        $responseData = array('success' => true, 'message' => 'Utilisateurs supprimé avec succès.', 'users' => $newUserList);
+                        // var_dump($responseData);
+                        echo json_encode($responseData);
+                    }
         } else {
-                echo json_encode(array("errors" => "L'utilisateur n'a pas été supprimé"));
+                echo json_encode(array("success" => false, "message" => "L'utilisateur n'a pas été supprimé"));
         }
     }
 

@@ -1,14 +1,14 @@
 <?php
-class Product {
+class Product implements JsonSerializable {
     private ?int $id;
     private string $name;
-    private float $price;
+    private ?float $price;
     private string $description;
     private int $quantity;
     private ?int $category_id;
     private ?int $media_id;
 
-    public function __construct(string $name, float $price, string $description, int $quantity, ?int $category_id, ?int $media_id) {
+    public function __construct(string $name, ?float $price, string $description, int $quantity, ?int $category_id, ?int $media_id) {
         $this->id = null;
         $this->name = $name;
         $this->price = $price;
@@ -80,13 +80,27 @@ class Product {
         $this->quantity = $quantity;
     }
 
-    public function setCategoryId(Category $category_id) : void
+    public function setCategoryId(?int $category_id) : void
     {
         $this->category_id = $category_id;
     }
-    public function setMediaId(Media $media_id) : void
+    public function setMediaId(?int $media_id) : void
     {
         $this->media_id = $media_id;
+    }
+    
+    public function jsonSerialize()
+    {
+        $array = [];
+        $array["id"] = $this->id;
+        $array["name"] = $this->name;
+        $array["price"] = $this->price;
+        $array["description"] = $this->description;
+        $array["quantity"] = $this->quantity;
+        $array["category_id"] = $this->category_id;
+        $array["media_id"] = $this->media_id;
+
+        return $array;
     }
 }
 

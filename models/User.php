@@ -5,7 +5,7 @@ class User implements JsonSerializable {
     private string $last_name;
     private string $email;
     private string $password;
-    private ?int $role_id; // Est ce que je dois pas plutôt le déclarer en Roles au lieu de int
+    private ?int $role_id; 
 
     public function __construct(string $first_name, string $last_name, string $email, string $password, ?int $role_id) {
         $this->id = null;

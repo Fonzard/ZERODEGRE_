@@ -7,9 +7,7 @@ class UserManager extends AbstractManager {
         $class = "User";
         $query = ("SELECT * FROM users");
         $parameters = null;
-        
-        $results = $this->getResult($query, $parameters, $class, false);
-        
+        $results = $this->getResult($query, null, $class, false);
         return $results;
     }
     public function getUserByEmail(string $email) : ? User
