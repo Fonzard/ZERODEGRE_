@@ -1,16 +1,15 @@
 <?php
-class Album {
+class Album implements JsonSerializable {
     private ?int $id;
-    private string $title;
+    private string $titre;
     private int $year;
-    private Artist $artistId;
-    private Media $mediaId;
+    private int $media_id;
 
-    public function __construct(string $title, int $year, Media $mediaId) {
+    public function __construct(string $titre, int $year, int $media_id) {
         $this->id = null;
-        $this->title = $title;
+        $this->titre = $title;
         $this->year = $year;
-        $this->mediaId = $mediaId;
+        $this->media_id = $media_id;
     }
 
     ////////////  Getters ////////////
@@ -18,17 +17,17 @@ class Album {
         return $this->id;
     }
 
-    public function getTitle(): string {
-        return $this->title;
+    public function getTitre(): string {
+        return $this->titre;
     }
 
     public function getYear(): int {
         return $this->year;
     }
     
-    public function getMediaId(): Media 
+    public function getMediaId(): int 
     {
-        return $this->mediaId;
+        return $this->media_id;
     }
     //////////// Setters ////////////
     public function setId(?int $id) : void
@@ -36,7 +35,7 @@ class Album {
         $this->id =$id;
     }
     
-    public function setTitle(string $title): void {
+    public function setTitre(string $title): void {
         $this->title = $title;
     }
 
@@ -44,8 +43,19 @@ class Album {
         $this->year = $year;
     }
     
-    public function setMediaId(Media $mediaId): void {
-        $this->mediaId = $mediaId;
+    public function setMediaId(Media $media_id): void {
+        $this->media_id = $media_id;
+    }
+    
+    public function jsonSerialize()
+    {
+        $array = [];
+        $array["id"] = $this->id;
+        $array["titre"] = $this->titre;
+        $array["year"] = $this->year;
+        $array["media_id"] = $this->media_id;
+
+        return $array;
     }
 }
 ?>

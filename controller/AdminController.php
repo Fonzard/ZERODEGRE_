@@ -42,7 +42,7 @@ class AdminController extends AbstractController{
                         echo json_encode(array("success" => false, "message" => "Aucun Utilisateur disponible."));
                     } else {
                         $responseData = array('success' => true, 'message' => 'Utilisateurs supprimé avec succès.', 'users' => $newUserList);
-                        // var_dump($responseData);
+                        var_dump($responseData);
                         echo json_encode($responseData);
                     }
         } else {
