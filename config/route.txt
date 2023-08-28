@@ -14,15 +14,22 @@ ADMIN
 
 /admin
 
-Route pour admin user :
+Route pour admin User :
 
 /admin/user
-/admin/user/edit?id
-/admin/user/delete?id
+/admin/user/edit&id=
+/admin/user/delete&id=
 
-Route pour admin product :
+Route pour admin Product :
 
 /admin/product
 /admin/product/create
-/admin/product/edit?id
-/admin/product/delete?id
+/admin/product/edit&id=
+/admin/product/delete&id=
+
+Route pour admin Album :
+
+/admin/album
+/admin/album/create
+/admin/album/edit&id=
+/admin/album/delete&id=

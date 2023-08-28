@@ -2,12 +2,12 @@
 class Media {
     private ?int $id;
     private string $url;
-    private string $altText;
+    private string $alt_text;
 
-    public function __construct(string $url, string $altText) {
+    public function __construct(string $url, string $alt_text) {
         $this->id = null;
         $this->url = $url;
-        $this->altText = $altText;
+        $this->alt_text = $alt_text;
     }   
 
     //////////// Getters ////////////
@@ -23,7 +23,7 @@ class Media {
     
     public function getAltText(): string 
     {
-        return $this->altText;
+        return $this->alt_text;
     }
 
     //////////// Setters ////////////
@@ -37,9 +37,9 @@ class Media {
         $this->url = $url;
     }
     
-    public function setAltText(string $altText) : void
+    public function setAltText(string $alt_text) : void
     {
-        $this->altText = $altText;
+        $this->alt_text = $alt_text;
     }
 }
 

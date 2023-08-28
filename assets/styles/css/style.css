@@ -18,5 +18,11 @@
   transform: translate(-50%, -50%);
   border-radius: 5px;
 }
+#manage-admin .album-toggle {
+  cursor: pointer;
+}
+#manage-admin .album-dropdown {
+  display: none;
+}
 
 /*# sourceMappingURL=style.css.map */

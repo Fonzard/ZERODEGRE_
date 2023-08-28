@@ -3,13 +3,13 @@ class Artist {
     private ?int $id;
     private string $name;
     private string $description;
-    private Media $mediaId;
+    private ?int $media_id;
     
-    public function __construct(string $name, string $description, Media $mediaId) {
+    public function __construct(string $name, string $description, ?int $media_id) {
         $this->id = null;
         $this->name = $name;
         $this->description = $description;
-        $this->mediaId = $mediaId;
+        $this->media_id = $media_id;
     }
 
     //////////// Getters ////////////
@@ -28,9 +28,9 @@ class Artist {
         return $this->description;
     }
 
-    public function getMediaId(): Media 
+    public function getMediaId(): ?int 
     {
-        return $this->mediaId;
+        return $this->media_id;
     }
     //////////// Setters ////////////
     public function setId(?int $id) : void
@@ -48,9 +48,9 @@ class Artist {
         $this->description = $description;
     }
     
-    public function setMediaId(Media $mediaId) : void
+    public function setMediaId(?int $media_id) : void
     {
-        $this->mediaId = $mediaId;
+        $this->media_id = $media_id;
     }
 }
 ?>

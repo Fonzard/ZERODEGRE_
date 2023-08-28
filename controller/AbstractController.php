@@ -1,6 +1,6 @@
 <?php
 abstract class AbstractController {
-    
+
     protected function render(string $view, array $values) : void
     {
         $template = $view;
@@ -42,27 +42,24 @@ abstract class AbstractController {
         
         return $passwordErrors;
     }
-    
-    
-    //Je ne suis pas du tout sur de cette function 
-    // protected function viewUserInfo($userId)
+    // Voir comment faire appelle au Manager ????
+    // protected function checkEntityExistence($entityId, $entityType) 
     // {
-    //     // Vérifier si l'utilisateur est connecté
-    //     if (!isset($_SESSION["user"])) {
-    //         // Rediriger l'utilisateur vers une page de connexion ou afficher un message d'erreur
-    //         header("location: index.php?route=homepage");
+    //     if ($entityType === 'album') {
+    //         $existingEntity = $albumManager->getAlbumById($entityId);
+    //     } elseif ($entityType === 'product') {
+    //         $existingEntity = $productManager->getProductById($entityId);
+    //     } elseif ($entityType === 'user') {
+    //         $existingEntity = $userManager->getUserById($entityId);
+    //     } else {
+    //         $existingEntity = null;
     //     }
-    
-    //     // Vérifier si l'utilisateur connecté est le même que celui dont les informations sont demandées
-    //     if ($_SESSION["user"] !== $userId) {
-    //         // Rediriger l'utilisateur vers une page d'accès interdit ou afficher un message d'erreur
-    //         header("location: index.php?route=403");
-            
+
+    //     if (!$existingEntity) {
+    //         $_SESSION['message'] = "L'$entityType que vous souhaitez éditer n'existe pas.";
+    //         // A Remplacer par page d'accueil ADMIN
+    //         header("location : /ZERODEGRE_/admin/album");
     //     }
-    
-    //     // Si toutes les vérifications sont passées, afficher les informations de l'utilisateur
-    //     // A vérifier 
-    //     header("location: index.php?route=homepage");
     // }
 
 }

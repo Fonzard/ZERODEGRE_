@@ -21,14 +21,13 @@ class ProductManager extends AbstractManager {
         return $result;
     }
     
-    public function getProductById(int $id) : ?User
+    public function getProductById(int $id)
     {
         $class = "Product";
         $query = "SELECT * FROM products WHERE products.id = :id";
         $parameters = array(":id" => $id);
         
         $result = $this->getResult($query, $parameters, $class, true);
-        var_dump($result);
         return $result;
     }
     

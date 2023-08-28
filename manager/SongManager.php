@@ -12,7 +12,7 @@ class SongManager extends AbstractManager {
     public function getAllSongInAlbum($albumId)
     {
         $class = "Song";
-        $query = "SELECT * FROM song WHERE album.id = :album_id";
+        $query = "SELECT * FROM song WHERE song.album_id = :album_id";
         $parameters = array("album_id" => $albumId);
         $results = $this->getResult($query,$parameters, $class, false);
         return $results;

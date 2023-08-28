@@ -95,3 +95,50 @@ document.getElementById("confirm-delete").addEventListener("click", function(){
         }
     });  
 });
+
+/////////////////// DELETE BTN ALBUM \\\\\\\\\\\\\\\\\\\\\\
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const deleteForm = document.getElementById("deleteForm");
+    const songIdSelect = document.getElementById("songId");
+    const songList = document.getElementById("songIdList");
+    
+    deleteForm.addEventListener("submit", function(event) {
+        event.preventDefault()
+            
+        const selectedSongId = songIdSelect.value;
+        if (!selectedSongId) {
+            return; // Quitter si aucune chanson n'est sélectionnée
+            
+        // Effectuer une requête AJAX vers le serveur pour supprimer la chanson
+        fetch(`/ZERODEGRE_/admin/album/deleteSong?id=${selectedSongId}`, {
+            method: "POST",
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Effacer la liste actuelle de chansons
+            songList.innerHTML = ""
+            // Ajouter les nouvelles chansons à la liste
+            data.forEach(song => {
+                const songItem = document.createElement("li");
+                songItem.textContent = song.title;
+                songList.appendChild(songItem);
+                })
+            // Afficher un message ou effectuer d'autres actions nécessaires
+            alert("Chanson supprimée avec succès !");
+        })
+        .catch(error => {
+            console.error("Erreur lors de la requête AJAX :", error);
+        });
+    });
+});
+
+
+
+/////////////////// DROPDOWN ALBUM \\\\\\\\\\\\\\\\\\\\\\\
+
+function toggleSongs(albumId) {
+    const dropdown = document.querySelector(`.album-dropdown[data-album="${albumId}"]`);
+    dropdown.style.display = (dropdown.style.display === 'none') ? 'block' : 'none';
+}

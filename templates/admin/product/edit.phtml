@@ -1,40 +1,35 @@
 <main id="edit-product">  
     <h2>Modifier un produit</h2>
+    <?php $product = $data['product']; 
+        $media = $data['media'];
+    ?>
+    <p class="message">
+        <?php
+            if(isset($_SESSION['message'])) {
+                echo $_SESSION['message'];
+                unset($_SESSION['message']); 
+            }
+        ?>
+    </p>
     <form action="/ZERODEGRE_/admin/product/edit&id=<?= $_GET['id'] ?>" method="post">
-        <p class="form-errors">
-            <?php
-                if(isset($data['message']))
-                    echo $data["message"][0];
-            ?>
-        </p>
         <fieldset>
-            <label for="product-name">
-                Nom du produit
-            </label>
-            <input type="text" name="product-name" id="product-name"/>
+            <label for="product-name"> Nom du produit</label>
+            <input type="text" name="product-name" id="product-name" value="<?= $product->getName() ?>"/>
         </fieldset>
         <fieldset>
-            <label for="product-price">
-                Prix
-            </label>
-            <input type="number" name="product-price" id="product-price"/>
+            <label for="product-price"> Prix </label>
+            <input type="number" name="product-price" id="product-price" value="<?= $product->getPrice() ?>"/>
         </fieldset>
         <fieldset>
-            <label for="product-description">
-                Description
-            </label>
-            <input type="textarea" name="product-description" id="product-description"/>
+            <label for="product-description"> Description </label>
+            <input type="textarea" name="product-description" id="product-description" value="<?= $product->getDescription() ?>"/>
         </fieldset>
         <fieldset>
-            <label for="product-quantity">
-                Quantité
-            </label>
-            <input type="number" name="product-quantity" id="product-quantity"/>
+            <label for="product-quantity"> Quantité </label>
+            <input type="number" name="product-quantity" id="product-quantity" value="<?= $product->getQuantity() ?>"/>
         </fieldset>
         <fieldset>
-            <label for="product-categoryId">
-                 Choisir la catégorie
-            </label>
+            <label for="product-categoryId"> Choisir la catégorie </label>
             <select name="product-categoryId" id="product-categoryId">
                 <?php foreach($data['categories'] as $category) : ?>
                 <option value="<?=$category->getId()?>"> <?= $category->getName(); ?> </option>
@@ -42,16 +37,12 @@
             </select>
         </fieldset>
         <fieldset>
-            <label for="product-mediaId">
-                 Ajouter des médias 
-            </label>
-            <input type="text" name="product-url" id="product-url" placeholder="Chemin/de/l'image">
-            <input type="text" name="product-altText" id="product-altText" placeholder="Text alternatif"/>
+            <label for="product-mediaId"> Modifier le média </label>
+            <input type="text" name="product-url" id="product-url" value="<?= $media->getUrl() ?>">
+            <input type="text" name="product-altText" id="product-altText" placeholder="Text alternatif" value="<?= $media->getAltText() ?>"/>
         </fieldset>
         <fieldset>
-            <button type="submit">
-                Modifier le produit
-            </button>
+            <button type="submit"> Modifier le produit </button>
         </fieldset>
          <input type="hidden" name="product-edit-form" value="submit"/>
     </form>

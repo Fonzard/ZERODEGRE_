@@ -2,19 +2,28 @@
 
 class MediaManager extends AbstractManager {
     
-    // A tester 
+    public function getMediaById(int $mediaId)
+    {
+        $class = "Media";
+        $query = "SELECT * FROM medias WHERE id = :id";
+        $parameters = array("id" => $mediaId);
+        
+        $result = $this->getResult($query, $parameters, $class, true);
+        return $result;
+    }
     // PRODUCTS \\
-    public function getMediaIdByUrl($url)
+    public function getMediaIdByUrl(string $url)
     {
         $class = "Media";
         $query = ("SELECT id FROM medias WHERE url = :url");
         $parameters = array("url" => $url);
         
         $result = $this->getResult($query, $parameters, $class, true);
+        return $result;
         
     }
     
-    public function getMediaDescription($mediaId)
+    public function getMediaDescription(int $mediaId)
     {
         $query = "SELECT medias.alt_text FROM medias WHERE medias.id = :mediaId";
         $parameters = array("mediaId" => $mediaId);
@@ -24,7 +33,7 @@ class MediaManager extends AbstractManager {
     }
     
     //Générale 
-    public function insertMedia($media)
+    public function insertMedia(Media $media)
     {
         $query =("INSERT INTO medias (url, alt_text) VALUES (:url, :alt_text)");
         $parameters = array(":url" => $media->getUrl(), ":alt_text" => $media->getAltText());
@@ -36,10 +45,4 @@ class MediaManager extends AbstractManager {
         $media->setId($lastInsertId);
         return $media;
     }
-    public function editMedia($mediaId)
-    {
-        
-    }
-    
- 
 }

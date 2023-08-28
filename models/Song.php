@@ -4,9 +4,9 @@ class Song implements JsonSerializable {
     private string $title;
     private string $duration;
     private string $url;
-    private int $albumId;
+    private ?int $album_id;
 
-    public function __construct(string $title, string $duration, string $url, int $albumId) {
+    public function __construct(string $title, string $duration, string $url, ?int $album_id) {
         $this->id = null;
         $this->title = $title;
         $this->duration = $duration;
@@ -35,7 +35,7 @@ class Song implements JsonSerializable {
         return $this->url;
     }
 
-    public function getAlbum_id(): int 
+    public function getAlbumId(): ?int 
     {
         return $this->album_id;
     }
@@ -43,7 +43,7 @@ class Song implements JsonSerializable {
     //////////// Setters ////////////
     public function setId(?int $id) : void
     {
-        $this->id =$id;
+        $this->id = $id;
     }
     
     public function setTitle(string $title): void 
@@ -61,9 +61,9 @@ class Song implements JsonSerializable {
         $this->url = $url;
     }
 
-    public function setAlbumId(int $albumId): void 
+    public function setAlbumId(int $album_id): void 
     {
-        $this->albumId = $albumId;
+        $this->album_id = $album_id;
     }
     
     public function jsonSerialize()
@@ -78,5 +78,4 @@ class Song implements JsonSerializable {
         return $array;
     }
 }
-
 ?>

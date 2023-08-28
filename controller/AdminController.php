@@ -2,20 +2,26 @@
 class AdminController extends AbstractController{
     
     // private ArtistManager $artistManager;
-    // private AlbumManager $albumManager;
+    private AlbumManager $albumManager;
+    private AlbumController $albumController;
     // private PostManager $postManager;
     private CategoryManager $categoryManager;
+    private MediaManager $mediaManager;
     private ProductManager $productManager;
     private UserManager $userManager;
+    private SongManager $songManager;
+    private SongController $songController;
     
     public function __construct()
     {
         // $this->artistManager = new ArtistManager();
-        // $this->albumManager = new AlbumManager();
+        $this->albumManager = new AlbumManager();
+        $this->albumController = new AlbumController();
         $this->categoryManager = new CategoryManager();
         // $this->postManager = new PostManager();
         $this->mediaManager = new MediaManager();
         $this->productManager = new ProductManager();
+        $this->songManager = new SongManager();
         $this->userManager = new UserManager();
     }
     public function index() 
@@ -42,7 +48,7 @@ class AdminController extends AbstractController{
                         echo json_encode(array("success" => false, "message" => "Aucun Utilisateur disponible."));
                     } else {
                         $responseData = array('success' => true, 'message' => 'Utilisateurs supprimé avec succès.', 'users' => $newUserList);
-                        var_dump($responseData);
+                        // var_dump($responseData);
                         echo json_encode($responseData);
                     }
         } else {
@@ -50,7 +56,7 @@ class AdminController extends AbstractController{
         }
     }
 
-    public function editUser()
+    public function editUser($userId)
     {
         if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["edit-form"] === "edit") 
         {
@@ -111,7 +117,8 @@ class AdminController extends AbstractController{
             }
             
         } else {
-                $this->render("admin/user/edit", []);
+            $user = $this->userManager->getUserById($userId);
+            $this->render("admin/user/edit", ["user" => $user]);
         }
     }
     
@@ -150,8 +157,27 @@ class AdminController extends AbstractController{
     
     public function manageAlbum()
     {
-        $albums = $this->albumManager->getAllAlbums();
-        $this->render("admin/album/manage_album", ["albums" => $albums]);
+        $songs = $this->songManager->getAllSong();
+        
+        $albums = $this->albumManager->getAllAlbum();
+        $albumsWithSongs = [];
+        
+        
+        foreach ($albums as $album) {
+            
+            $albumWithSongs = $this->albumController->getAlbumWithSongs($album->getId());
+            if ($albumWithSongs === null) 
+            {
+            // Aucune chanson associée à cet album, gérer l'erreur ici
+                $_SESSIONS['message'] = "Aucune chanson n'est associée à cette album en base de données.";
+                //Est ce utile ??
+                // header("location: /ZERODEGRE_/admin/album");
+            } else {
+                $albumsWithSongs[] = $albumWithSongs;
+            }
+        }
+        
+        $this->render("admin/album/manage_album", ["albumsWithSongs" => $albumsWithSongs, "songs" => $songs, "albums" => $albums]);
     }
     
     //Gestion des pages d'erreurs

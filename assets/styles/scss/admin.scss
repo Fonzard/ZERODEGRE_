@@ -25,5 +25,11 @@
         transform: translate(-50%, -50%);
         border-radius: 5px;
     }
+    .album-toggle {
+        cursor: pointer;
+    }
+    .album-dropdown {
+        display: none;
+    }  
 
 }

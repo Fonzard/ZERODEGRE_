@@ -1,17 +1,27 @@
 <?php
-class SongManager extends AbstractManager {
+class AlbumManager extends AbstractManager {
+ 
  
     public function getAllAlbum() : array
     {
         $class = "Album";
-        $query = ("SELECT * FROM album");
+        $query = "SELECT * FROM album";
         $results = $this->getResult($query, null, $class, false);
         return $results;
     }
     
+    public function getAlbumById($albumId)
+    {
+        $class = "Album";
+        $query = "SELECT * FROM album WHERE id = :id";
+        $parameters = array("id" => $albumId);
+        $result = $this->getResult($query, $parameters, $class, true);
+        return $result;
+    }
+    
     public function add(Album $album) : ?Album
     {
-        $query = "INSERT INTO album(titre, year, media_id) VALUES (:titre, :year, :media_id");
+        $query = "INSERT INTO album(titre, year, media_id) VALUES (:titre, :year, :media_id)";
         $parameters = array("titre" => $album->getTitre(), "year" => $album->getYear(), "media_id" => $album->getMediaId());
         
         $this->getQuery($query, $parameters);

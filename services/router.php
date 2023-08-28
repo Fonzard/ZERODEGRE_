@@ -10,11 +10,11 @@ class Router {
     private MediaController $mediaController;
     private PostController $postController;
     private ProductController $productController;
-    private SongController $songController; // Est utile si je déclare déja albumController ??
     
     public function __construct()
     {   
         $this->adminController = new AdminController();
+        $this->albumController = new AlbumController();
         $this->authController = new AuthController();
         
         $this->categoryController = new CategoryController();
@@ -29,6 +29,7 @@ class Router {
         $routeAndParams["route"] = null;  
         $routeAndParams["userId"] = null;  
         $routeAndParams["productId"] = null;  
+        $routeAndParams["albumId"] = null;
       
         if(strlen($route) > 0) // si la chaine de la route n'est pas vide (donc si ça n'est pas la home)  
         {  
@@ -80,6 +81,31 @@ class Router {
                     $routeAndParams["route"] = "admin/product/delete";
                     $routeAndParams["productId"] = $_GET["id"];
                     
+                } elseif ($tab[1] === "album" && !isset($tab[2])) 
+                {
+                    $routeAndParams["route"] = "admin/album";
+                    
+                } elseif ($tab[1] === "album" && $tab[2] === "add") 
+                {
+                    $routeAndParams["route"] = "admin/album/add";
+                    
+                } elseif ($tab[1] === "album" && $tab[2] === "addSong" && isset($_GET["id"])) 
+                {
+                    $routeAndParams["route"] = "admin/album/addSong";
+                    $routeAndParams["albumId"] = $_GET["id"];
+                    
+                } elseif ($tab[1] === "album" && $tab[2] === "deleteSong" && isset($_GET["id"])) 
+                {
+                    $routeAndParams["route"] = "admin/album/deleteSong";
+                    $routeAndParams["albumId"] = $_GET["id"];
+                } elseif ($tab[1] === "album" && $tab[2] === "edit" && isset($_GET["id"])) 
+                {
+                    $routeAndParams["route"] = "admin/album/edit";
+                    $routeAndParams["albumId"] = $_GET["id"];
+                } elseif ($tab[1] === "album" && $tab[2] === "delete" && isset($_GET["id"])) 
+                {
+                    $routeAndParams["route"] = "admin/album/delete";
+                    $routeAndParams["albumId"] = $_GET["id"];
                 }
             }
         }  
@@ -132,16 +158,41 @@ class Router {
                     $this->adminController->manageProduct();
                 } elseif ($routeAndParams["route"] === "admin/product/create") 
                 {
-                    $this->categoryController->manageCategoryProduct(true);
                     $this->productController->createProduct();
                 } elseif ($routeAndParams["route"] === "admin/product/edit" && isset($_GET['id'])) 
                 {
-                    $this->categoryController->manageCategoryProduct(false);
                     $this->productController->editProduct($_GET['id']);
                 } elseif ($routeAndParams["route"] === "admin/product/delete" && isset($_GET['id'])) 
                 {
                     $this->productController->deleteProduct($_GET['id']);
                 }
+                // ADMIN | ALBUM \\
+                elseif ($routeAndParams["route"] === "admin/album") 
+                {
+                    $this->adminController->manageAlbum();
+                } elseif ($routeAndParams["route"] === "admin/album/add") 
+                {
+                    $this->albumController->addAlbum();   
+                } elseif ($routeAndParams["route"] === "admin/album/addSong" && isset($_GET['id'])) 
+                {
+                    $this->albumController->addSong($_GET['id']);   
+                } elseif ($routeAndParams["route"] === "admin/album/deleteSong" && isset($_POST['id'])) 
+                {
+                    $this->albumController->deleteSong($_POST['id']);
+                } elseif ($routeAndParams["route"] === "admin/album/edit" && isset($_GET['id'])) 
+                {
+                    $this->albumController->editAlbum($_GET['id']);
+                } elseif ($routeAndParams["route"] === "admin/album/delete" && isset($_GET['id'])) 
+                {
+                    $this->albumController->deleteAlbum($_GET['id']);
+                }
+                // ADMIN | MEDIA \\
+                elseif ($routeAndParams["route"] === "admin/media") 
+                {
+                    $this->adminController->manageMedia();
+                }
+                
+                
             }
         }
     }

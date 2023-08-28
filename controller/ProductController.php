@@ -2,11 +2,13 @@
 
 class ProductController extends AbstractController{
 
+    private CategoryManager $cm;
     private ProductManager $pm;
     private MediaManager $mm;
     
     public function __construct()
     {
+        $this->cm = new CategoryManager();
         $this->pm = new ProductManager();
         $this->mm = new MediaManager();
     }
@@ -34,10 +36,13 @@ class ProductController extends AbstractController{
             //Peut être changer la route 
             header("location: /ZERODEGRE_/admin/product");
             $_SESSION['message'] = "Le produit". $name ." a bien été créé";
-        } 
+        } else {
+            $categories = $this->cm->getAllCategoriesProducts();
+            $this->render("admin/product/create", ["categories" => $categories]); 
+        }
     }
     
-    public function editProduct() : void
+    public function editProduct($productId) : void
     {
         
         if (isset($_POST["product-edit-form"]) && $_POST["product-edit-form"] === "submit") 
@@ -67,8 +72,14 @@ class ProductController extends AbstractController{
 
             $_SESSION['message'] = "Le produit ". $name ." a bien été modifié";
             header("Location: /ZERODEGRE_/admin/product");
-                
-        } 
+        } else {
+            $product = $this->pm->getProductById($productId);
+            $mediaId = $product->getMediaId();
+            $media = $this->mm->getMediaById($mediaId);
+            $categories = $this->cm->getAllCategoriesProducts();
+            
+            $this->render("admin/product/edit", ["product" => $product, "media" => $media, "categories" => $categories]);
+        }
     }
     
     public function deleteProduct()
@@ -89,8 +100,6 @@ class ProductController extends AbstractController{
             echo json_encode(array("success" => false, "message" => "Le produit n'a pas été supprimé."));
         }
     }
-    
-    
 }
 // 'success' => boolean true
 //   'message' => string 'Produit supprimé avec succès.' (length=31)
