@@ -123,56 +123,71 @@ class AlbumController extends AbstractController{
             $this->render("admin/album/create_song", ["album" => $album, "albums" => $albums]);
         }
     }
-    
+    //GOOOOOOOOOOOOOOOOOD Album et Média
     public function editAlbum($albumId)
     {
-        if (isset($_POST["album-edit-form"]) && $_POST["album-edit-form"] === "submit") 
+        
+        if (isset($_POST["album-edit-form"]) && $_POST["album-edit-form"] === "edit") 
         {
-            // Récupérer les données du formulaire
+            var_dump($_POST);
             $titre = $this->clean($_POST['albumTitle']);
             $year = $this->clean($_POST['albumYear']);
             $mediaUrl = $this->clean($_POST['albumMediaUrl']);
             $mediaAltText = $this->clean($_POST['albumMediaAltText']);
-            
-            $editedAlbum = new Album($titre, $year);
+            $errors = [];
     
-            // Set the ID of the album
-            $editedAlbum->setId($albumId);
-    
-            if (!$mediaId) {
-                // Create a new Media object
-                $newMedia = new Media($mediaUrl, $mediaAltText);
-                
-                // Add the media to the database
-                $addedMedia = $this->mm->insertMedia($newMedia);
-                
-                if (!$addedMedia) {
-                    // I'm not sure about the rendering :/
-                    $_SESSION['message'] = "Error adding the media.";
-                } else {
-                    // Associate the newly created media with the album
-                    $editedAlbum->setMediaId($addedMedia->getId());
-                }
-            } else {
-                // If the media already exists, associate it directly with the album
-                $editedAlbum->setMediaId($mediaId);
-            }
-            
-            // Update the album in the database
-            $updatedAlbum = $this->am->edit($editedAlbum);
-    
-            if ($updatedAlbum) 
+            if (!isset($titre))
             {
-                $_SESSION['message'] = "L'album a été modifié avec succès!";
-                header("location: /ZERODEGRE_/admin/album");
-            } else {
-                $_SESSION['message'] = "Erreur lors de la modification de l'album.";
+                $errors[] = "Veuillez saisir votre titre.";
             }
+            if (!isset($year))
+            {
+                $errors[] = "Veuillez choisir une date";
+            }
+   
+            if (!$errors) {
+
+                    if (isset($_POST['albumMediaId'])) 
+                    {
+                        $mediaId = $_POST['albumMediaId'];
+                        $media = $this->mm->getMediaById($mediaId);
+                        
+                        $media->setUrl($mediaUrl);
+                        $media->setAltText($mediaAltText);
+                        $this->mm->editMedia($media);
+                        $editedMedia = $this->mm->getMediaById($media->getId());
+
+                    } else {
+                        $media = new Media($mediaUrl, $mediaAltText);
+                        $this->mm->insertMedia($media);
+                        $mediaId = $media->getid();
+                        $editedMedia = $this->mm->getMediaById($mediaId);
+                        
+                    }
+                
+                $album = $this->am->getAlbumById($albumId);
+                
+                $album->setTitre($titre);
+                $album->setYear($year);
+                $album->setMediaId($editedMedia->getId());
+                $this->am->edit($album);
+                
+                // Redirect to the manage album
+                $_SESSION['message'] = "L'album a bien été modifié";
+                header("Location: /ZERODEGRE_/admin/album");
+
+            } else {
+                 $this->render("admin/album/edit", [
+                     "errors" => $errors
+                     ]);
+            }
+            
         } else {
             $album = $this->am->getAlbumById($albumId);
             $songAlbum = $this->sm->getAllSongInAlbum($albumId);
             $mediaId = $album->getMediaId();
             $media = $this->mm->getMediaById($mediaId);
+            var_dump($media);
             $this->render("admin/album/edit", ["album" => $album, "media" => $media, "song" =>$songAlbum]);
         }
     }
@@ -196,24 +211,21 @@ class AlbumController extends AbstractController{
         }
     }
     
-    public function deleteSong($albumId)
+    public function deleteSong()
     {
-        if(isset($_POST["song-delete-form"]) && $_POST["song-delete-form"] === "submit")
+
+        if (isset($_POST["song-delete-form"]) && $_POST["song-delete-form"] === "submit") 
         {
             $songId = $_POST["songIdList"];
+
             $this->sm->delete($songId);
-            $newSongList = $this->sm->getAllSongInAlbum($albumId);
-            
-            // Ne marche pas, Prendre le temps de trouver la soluce !!!!!!!!
-            if (empty($newAlbumList)) {
-                echo json_encode(array("success" => false, "message" => "Aucune musique disponible."));
-            } else {
-                $responseData = array('success' => true, 'message' => 'Musique supprimé avec succès.', 'song' => $newSongList);
-                echo json_encode($responseData);
-            }
-            
+
+            $_SESSION["message"] = "La musique à bien été supprimé";
+
+            header("location : /ZERODEGRE_/admin/album");
         } else {
-            echo json_encode(array("success" => false, "message" => "La musique n'a pas été supprimé."));
+            $_SESSION["message"] = "La musique n'a pas pu être supprimé.";
+            header("location : /ZERODEGRE_/admin/album");
         }
     }
     

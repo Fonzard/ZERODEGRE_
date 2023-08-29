@@ -45,4 +45,12 @@ class MediaManager extends AbstractManager {
         $media->setId($lastInsertId);
         return $media;
     }
+    public function editMedia(Media $media)
+    {
+        var_dump("editMedia");
+        $query ="UPDATE medias SET url = :url, alt_text = :altText WHERE id = :id";
+        $parameters = array("url" => $media->getUrl(), "altText" => $media->getAltText(), "id" => $media->getId());
+        
+        $this->getQuery($query, $parameters);
+    }
 }

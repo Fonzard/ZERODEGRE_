@@ -1,35 +1,33 @@
 <section class="manage-admin">
     <!-- Form for editing an existing album -->
     <h2>Editer un Album</h2>
-    <?php $album = $data['album'];
-        $media = $data['media'];  
+    <p class="form-errors">
+    <?php
+        if(isset($data['errors']))
+            echo $data["errors"][0];
+            
     ?>
-    <p class="message">
-        <?php
-            if(isset($_SESSION['message'])) {
-                echo $_SESSION['message'];
-                unset($_SESSION['message']); // Effacer le message pour qu'il ne s'affiche pas à chaque     rafraîchissement
-            }
-        ?>
     </p>
-    <form action="/ZERODEGRE_/admin/album/edit&=<?= $_GET['id'] ?>" method="post">
+    <form action="/ZERODEGRE_/admin/album/edit&id=<?= $_GET['id'] ?>" method="post">
         <label for="albumTitle">Album Title:</label>
-        <input type="text" id="albumTitle" name="albumTitle" value="<?= $album->getTitre() ?>">
+        <input type="text" id="albumTitle" name="albumTitle" value="<?= $data['album']->getTitre() ?>">
         <label for="albumYear">Year:</label>
-        <input type="number" id="albumYear" name="albumYear" value="<?= $album->getYear() ?>">
-        <?php if (!empty($media)) : ?>
+        <input type="number" id="albumYear" name="albumYear" value="<?= $data['album']->getYear() ?>">
+        <?php if (!empty($data['media'])) : ?>
             <label for="albumMediaUrl">Media URL:</label>
-            <input type="text" id="albumMediaUrl" name="albumMediaUrl" value="<?= $media->getUrl() ?>">
+            <input type="text" id="albumMediaUrl" name="albumMediaUrl" value="<?= $data['media']->getUrl() ?>">
             <label for="albumMediaAltText">Media Alt Text:</label>
-            <input type="text" id="albumMediaAltText" name="albumMediaAltText" value="<?= $media    ->getAltText() ?>">           
+            <input type="text" id="albumMediaAltText" name="albumMediaAltText" value="<?= $data['media']->getAltText() ?>">
+            <input type="hidden" name="albumMediaId" value="<?= $data['media']->getId() ?>">
         <?php else : ?>
             <label for="albumMediaUrl">Media URL:</label>
             <input type="text" id="albumMediaUrl" name="albumMediaUrl">
             <label for="albumMediaAltText">Media Alt Text:</label>
             <input type="text" id="albumMediaAltText" name="albumMediaAltText">
+            <input type="hidden" name="albumMediaId" value="">
         <?php endif ; ?>
         <button type="submit">Edit Album</button>
-        <input type="hidden" name="album-edit-form" value="submit"/>
+        <input type="hidden" name="album-edit-form" value="edit">
     </form>
     
     <!--Supprimer musique à l'unité-->
@@ -40,7 +38,8 @@
                 <option value="<?= $song->getId() ?>"><?= $song->getTitle() ?></option>
             <?php endforeach; ?>
         </select>
-        <button type="submit" id="song-delete-btn" data-action="/ZERODEGRE_/admin/album/deleteSong">Supprimer</button>
+        <button type="submit" id="song-delete-btn" data-action="/ZERODEGRE_/admin/album/deleteSong&id=">Supprimer</button>
         <input type="hidden" name="song-delete-form"  value="submit"/>
     </form>
 </section>
+<script type="text/javascript" src="./../assets/js/admin_modal.js"></script>

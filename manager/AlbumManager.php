@@ -41,9 +41,9 @@ class AlbumManager extends AbstractManager {
         $this->getQuery($query, $parameters, true);
     }
     
-    public function edit(Product $album) : void
+    public function edit(Album $album) : void
     {
-        $query ="UPDATE album SET titre = :titre, year = :year, media_id = :media_id, album_id = :album_id, category_id = :category_id, media_id = :media_id WHERE album.id = :id";
+        $query ="UPDATE album SET titre = :titre, year = :year, media_id = :media_id WHERE id = :id";
         $parameters = array("titre" => $album->getTitre(), "year" => $album->getYear(), "media_id" => $album->getMediaId(), "id" => $album->getId());
         
         $this->getQuery($query, $parameters);
