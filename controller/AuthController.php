@@ -11,6 +11,7 @@ class AuthController extends AbstractController{
     
     public function register(): void
     {
+        // Voir si je peux envoyer le formulaire sans avoir remplit toutes les cases
         if (isset($_POST["register-form"]) && $_POST["register-form"] === "register") 
         {
             $email = $this->clean($_POST["register-email"]);
@@ -19,9 +20,20 @@ class AuthController extends AbstractController{
             $password = $_POST["register-password"];
             $confirmPassword = $_POST["register-confirm-password"];
             $roleId = "1"; 
-            
             $errors = [];
-        
+            
+            if (empty($email)) {
+                $errors[] = "Veuillez saisir votre Email";
+            }
+            
+            if (empty($firstName)) {
+                $errors[] = "Veuillez saisir votre Prénom";
+            }
+            
+            if (empty($lastName)){
+                $errors[] = "Veuillez saisir votre Nom de famille";
+            }
+            
             if (strlen($email) >= 50) {
                 $errors[] = "L'email ne doit pas dépasser 50 caractères";
             }
@@ -46,14 +58,15 @@ class AuthController extends AbstractController{
                 $errors[] = "Les mots de passe ne correspondent pas";
             }
             
+            
             $passwordErrors = $this->validatePassword($password);
             
             //Merge the two error arrays
             $errors = array_merge($errors, $passwordErrors);
-
+            
             if (!$errors) {
+               
                 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-                
                 $user = new User($firstName, $lastName, $email, $hashedPassword, $roleId);
                 $this->manager->createUser($user);
                 
@@ -98,6 +111,7 @@ class AuthController extends AbstractController{
                     
                     if(isset($_SESSION) && $_SESSION["role"] === "Admin")
                     {
+                        //Rajouter un élément pour qu'admin sois montré actif
                         echo ("weshhhhhh");
                         header("location: /ZERODEGRE_/admin/user");
                     } else {

@@ -26,7 +26,6 @@ require "./controller/ArtistController.php";
 require "./controller/AuthController.php";
 require "./controller/CategoryController.php";
 require "./controller/HomeController.php";
-require "./controller/MediaController.php";
 require "./controller/PostController.php";
 require "./controller/ProductController.php";
 require "./controller/SongController.php";
