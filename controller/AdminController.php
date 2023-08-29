@@ -1,7 +1,7 @@
 <?php
 class AdminController extends AbstractController{
     
-    // private ArtistManager $artistManager;
+    private ArtistManager $artistManager;
     private AlbumManager $albumManager;
     private AlbumController $albumController;
     // private PostManager $postManager;
@@ -14,7 +14,7 @@ class AdminController extends AbstractController{
     
     public function __construct()
     {
-        // $this->artistManager = new ArtistManager();
+        $this->artistManager = new ArtistManager();
         $this->albumManager = new AlbumManager();
         $this->albumController = new AlbumController();
         $this->categoryManager = new CategoryManager();
@@ -58,7 +58,7 @@ class AdminController extends AbstractController{
 
     public function editUser($userId)
     {
-        if ($_SERVER["REQUEST_METHOD"] === "POST" && $_POST["edit-form"] === "edit") 
+        if ($_POST["album-edit-form"] === "edit") 
         {
             $email = $this->clean($_POST["edit-email"]);
             $firstName = $this->clean($_POST["edit-firstName"]);
@@ -139,8 +139,6 @@ class AdminController extends AbstractController{
             $categoriesNames[] = $categoryName;
         }
         
-        //Récupère la description des médias pourl'afficher
-        $mediasNames = [];
         foreach ($products as $product){
             $mediaId = $product->getMediaId();
             $mediaDesc = $this->mediaManager->getMediaDescription($mediaId);
@@ -152,7 +150,15 @@ class AdminController extends AbstractController{
     public function manageArtist()
     {
         $artists = $this->artistManager->getAllArtists();
-        $this->render("admin/artist/manage_artist", ["artists" => $artists]);
+        $mediasDesc = [];
+        
+        foreach ($artists as $artist) {
+            $mediaId = $artist->getMediaId();
+            $mediaDesc = $this->mediaManager->getMediaDescription($mediaId);
+            $mediasDesc[] = $mediaDesc;
+        }
+        var_dump($mediasDesc);
+        $this->render("admin/artist/manage_artist", ["artists" => $artists, "mediaDesc" => $mediasDesc]);
     }
     
     public function manageAlbum()
@@ -162,21 +168,20 @@ class AdminController extends AbstractController{
         $albums = $this->albumManager->getAllAlbum();
         $albumsWithSongs = [];
         
-        
         foreach ($albums as $album) {
             
             $albumWithSongs = $this->albumController->getAlbumWithSongs($album->getId());
+            var_dump($albumWithSongs);
             if ($albumWithSongs === null) 
             {
-            // Aucune chanson associée à cet album, gérer l'erreur ici
+                // Aucune chanson associée à cet album, gérer l'erreur ici
                 $_SESSIONS['message'] = "Aucune chanson n'est associée à cette album en base de données.";
                 //Est ce utile ??
-                // header("location: /ZERODEGRE_/admin/album");
+                header("location: /ZERODEGRE_/admin/album");
             } else {
                 $albumsWithSongs[] = $albumWithSongs;
             }
         }
-        
         $this->render("admin/album/manage_album", ["albumsWithSongs" => $albumsWithSongs, "songs" => $songs, "albums" => $albums]);
     }
     

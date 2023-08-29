@@ -32,17 +32,19 @@ class AlbumController extends AbstractController{
         if ($album) 
         {
             $songs = $this->sm->getAllSongInAlbum($albumId); 
-           
-            if (count($songs) === 0) 
+            var_dump($songs);
+            if ($songs === null) 
             {
                 // Aucune chanson associée à l'album, renvoyer null
-                return null;
+                $album->setSongs([]);
+            } else {
+                $album->setSongs($songs); 
             }
-            $album->setSongs($songs); 
+            
             return $album; 
         }
         
-        return null; 
+        return $album; 
     }
     
     public function AddAlbum()
@@ -56,31 +58,18 @@ class AlbumController extends AbstractController{
             $mediaUrl = $this->clean($_POST['albumMediaUrl']);
             $mediaAltText = $this->clean($_POST['albumMediaAltText']);
         
-            // Créer un nouvel objet Album
-            $newAlbum = new Album($titre, $year); 
-        
             // Vérifier si le média existe déjà dans la base de données
             $mediaId = $this->mm->getMediaIdByUrl($mediaUrl);
-            
-            if (!$mediaId) {
+
+            if ($mediaId === null) {
                 // Créer un nouvel objet Media
-                $newMedia = new Media($mediaUrl, $mediaAltText);
-                
-                // Ajouter le média à la base de données
-                $addedMedia = $this->mm->insertMedia($newMedia);
-                
-                if (!$addedMedia) {
-                    //JE ne suis pas sur du rendu :/
-                    $_SESSION['message'] = "Erreur lors de l'ajout du média.";
-                } else {
-                    // Associé le média nouvellement créé à l'album
-                    $newAlbum->setMediaId($addedMedia->getId());
-                }
-            } else {
-                // Si le média existe déjà, l'associer directement à l'album
-                $newAlbum->setMediaId($mediaId);
+                $media = new Media($mediaUrl, $mediaAltText);
+                $this->mm->insertMedia($media);
+                $mediaId = $media->getid();
+                $editedMedia = $this->mm->getMediaById($mediaId['id']);
             }
-        
+            
+            $newAlbum = new Album($titre, $year, $mediaId['id']); 
             // Ajouter l'album à la base de données
             $addedAlbum = $this->am->add($newAlbum);
         
@@ -94,7 +83,7 @@ class AlbumController extends AbstractController{
             }
         }
     }
-    
+    // GOOOOOOOOOOOOOD
     public function addSong($albumId)
     {
         if (isset($_POST["song-form"]) && $_POST["song-form"] === "submit") 
@@ -112,8 +101,8 @@ class AlbumController extends AbstractController{
             $addedSong = $this->sm->add($newSong);
 
             if ($addedSong) {
-                $_SESSION['message'] = $title ."ajoutée avec succès!";
-                // header ("location: ")
+                $_SESSION['message'] = $title ." ajoutée avec succès!";
+                header ("location: /ZERODEGRE_/admin/album");
             } else {
                 $_SESSION['message'] = "Erreur lors de l'ajout de la chanson.";
             }
