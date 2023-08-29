@@ -1,0 +1,18 @@
+<h2>Créer un nouvel artiste</h2>
+<form action="/ZERODEGRE_/admin/artist/create" method="post">
+    <fieldset>
+        <label for="name">Nom de l'artiste:</label>
+        <input type="text" id="name" name="name" required>
+    </fieldset>
+    <fieldset>
+         <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+    </fieldset>
+    <fieldset>
+        <label for="product-mediaId"> Ajouter des médias </label>
+        <input type="text" name="mediaUrl" id="mediaUrl" placeholder="Chemin/de/l'image">
+        <input type="text" name="mediaAltText" id="mediaAltText" placeholder="Text alternatif"/>
+    </fieldset>
+    <button type="submit">Créer Artiste</button>
+     <input type="hidden" name="artist-form" value="submit"/>
+</form>

@@ -1,0 +1,21 @@
+<h2>Modifier un artiste</h2>
+<form action="/ZERODEGRE_/admin/artist/edit&id=<?= $data['artist']->getId() ?>" method="post">
+    <label for="artistName">Nom de l'artiste:</label>
+    <input type="text" id="name" name="artistName" value="<?= $data['artist']->getName() ?>" required>
+    <label for="artistDescription">Description:</label>
+    <textarea id="description" name="artistDescription" required><?= $data['artist']->getDescription() ?></textarea>
+        <?php if (!empty($data['media'])) : ?>
+            <label for="artistMediaUrl">Media URL:</label>
+            <input type="text" id="artistMediaUrl" name="artistMediaUrl" value="<?= $data['media']->getUrl() ?>">
+            <label for="artistMediaAltText">Media Alt Text:</label>
+            <input type="text" id="artistMediaAltText" name="artistMediaAltText" value="<?= $data['media']->getAltText() ?>">
+            <input type="hidden" name="artistMediaId" value="<?= $data['media']->getId() ?>">
+        <?php else : ?>
+            <label for="artistMediaUrl">Media URL:</label>
+            <input type="text" id="artistMediaUrl" name="artistMediaUrl">
+            <label for="artistMediaAltText">Media Alt Text:</label>
+            <input type="text" id="artistMediaAltText" name="artistMediaAltText">
+        <?php endif ; ?>
+    <button type="submit">Modifier Artiste</button>
+    <input type="hidden" name="artist-edit-form" value="submit"/>
+</form>
