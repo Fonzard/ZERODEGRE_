@@ -1,42 +1,47 @@
 <?php
 class ArtistManager extends AbstractManager {
 
-    public function getAllArtists() {
+    public function getAllArtists() : array
+    {
         $class = "Artist";
         $query = "SELECT * FROM artists";
-        return $this->getResult($query, null, $class);
+        $parameters = null;
+        $results = $this->getResult($query, $parameters, $class, false);
+        return $results;
     }
 
-    public function getArtistById($artistId) {
+    public function getArtistById($artistId) : ? Artist
+    {
         $class = "Artist";
-        $query = "SELECT * FROM artists WHERE id = ?";
+        $query = "SELECT * FROM artists WHERE id = :artistId";
         $parameters = array("artistId" => $artistId);
         return $this->getResult($query, $parameters, $class, true);
     }
 
-    public function createArtist(Artist $artist) 
+    public function create(Artist $artist) 
     {
         $class = "Artist";
         $query = "INSERT INTO artists (name, description, media_id) VALUES (:name, :description, :media_id)";
         $parameters = array("name" => $artist->getName(), "description" => $artist->getDescription(), "media_id" => $artist->getMediaId());
-        $this->getQuery($query, $parameters);
+        $this->getQuery($query, $parameters, true);
 
         $lastInsertId = $this->connex->lastInsertId();
-        
-        // A vérifier !!!
         $artist->setId($lastInsertId);
         return $artist;
+        var_dump($artist);
     }
 
     public function editArtist(Artist $artist) {
-        $query = "UPDATE artists SET name = ?, description = ?, media_id = ? WHERE id = ?";
-        $parameters = [$artist->getName(), $artist->getDescription(), $artist->getMediaId(), $artist->getId()];
-        return $this->executeQuery($query, $parameters);
+        
+        $query = "UPDATE artists SET name = :name, description = :description, media_id = :media_id WHERE id = :id";
+        $parameters = array("name" => $artist->getName(), "description" => $artist->getDescription(), "media_id" => $artist->getMediaId(),"id" => $artist->getId());
+        $this->getQuery($query, $parameters, true);
     }
 
     public function deleteArtist($artistId) {
-        $query = "DELETE FROM artists WHERE id = ?";
-        return $this->executeQuery($query, [$artistId]);
+        $query = "DELETE FROM artists WHERE id = :id";
+        $parameters = array("id" => $artistId);
+        $this->getQuery($query, $parameters, true);
     }
 }
 

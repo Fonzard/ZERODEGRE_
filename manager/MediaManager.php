@@ -14,13 +14,12 @@ class MediaManager extends AbstractManager {
     // PRODUCTS \\
     public function getMediaIdByUrl(string $url)
     {
-        $class = "Media";
         $query = ("SELECT id FROM medias WHERE url = :url");
         $parameters = array("url" => $url);
         
-        $result = $this->getResult($query, $parameters, $class, true);
+        $result = $this->getQuery($query, $parameters, true);
+        var_dump($result);
         return $result;
-        
     }
     
     public function getMediaDescription(int $mediaId)

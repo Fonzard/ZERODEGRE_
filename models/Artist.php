@@ -1,5 +1,5 @@
 <?php 
-class Artist {
+class Artist implements JsonSerializable {
     private ?int $id;
     private string $name;
     private string $description;
@@ -51,6 +51,16 @@ class Artist {
     public function setMediaId(?int $media_id) : void
     {
         $this->media_id = $media_id;
+    }
+    public function jsonSerialize()
+    {
+        $array = [];
+        $array["id"] = $this->id;
+        $array["name"] = $this->name;
+        $array["description"] = $this->description;
+        $array["media_id"] = $this->media_id;
+
+        return $array;
     }
 }
 ?>

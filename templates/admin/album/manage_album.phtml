@@ -25,6 +25,7 @@
                 <tr class="album-dropdown" data-album="<?= $album->getId() ?>">
                     <td colspan="2">
                         <ul>
+                            
                             <?php foreach ($album->getSongs() as $song): ?>
                                 <li><?= $song->getTitle() ?> (<?= $song->getDuration() ?>)</li>
                             <?php endforeach; ?>

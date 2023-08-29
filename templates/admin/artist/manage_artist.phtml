@@ -1,0 +1,37 @@
+<section class="manage-admin">
+    <p class="message">
+        <?php
+            if(isset($_SESSION['message'])) {
+                echo $_SESSION['message'];
+                unset($_SESSION['message']); // Effacer le message pour qu'il ne s'affiche pas à chaque rafraîchissement
+            }
+        ?>
+    </p>
+    <h2>Manage Artists</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Nom du média</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($data['artists'] as $key => $artist) : ?>
+                <tr>
+                    <td><?= htmlspecialchars($artist->getId()) ?></td>
+                    <td><?= htmlspecialchars($artist->getName()) ?></td>
+                    <td><?= htmlspecialchars($artist->getDescription()) ?></td>
+                    <td><?= $data['mediaDesc'][$key]['alt_text'] ?></td>
+                    <td>
+                        <a href="/ZERODEGRE_/admin/artist/edit&id=<?= $artist->getId() ?>">Edit</a>
+                        <a href="/ZERODEGRE_/admin/artist/delete&id=<?= $artist->getId() ?>">Delete</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <a href="/ZERODEGRE_/admin/artist/create">Créer un nouvel artiste</a>
+</section>

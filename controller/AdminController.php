@@ -157,7 +157,6 @@ class AdminController extends AbstractController{
             $mediaDesc = $this->mediaManager->getMediaDescription($mediaId);
             $mediasDesc[] = $mediaDesc;
         }
-        var_dump($mediasDesc);
         $this->render("admin/artist/manage_artist", ["artists" => $artists, "mediaDesc" => $mediasDesc]);
     }
     
@@ -171,12 +170,10 @@ class AdminController extends AbstractController{
         foreach ($albums as $album) {
             
             $albumWithSongs = $this->albumController->getAlbumWithSongs($album->getId());
-            var_dump($albumWithSongs);
             if ($albumWithSongs === null) 
             {
                 // Aucune chanson associée à cet album, gérer l'erreur ici
                 $_SESSIONS['message'] = "Aucune chanson n'est associée à cette album en base de données.";
-                //Est ce utile ??
                 header("location: /ZERODEGRE_/admin/album");
             } else {
                 $albumsWithSongs[] = $albumWithSongs;

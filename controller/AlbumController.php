@@ -32,7 +32,6 @@ class AlbumController extends AbstractController{
         if ($album) 
         {
             $songs = $this->sm->getAllSongInAlbum($albumId); 
-            var_dump($songs);
             if ($songs === null) 
             {
                 // Aucune chanson associée à l'album, renvoyer null
@@ -199,22 +198,25 @@ class AlbumController extends AbstractController{
             echo json_encode(array("success" => false, "message" => "L'album n'a pas été supprimé."));
         }
     }
-    
+    // A vérifier ET réfléchir à l'utilité du fetch pour un musique
     public function deleteSong()
     {
 
-        if (isset($_POST["song-delete-form"]) && $_POST["song-delete-form"] === "submit") 
+        if(isset($_GET['id']))
         {
-            $songId = $_POST["songIdList"];
-
+            $songId = $_GET['id'];
             $this->sm->delete($songId);
-
-            $_SESSION["message"] = "La musique à bien été supprimé";
-
-            header("location : /ZERODEGRE_/admin/album");
+            $newSongList = $this->sm->getAllSong();
+            
+            // Ne marche pas, Prendre le temps de trouver la soluce !!!!!!!!
+                if (empty($newSongList)) {
+                    echo json_encode(array("success" => false, "message" => "Aucun produit disponible."));
+                } else {
+                    $responseData = array('success' => true, 'message' => 'Produit supprimé avec succès.', 'song' => $newSongList);
+                    echo json_encode($responseData);
+                }
         } else {
-            $_SESSION["message"] = "La musique n'a pas pu être supprimé.";
-            header("location : /ZERODEGRE_/admin/album");
+            echo json_encode(array("success" => false, "message" => "Le produit n'a pas été supprimé."));
         }
     }
     
