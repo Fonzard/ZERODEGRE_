@@ -38,8 +38,6 @@ abstract class AbstractManager {
         return $info;
     }
     
-    // Faut il en faire deux fetch / fetchAll ????
-    // Normalement singleResult résout le problème 
     public function getQuery($query, $parameters = array(), $singleResult = false) {
         
         
@@ -73,9 +71,9 @@ abstract class AbstractManager {
         // Récupérer les résultats de la requête à partir de la base de données
         $results = $this->getQuery($query, $parameters);
         $resultsTab = array();
-        
+        // var_dump($results);
         //Si il n'y aucune résultat renvoyer null
-        if ($results === null || empty($results)) {
+        if (empty($results)) {
             return null;
         }
         

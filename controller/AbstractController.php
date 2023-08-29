@@ -42,6 +42,18 @@ abstract class AbstractController {
         
         return $passwordErrors;
     }
+    
+    //Vérifier le fonctionnement ??
+    protected function redirectToPreviousPage() {
+        if (isset($_SERVER['HTTP_REFERER'])) {
+            header("Location: " . $_SERVER['HTTP_REFERER']);
+            exit();
+        } else {
+            // Si la page précédente n'est pas disponible, rediriger vers une page d'accueil par exemple
+            header("Location: /");
+            exit();
+        }
+    }
     // Voir comment faire appelle au Manager ????
     // protected function checkEntityExistence($entityId, $entityType) 
     // {

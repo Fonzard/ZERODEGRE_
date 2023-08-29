@@ -14,6 +14,7 @@ class AuthController extends AbstractController{
         // Voir si je peux envoyer le formulaire sans avoir remplit toutes les cases
         if (isset($_POST["register-form"]) && $_POST["register-form"] === "register") 
         {
+            var_dump("wesh");
             $email = $this->clean($_POST["register-email"]);
             $firstName = $this->clean($_POST["register-firstName"]);
             $lastName = $this->clean($_POST["register-lastName"]);

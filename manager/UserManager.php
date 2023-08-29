@@ -5,12 +5,12 @@ class UserManager extends AbstractManager {
     public function getAllUsers() : array
     {
         $class = "User";
-        $query = ("SELECT * FROM users");
+        $query = "SELECT * FROM users";
         $parameters = null;
-        $results = $this->getResult($query, null, $class, false);
+        $results = $this->getResult($query, $parameters, $class, false);
         return $results;
     }
-    public function getUserByEmail(string $email) : ? User
+    public function getUserByEmail(string $email) : ?User
     {
         $class = "User";
         $query = ("SELECT * FROM users WHERE users.email = :email");
@@ -56,7 +56,7 @@ class UserManager extends AbstractManager {
         return $result;
     }
     
-    public function createUser(User $user) : ?User
+    public function createUser(User $user) : ? User
     {
         $query = ("INSERT INTO users(first_name, last_name, email, password, role_id) VALUES (:first_name, :last_name, :email, :password, :role_id)");
         $parameters = array("first_name" => $user->getLastName(), "last_name" => $user->getFirstName(), "email" => $user->getEmail(), "password" => $user->getPassword(), "role_id" => $user->getRoleId());

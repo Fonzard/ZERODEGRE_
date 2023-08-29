@@ -15,8 +15,8 @@ class Router {
     {   
         $this->adminController = new AdminController();
         $this->albumController = new AlbumController();
+        $this->artistController = new ArtistController();
         $this->authController = new AuthController();
-        
         $this->categoryController = new CategoryController();
         $this->homeController = new HomeController();
         $this->postController = new PostController();
@@ -30,6 +30,7 @@ class Router {
         $routeAndParams["userId"] = null;  
         $routeAndParams["productId"] = null;  
         $routeAndParams["albumId"] = null;
+        $routeAndParams["artistId"] = null;
       
         if(strlen($route) > 0) // si la chaine de la route n'est pas vide (donc si ça n'est pas la home)  
         {  
@@ -106,7 +107,21 @@ class Router {
                 {
                     $routeAndParams["route"] = "admin/album/delete";
                     $routeAndParams["albumId"] = $_GET["id"];
-                }
+                } elseif ($tab[1] === "artist" && !isset($tab[2])) // Penser à faire des condition plus précise
+                {
+                    $routeAndParams["route"] = "admin/artist";
+                } elseif ($tab[1] === "artist" && $tab[2] === "create") 
+                {
+                    $routeAndParams["route"] = "admin/artist/create";
+                } elseif ($tab[1] === "artist" && $tab[2] === "edit" && isset($_GET["id"])) 
+                {
+                    $routeAndParams["route"] = "admin/artist/edit";
+                    $routeAndParams["artistId"] = $_GET["id"];
+                } elseif ($tab[1] === "artist" && $tab[2] === "delete" && isset($_GET["id"])) 
+                {
+                    $routeAndParams["route"] = "admin/artist/delete";
+                    $routeAndParams["artistId"] = $_GET["id"];
+                } 
             }
         }  
         else  
@@ -122,8 +137,9 @@ class Router {
         if (isset($_GET["path"])) 
         {
             $routeAndParams = $this->splitRouteAndParameters($_GET["path"]);
-            
-            if(empty($routeAndParams["route"]))
+            // var_dump($routeAndParams);
+            // die();
+               if(empty($routeAndParams["route"]))
             {
                 $this->homeController->index();
             }
@@ -186,12 +202,21 @@ class Router {
                 {
                     $this->albumController->deleteAlbum($_GET['id']);
                 }
-                // ADMIN | MEDIA \\
-                elseif ($routeAndParams["route"] === "admin/media") 
+                // ADMIN | ARTIST \\
+                elseif ($routeAndParams["route"] === "admin/artist" && !isset($_GET['id'])) 
+                {   
+                    $this->adminController->manageArtist();
+                } elseif ($routeAndParams["route"] === "admin/artist/create") 
                 {
-                    $this->adminController->manageMedia();
+                    $this->artistController->createArtist();
+                } elseif ($routeAndParams["route"] === "admin/artist/edit" && isset($_GET['id'])) 
+                {
+                    $this->artistController->editArtist($_GET['id']);
+                    
+                } elseif ($routeAndParams["route"] === "admin/artist/delete" && isset($_GET['id'])) 
+                {
+                    $this->artistController->deleteArtist($_GET['id']);
                 }
-                
                 
             }
         }
