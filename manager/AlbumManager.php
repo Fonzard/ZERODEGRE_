@@ -10,7 +10,7 @@ class AlbumManager extends AbstractManager {
         return $results;
     }
     
-    public function getAlbumById($albumId)
+    public function getAlbumById($albumId) : ? ALbum
     {
         $class = "Album";
         $query = "SELECT * FROM album WHERE id = :id";
@@ -18,7 +18,31 @@ class AlbumManager extends AbstractManager {
         $result = $this->getResult($query, $parameters, $class, true);
         return $result;
     }
-    
+
+    public function getArtistByAlbumId($albumId)
+    {
+        $class = "Artist";
+        $query = "SELECT * FROM Artist WHERE id = :albumId";
+        $parameters = array ("id" => $albumId);
+        $results = $this->getResult($query,$parameters, $class, false);
+        return $results;
+    }
+
+    public function getAllAlbumOfArtist($artistId) 
+    {
+        $class = "Album";
+        $query = "SELECT al.id, al.titre, al.year, al.media_id
+        FROM album al
+        JOIN artist_album aa ON al.id = aa.album_id
+        WHERE aa.artists_id = :artistId";
+        
+        $parameters = array("artistId" => $artistId);
+        $albums = [];
+        $albums[] = $this->getResult($query, $parameters, $class, "Album", false);
+        var_dump($albums);
+        echo "<br>";
+        return $albums;
+    }
     public function add(Album $album) : ?Album
     {
         $query = "INSERT INTO album(titre, year, media_id) VALUES (:titre, :year, :media_id)";

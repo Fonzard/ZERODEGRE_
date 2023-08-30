@@ -15,16 +15,33 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Nom du média</th>
+                <th>Album</th>
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
-            <?php foreach ($data['artists'] as $key => $artist) : ?>
+        <tbody> 
+            <?php foreach ($data['artistWithAlbum'] as $key => $artist) : ?>
                 <tr>
+                    <?php echo "<br/>" ?>
+                    <?php echo "ALBUM" ?>
+                    <?php echo "<br/>" ?>
+                    <?php var_dump($artist) ?>
+                    <?php echo "<br/>" ?>
+                    <!-- Il faut que je renvoit des objets Artist remplit ou non d'album // La difficulté va être de rajouter les médias  -->
                     <td><?= htmlspecialchars($artist->getId()) ?></td>
                     <td><?= htmlspecialchars($artist->getName()) ?></td>
                     <td><?= htmlspecialchars($artist->getDescription()) ?></td>
-                    <td><?= $data['mediaDesc'][$key]['alt_text'] ?></td>
+                    <td><?= htmlspecialchars($data['mediaDesc'][$key]['alt_text']) ?></td>
+                    <?php var_dump($artist->getAlbums());  echo "kzefezfze"?>
+                    <?php $albums = $artist->getAlbums(); ?>
+                    <?php echo "Poisson"; var_dump($albums); echo "Poisson"?>
+                    <?php if ($albums !== null) : ?>
+                    <td>
+                        <?= htmlspecialchars($albums->getTitre()) ?><br>
+                    </td>
+                    <?php else : ?>
+                        <td></td> <!-- Case vide si pas d'albums associés -->
+                    <?php endif; ?>
                     <td>
                         <a href="/ZERODEGRE_/admin/artist/edit&id=<?= $artist->getId() ?>">Edit</a>
                         <a href="/ZERODEGRE_/admin/artist/delete&id=<?= $artist->getId() ?>">Delete</a>

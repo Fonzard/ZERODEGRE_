@@ -18,6 +18,18 @@ class ArtistManager extends AbstractManager {
         return $this->getResult($query, $parameters, $class, true);
     }
 
+    public function getAlbumByArtistId($artistId)
+    {
+        $class = "Album";
+        $query = "SELECT *
+        FROM album al
+        JOIN artist_album aa ON al.id = aa.album_id
+        WHERE aa.artists_id = :artistId;";
+        $parameters = array("artistId" => $artistId);
+        $results = $this->getResult($query, $parameters, $class, false);
+        return $results;
+    }
+    
     public function create(Artist $artist) 
     {
         $class = "Artist";

@@ -2,6 +2,7 @@
 class AdminController extends AbstractController{
     
     private ArtistManager $artistManager;
+    private ArtistController $artistController;
     private AlbumManager $albumManager;
     private AlbumController $albumController;
     // private PostManager $postManager;
@@ -10,11 +11,11 @@ class AdminController extends AbstractController{
     private ProductManager $productManager;
     private UserManager $userManager;
     private SongManager $songManager;
-    private SongController $songController;
     
     public function __construct()
     {
         $this->artistManager = new ArtistManager();
+        $this->artistController = new ArtistController();
         $this->albumManager = new AlbumManager();
         $this->albumController = new AlbumController();
         $this->categoryManager = new CategoryManager();
@@ -151,13 +152,22 @@ class AdminController extends AbstractController{
     {
         $artists = $this->artistManager->getAllArtists();
         $mediasDesc = [];
-        
+        $artistAlbum = [];
         foreach ($artists as $artist) {
             $mediaId = $artist->getMediaId();
             $mediaDesc = $this->mediaManager->getMediaDescription($mediaId);
             $mediasDesc[] = $mediaDesc;
+            
+            $artistId = $artist->getId();
+            $artistWithAlbum = $this->artistController->getArtistWithAlbums($artistId);
+            
+            if (!empty($artistWithAlbum))
+            {
+                $artistAlbum[] = $artistWithAlbum;
+            }
+
         }
-        $this->render("admin/artist/manage_artist", ["artists" => $artists, "mediaDesc" => $mediasDesc]);
+        $this->render("admin/artist/manage_artist", ["artistWithAlbum" => $artistAlbum, "mediaDesc" => $mediasDesc]);
     }
     
     public function manageAlbum()

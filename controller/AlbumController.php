@@ -15,17 +15,18 @@ class AlbumController extends AbstractController{
     public function createAlbumWithSongs($albumData, $songsData) {
         
         $album = new Album($albumData['titre'], $albumData['year'], $albumData['media_id']);
-        $createdAlbum = $this->albumManager->add($album);
+        $createdAlbum = $this->am->add($album);
 
         foreach ($songsData as $songData) {
             $song = new Song($songData['title'], $songData['duration'], $songData['url'], $createdAlbum->getId());
-            $this->songManager->add($song);
+            $this->sm->add($song);
         }
 
         return $createdAlbum;
     }
     
-    public function getAlbumWithSongs($albumId) {
+    public function getAlbumWithSongs($albumId) 
+    {
         
         $album = $this->am->getAlbumById($albumId); 
         
@@ -42,7 +43,6 @@ class AlbumController extends AbstractController{
             
             return $album; 
         }
-        
         return $album; 
     }
     
