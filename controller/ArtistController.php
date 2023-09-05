@@ -2,12 +2,46 @@
 class ArtistController extends AbstractController {
     
     private ArtistManager $am;
+    private AlbumManager $alm;
     private MediaManager $mm;
     
     public function __construct ()
     {
         $this->am = new ArtistManager();
+        $this->alm = new AlbumManager();
         $this->mm = new MediaManager();
+    }
+
+    public function getArtistWithAlbums($artistId) 
+    {
+        
+        $artist = $this->am->getArtistById($artistId); 
+        
+        if ($artist) 
+        {
+            $albums = $this->alm->getAllAlbumOfArtist($artistId); 
+            if ($albums === null) 
+            {
+                // Aucun album associée à l'artiste, renvoit tableau vide
+                $artist->setAlbums(null);
+            } else {
+                $artistWithAlbum = $artist;
+                var_dump($artistWithAlbum);
+
+                foreach($albums as $album)
+                {
+                    
+                    echo "wessh";
+                    $artistWithAlbum->setAlbums($album); 
+                }
+                
+            }
+            var_dump($artistWithAlbum);
+            
+            return $artistWithAlbum; 
+        }
+        
+        return $artist; 
     }
     // GOOOOOOOOD
     public function editArtist($artistId)

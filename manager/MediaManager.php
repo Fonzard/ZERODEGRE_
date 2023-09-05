@@ -18,7 +18,7 @@ class MediaManager extends AbstractManager {
         $parameters = array("url" => $url);
         
         $result = $this->getQuery($query, $parameters, true);
-        var_dump($result);
+
         return $result;
     }
     

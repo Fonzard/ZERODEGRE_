@@ -59,23 +59,29 @@ class AlbumController extends AbstractController{
         
             // Vérifier si le média existe déjà dans la base de données
             $mediaId = $this->mm->getMediaIdByUrl($mediaUrl);
-
-            if ($mediaId === null) {
+            var_dump($mediaId);
+            if ($mediaId === false) {
                 // Créer un nouvel objet Media
                 $media = new Media($mediaUrl, $mediaAltText);
                 $this->mm->insertMedia($media);
                 $mediaId = $media->getid();
-                $editedMedia = $this->mm->getMediaById($mediaId['id']);
+                $editedMedia = $this->mm->getMediaById($mediaId);
+            } else {
+                $media = $this->mm->getMediaById($mediaId);
+                $media->setUrl($mediaUrl);
+                $media->setAltText($mediaAltText);
+                $this->mm->editMedia($media);
+                $editedMedia = $this->mm->getMediaById($media->getId());
             }
             
-            $newAlbum = new Album($titre, $year, $mediaId['id']); 
+            $newAlbum = new Album($titre, $year, $editedMedia->getId()); 
             // Ajouter l'album à la base de données
             $addedAlbum = $this->am->add($newAlbum);
         
             if ($addedAlbum) 
             {
                 header("location: /ZERODEGRE_/admin/album");
-                $_SESSION['message'] = "L'album". $name ." a bien été créé";
+                $_SESSION['message'] = "L'album". $titre ." a bien été créé";
             } else {
                 header("location: /ZERODEGRE_/admin/album/create");
                 $_SESSION['message'] = "Erreur pour la création d'album, veuillez recommencer.";

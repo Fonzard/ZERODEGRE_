@@ -31,6 +31,7 @@ class Router {
         $routeAndParams["productId"] = null;  
         $routeAndParams["albumId"] = null;
         $routeAndParams["artistId"] = null;
+        $routeAndParams["postId"] = null;
       
         if(strlen($route) > 0) // si la chaine de la route n'est pas vide (donc si ça n'est pas la home)  
         {  
@@ -48,7 +49,7 @@ class Router {
             {
                 $routeAndParams["route"] = "logout";  
                 
-            } else if (isset($_SESSION["role"]) && $_SESSION["role"] === "Admin") 
+            } else if (isset($_SESSION["role"]) && $_SESSION["role"] === "Admin")  //////////ADMIN USER
             { 
                 if ($tab[1] === "user" && !isset($tab[2])) 
                 {
@@ -64,7 +65,7 @@ class Router {
                     $routeAndParams["route"] = "admin/user/delete";
                     $routeAndParams["userId"] = $_GET["id"];
                     
-                } elseif ($tab[1] === "product" && !isset($tab[2])) 
+                } elseif ($tab[1] === "product" && !isset($tab[2]))  //////////PRODUCT
                 {
                     $routeAndParams["route"] = "admin/product";
                     
@@ -82,7 +83,7 @@ class Router {
                     $routeAndParams["route"] = "admin/product/delete";
                     $routeAndParams["productId"] = $_GET["id"];
                     
-                } elseif ($tab[1] === "album" && !isset($tab[2])) 
+                } elseif ($tab[1] === "album" && !isset($tab[2]))   //////////ALBUM
                 {
                     $routeAndParams["route"] = "admin/album";
                     
@@ -121,6 +122,20 @@ class Router {
                 {
                     $routeAndParams["route"] = "admin/artist/delete";
                     $routeAndParams["artistId"] = $_GET["id"];
+                } elseif ($tab[1] === "post" && !isset($tab[2]))  //////////POST
+                {
+                    $routeAndParams["route"] = "admin/post";
+                } elseif ($tab[1] === "post" && $tab[2] === "create") 
+                {
+                    $routeAndParams["route"] = "admin/post/create";
+                } elseif ($tab[1] === "post" && $tab[2] === "edit" && isset($_GET["id"])) 
+                {
+                    $routeAndParams["route"] = "admin/post/edit";
+                    $routeAndParams["artistId"] = $_GET["id"];
+                } elseif ($tab[1] === "post" && $tab[2] === "delete" && isset($_GET["id"])) 
+                {
+                    $routeAndParams["route"] = "admin/post/delete";
+                    $routeAndParams["postId"] = $_GET["id"];
                 } 
             }
         }  
@@ -216,6 +231,21 @@ class Router {
                 } elseif ($routeAndParams["route"] === "admin/artist/delete" && isset($_GET['id'])) 
                 {
                     $this->artistController->deleteArtist($_GET['id']);
+                }
+                // ADMIN | POST \\
+                elseif ($routeAndParams["route"] === "admin/post" && !isset($_GET['id'])) 
+                {   
+                    $this->adminController->managePost();
+                } elseif ($routeAndParams["route"] === "admin/post/create") 
+                {
+                    $this->artistController->createPost();
+                } elseif ($routeAndParams["route"] === "admin/post/edit" && isset($_GET['id'])) 
+                {
+                    $this->artistController->editPost($_GET['id']);
+                    
+                } elseif ($routeAndParams["route"] === "admin/post/delete" && isset($_GET['id'])) 
+                {
+                    $this->artistController->deletePost($_GET['id']);
                 }
                 
             }

@@ -56,17 +56,31 @@ class ProductController extends AbstractController{
             $altText = $this->clean($_POST["product-altText"]);
             
             $product = $this->pm->getProductById($_GET["id"]);
-            
-            //Editer un média 
-            //A faire
-            $mediaId = $this->mm->getMediaIdByUrl($url);
+
+            if (isset($_POST['productMediaId'])) 
+            {
+                $mediaId = $_POST['productMediaId'];
+                $media = $this->mm->getMediaById($mediaId);
+      
+                $media->setUrl($url);
+                $media->setAltText($altText);
+                $this->mm->editMedia($media);
+                $editedMedia = $this->mm->getMediaById($media->getId());
+                var_dump($editedMedia);
+
+            } else {
+                $media = new Media($url, $altText);
+                $this->mm->insertMedia($media);
+                $mediaId = $media->getid();
+                $editedMedia = $this->mm->getMediaById($mediaId);
+            }
             
             $product->setName($name);
             $product->setPrice($price);
             $product->setDescription($description);
             $product->setQuantity($quantity);
             $product->setCategoryId($categotyId);
-            $product->setMediaId($mediaId);
+            $product->setMediaId($editedMedia->getId());
             
             $this->pm->edit($product);
 

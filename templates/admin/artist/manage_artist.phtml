@@ -22,19 +22,12 @@
         <tbody> 
             <?php foreach ($data['artistWithAlbum'] as $key => $artist) : ?>
                 <tr>
-                    <?php echo "<br/>" ?>
-                    <?php echo "ALBUM" ?>
-                    <?php echo "<br/>" ?>
-                    <?php var_dump($artist) ?>
-                    <?php echo "<br/>" ?>
                     <!-- Il faut que je renvoit des objets Artist remplit ou non d'album // La difficulté va être de rajouter les médias  -->
                     <td><?= htmlspecialchars($artist->getId()) ?></td>
                     <td><?= htmlspecialchars($artist->getName()) ?></td>
                     <td><?= htmlspecialchars($artist->getDescription()) ?></td>
                     <td><?= htmlspecialchars($data['mediaDesc'][$key]['alt_text']) ?></td>
-                    <?php var_dump($artist->getAlbums());  echo "kzefezfze"?>
                     <?php $albums = $artist->getAlbums(); ?>
-                    <?php echo "Poisson"; var_dump($albums); echo "Poisson"?>
                     <?php if ($albums !== null) : ?>
                     <td>
                         <?= htmlspecialchars($albums->getTitre()) ?><br>

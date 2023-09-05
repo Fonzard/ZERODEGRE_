@@ -36,11 +36,21 @@
                 <?php endforeach; ?>
             </select>
         </fieldset>
+        <?php if (!empty($data['media'])) : ?>
         <fieldset>
             <label for="product-mediaId"> Modifier le média </label>
             <input type="text" name="product-url" id="product-url" value="<?= $media->getUrl() ?>">
             <input type="text" name="product-altText" id="product-altText" placeholder="Text alternatif" value="<?= $media->getAltText() ?>"/>
+            <input type="hidden" name="productMediaId" value="<?= $data['media']->getId() ?>">
         </fieldset>
+        <?php else : ?>
+            <fieldset>
+            <label for="product-mediaId"> Modifier le média </label>
+            <input type="text" name="product-url" id="product-url">
+            <input type="text" name="product-altText" id="product-altText" placeholder="Text alternatif"/>
+            <input type="hidden" name="productMediaId" value="">
+        </fieldset>
+        <?php endif ; ?>
         <fieldset>
             <button type="submit"> Modifier le produit </button>
         </fieldset>

@@ -69,7 +69,7 @@ class ProductManager extends AbstractManager {
     public function edit(Product $product) : void
     {
         $query ="UPDATE products SET name = :name, price = :price, description = :description, quantity = :quantity, category_id = :category_id, media_id = :media_id WHERE products.id = :id";
-        $parameters = array("name" => $product->getName(), "price" => $product->getPrice(), "description" => $product->getDescription(), "quantity" => $product->getQuantity(), "category_id" => $product->getCategoryId(), "media_id" => $product->getMediaId, "id" => $product->getId());
+        $parameters = array("name" => $product->getName(), "price" => $product->getPrice(), "description" => $product->getDescription(), "quantity" => $product->getQuantity(), "category_id" => $product->getCategoryId(), "media_id" => $product->getMediaId(), "id" => $product->getId());
         
         $this->getQuery($query, $parameters);
     }

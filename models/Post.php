@@ -5,17 +5,17 @@ class Post {
     private string $content;
     private string $date;
     private string $author;
-    private Category $categoryId;
-    private Media $mediaId;
+    private ?int $category_id;
+    private ?int $media_id;
 
-    public function __construct(string $title, string $content, string $date, string $author, Category $categoryId, Media $mediaId) {
+    public function __construct(string $title, string $content, string $date, string $author, ?int $category_id, ?int $media_id) {
         $this->id = null;
         $this->title = $title;
         $this->content = $content;
         $this->date = $date;
         $this->author = $author;
-        $this->categoryId = $categoryId;
-        $this->mediaId = $mediaId; 
+        $this->category_id = $category_id;
+        $this->media_id = $media_id; 
     }
 
     //////////// Getters ////////////
@@ -44,14 +44,14 @@ class Post {
         return $this->author;
     }
     
-    public function getCategoryId(): Category 
+    public function getCategoryId(): ?int 
     {
-        return $this->categoryId;
+        return $this->category_id;
     }
     
-    public function getMediaId(): Media 
+    public function getMediaId(): ?int 
     {
-        return $this->mediaId;
+        return $this->media_id;
     }
 
     //////////// Setters ////////////
@@ -80,14 +80,28 @@ class Post {
         $this->author = $author;
     }
     
-    public function setCategoryId(Category $categoryId) : void
+    public function setCategoryId(?int $category_id) : void
     {
-        $this->categoryId = $categoryId;
+        $this->category_id = $category_id;
     }
     
-    public function setMediaId(Media $mediaId) : void
+    public function setMediaId(?int $media_id) : void
     {
-        $this->mediaId = $mediaId;
+        $this->media_id = $media_id;
+    }
+
+    public function jsonSerialize()
+    {
+        $array = [];
+        $array["id"] = $this->id;
+        $array["title"] = $this->title;
+        $array["content"] = $this->content;
+        $array["date"] = $this->date;
+        $array["author"] = $this->author;
+        $array["category_id"] = $this->category_id;
+        $array["media_id"] = $this->media_id;
+
+        return $array;
     }
 }
 

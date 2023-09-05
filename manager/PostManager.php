@@ -2,6 +2,14 @@
 
 class PostManager extends AbstractManager {
     
+    public function getAllPost()
+    {
+        $class = "Post";
+        $query = "SELECT * FROM post";
+        $results = $this->getResult($query, null, $class, false);
+        return $results;
+    }
+
     public function getPostById(int $id) : ?Post
     {
         $class = "Post";
@@ -68,11 +76,11 @@ class PostManager extends AbstractManager {
         $this->getQuery($query, $parameters);
         
         // Obtenez l'ID inséré
-        $lastInsertId = $this->connectToDatabase()->lastInsertId();
+        $lastInsertId = $this->connex->lastInsertId();
         
         // A vérifier !!!
-        $user->setId($lastInsertId);
-        return $user;
+        $post->setId($lastInsertId);
+        return $post;
     }
 } 
 ?>

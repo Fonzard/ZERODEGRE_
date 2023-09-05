@@ -5,7 +5,7 @@ class AdminController extends AbstractController{
     private ArtistController $artistController;
     private AlbumManager $albumManager;
     private AlbumController $albumController;
-    // private PostManager $postManager;
+    private PostManager $postManager;
     private CategoryManager $categoryManager;
     private MediaManager $mediaManager;
     private ProductManager $productManager;
@@ -19,7 +19,7 @@ class AdminController extends AbstractController{
         $this->albumManager = new AlbumManager();
         $this->albumController = new AlbumController();
         $this->categoryManager = new CategoryManager();
-        // $this->postManager = new PostManager();
+        $this->postManager = new PostManager();
         $this->mediaManager = new MediaManager();
         $this->productManager = new ProductManager();
         $this->songManager = new SongManager();
@@ -59,7 +59,7 @@ class AdminController extends AbstractController{
 
     public function editUser($userId)
     {
-        if ($_POST["album-edit-form"] === "edit") 
+        if ($_POST["edit-form"] === "edit") 
         {
             $email = $this->clean($_POST["edit-email"]);
             $firstName = $this->clean($_POST["edit-firstName"]);
@@ -125,8 +125,21 @@ class AdminController extends AbstractController{
     
     public function managePost()
     {
-        $posts = $this->postManager->getAllPosts();
-        $this->render("admin/post/manage_post", ["posts" => $posts]);
+        $posts = $this->postManager->getAllPost();
+        foreach ($posts as $post){
+            $categoryId = $post->getCategoryId();
+            $categoryName = $this->categoryManager->getCategoriesName($categoryId);
+            $categoriesNames[] = $categoryName;
+        }
+        $mediasDesc = [];
+        foreach ($posts as $post){
+            $mediaId = $post->getMediaId();
+            if ($mediaId !== null) {
+                $mediaDesc = $this->mediaManager->getMediaDescription($mediaId);
+                $mediasDesc[] = $mediaDesc;
+            }
+        }
+        $this->render("admin/post/manage_post", ["posts" => $posts, "categoriesNames" => $categoriesNames, "mediasDesc" => $mediasDesc]);
     }
     
     public function manageProduct()
@@ -139,11 +152,13 @@ class AdminController extends AbstractController{
             $categoryName = $this->categoryManager->getCategoriesName($categoryId);
             $categoriesNames[] = $categoryName;
         }
-        
+        $mediasDesc = [];
         foreach ($products as $product){
             $mediaId = $product->getMediaId();
-            $mediaDesc = $this->mediaManager->getMediaDescription($mediaId);
-            $mediasDesc[] = $mediaDesc;
+            if ($mediaId !== null) {
+                $mediaDesc = $this->mediaManager->getMediaDescription($mediaId);
+                $mediasDesc[] = $mediaDesc;
+            }
         }
         $this->render("admin/product/manage_product", ["products" => $products, "categoriesNames" => $categoriesNames, "mediasDesc" => $mediasDesc]);
     }

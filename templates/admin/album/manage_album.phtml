@@ -44,17 +44,26 @@
     <!-- Formulaire pour ajouter un nouvel album -->
     <h2>Ajouter un nouvel album</h2>
     <form action="/ZERODEGRE_/admin/album/add" method="post">
-        <label for="albumTitle">Titre de l'album:</label>
-        <input type="text" id="albumTitle" name="albumTitle" required>
-        <label for="albumYear">Année:</label>
-        <input type="number" id="albumYear" name="albumYear" required>
-        <label for="albumMediaUrl">URL du média:</label>
-        <input type="text" id="albumMediaUrl" name="albumMediaUrl" required>
-        <label for="albumMediaAltText">Texte alternatif du média:</label>
-        <input type="text" id="albumMediaAltText" name="albumMediaAltText" required>
+        <fieldset>
+            <legend>Informations de l'album</legend>
+            <label for="albumTitle">Titre de l'album:</label>
+            <input type="text" id="albumTitle" name="albumTitle" required><br>
+            <label for="albumYear">Année:</label>
+            <input type="number" id="albumYear" name="albumYear" required><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Informations du média</legend>
+            <label for="albumMediaUrl">URL du média:</label>
+            <input type="text" id="albumMediaUrl" name="albumMediaUrl" required><br>
+            <label for="albumMediaAltText">Texte alternatif du média:</label>
+            <input type="text" id="albumMediaAltText" name="albumMediaAltText" required><br>
+        </fieldset>
+
         <button type="submit">Ajouter Album</button>
         <input type="hidden" name="album-form" value="submit"/>
     </form>
+
 
 </section>
 <script type="text/javascript" src="./../assets/js/admin_modal.js"></script>
