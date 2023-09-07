@@ -11,11 +11,11 @@ class ProductManager extends AbstractManager {
         return $results;
     }
 
-    public function getProductByName(string $name) : ? User
+    public function getProductByName(string $name) 
     {
         $class = "Product";
         $query = "SELECT * FROM products WHERE products.name = :name";
-        $parameters = array(":name" => name);
+        $parameters = array(":name" => $name);
         
         $result = $this->getResult($query, $parameters, $class, true);
         return $result;
@@ -50,10 +50,8 @@ class ProductManager extends AbstractManager {
         
         $this->getQuery($query, $parameters);
         
-        // Obtenez l'ID inséré
         $lastInsertId = $this->connex->lastInsertId();
         
-        // A vérifier !!!
         $product->setId($lastInsertId);
         return $product;
     }

@@ -10,21 +10,15 @@ class PostManager extends AbstractManager {
         return $results;
     }
 
-    public function getPostById(int $id) : ?Post
+    public function getPostById(int $id)
     {
         $class = "Post";
         $query = ("SELECT * FROM post WHERE post.id = :id");
         $parameters = array(":id" => $id);
-        
         $result = $this->getResult($query, $parameters, $class, true);
-        
-        if($result !== null){
-            $result->setId($result["id"]);
-        }
-        
         return $result;
     }
-    public function getPostByTitle(string $title) : ?Post 
+    public function getPostByTitle(string $title)
     {
         $class = "Post";
         $query = ("SELECT * FROM post WHERE post.title = :title");
@@ -37,7 +31,7 @@ class PostManager extends AbstractManager {
         }
         return $result;
     }
-    public function getPostByAuthor(string $author) : ?Post 
+    public function getPostByAuthor(string $author) 
     {
         $class = "Post";
         $query = ("SELECT * FROM post WHERE post.author = :author");
@@ -67,7 +61,6 @@ class PostManager extends AbstractManager {
     }
 
     
-    //Quoi faire avec category_id et media_id et date  ??????
     public function createPost(Post $post) : ?Post
     {
         $query = ("INSERT INTO post(title, content, date, author, category_id, media_id) VALUES (:title, :content, :date, :author, :category_id, :media_id)");
@@ -77,10 +70,28 @@ class PostManager extends AbstractManager {
         
         // Obtenez l'ID inséré
         $lastInsertId = $this->connex->lastInsertId();
-        
-        // A vérifier !!!
         $post->setId($lastInsertId);
         return $post;
+    }
+
+    public function updatePost($post) {
+        $query = "UPDATE post SET title = :title, content = :content, date = :date, author = :author, category_id = :category_id, media_id = :media_id WHERE id = :id";
+        $parameters = array(
+            ":id" => $post->getId(),
+            ":title" => $post->getTitle(),
+            ":content" => $post->getContent(),
+            ":date" => $post->getDate(),
+            ":author" => $post->getAuthor(),
+            ":category_id" => $post->getCategoryId(),
+            ":media_id" => $post->getMediaId()
+        );
+        $this->getQuery($query, $parameters);
+    }
+
+    public function deletePost($postId) {
+        $query = "DELETE FROM post WHERE id = :id";
+        $parameters = array(":id" => $postId);
+        $this->getQuery($query, $parameters);
     }
 } 
 ?>

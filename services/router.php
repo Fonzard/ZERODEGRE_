@@ -238,14 +238,14 @@ class Router {
                     $this->adminController->managePost();
                 } elseif ($routeAndParams["route"] === "admin/post/create") 
                 {
-                    $this->artistController->createPost();
+                    $this->postController->createPost();
                 } elseif ($routeAndParams["route"] === "admin/post/edit" && isset($_GET['id'])) 
                 {
-                    $this->artistController->editPost($_GET['id']);
+                    $this->postController->editPost($_GET['id']);
                     
                 } elseif ($routeAndParams["route"] === "admin/post/delete" && isset($_GET['id'])) 
                 {
-                    $this->artistController->deletePost($_GET['id']);
+                    $this->postController->deletePost($_GET['id']);
                 }
                 
             }

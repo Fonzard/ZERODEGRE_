@@ -1,0 +1,37 @@
+<section class="manage-admin">
+    <!-- Formulaire de création d'article -->
+    <h3>Créer un nouvel article</h3>
+    <form action="/ZERODEGRE_/admin/post/create" method="post">
+        <fieldset>
+            <legend>Informations de l'article</legend>
+            <label for="post_title">Titre :</label>
+            <input type="text" name="post_title" required><br>
+
+            <label for="post_content">Contenu :</label>
+            <textarea name="post_content" required></textarea><br>
+
+            <label for="post_date">Date :</label>
+            <input type="date" name="post_date" required><br>
+            
+            <label for="post_author">Auteur :</label>
+            <input type="text" name="post_author" required><br>
+        </fieldset>
+
+        <fieldset>
+            <label for="post-categoryId"> Choisir la catégorie </label>
+            <!--Offrir la possibilité de créer un categorie sous forme de fenetre modale ??-->
+            <select name="post-categoryId" id="post-categoryId">
+                <?php foreach($data['categories'] as $category) : ?>
+                <option value="<?=$category->getId()?>"> <?= $category->getName(); ?> </option>
+                <?php endforeach; ?>
+            </select>
+            <label for="post-mediaId"> Ajouter des médias </label>
+            <input type="text" name="post-url" id="post-url" placeholder="Chemin/de/l'image">
+            <input type="text" name="post-altText" id="post-altText" placeholder="Text alternatif"/>
+        </fieldset>
+        <input type="hidden" name="post-form"  value="submit"/>
+        <fieldset>
+            <button type="submit"> Créer l'article </button>
+        </fieldset>
+    </form>
+</section>

@@ -125,10 +125,11 @@ class AdminController extends AbstractController{
     
     public function managePost()
     {
+        $categories = $this->categoryManager->getAllCategoriesPost();
         $posts = $this->postManager->getAllPost();
         foreach ($posts as $post){
             $categoryId = $post->getCategoryId();
-            $categoryName = $this->categoryManager->getCategoriesName($categoryId);
+            $categoryName = $this->categoryManager->getCategoriesPostName($categoryId);
             $categoriesNames[] = $categoryName;
         }
         $mediasDesc = [];
@@ -139,7 +140,7 @@ class AdminController extends AbstractController{
                 $mediasDesc[] = $mediaDesc;
             }
         }
-        $this->render("admin/post/manage_post", ["posts" => $posts, "categoriesNames" => $categoriesNames, "mediasDesc" => $mediasDesc]);
+        $this->render("admin/post/manage_post", ["posts" => $posts, "categoriesNames" => $categoriesNames, "mediasDesc" => $mediasDesc, "categories" => $categories]);
     }
     
     public function manageProduct()
@@ -149,7 +150,7 @@ class AdminController extends AbstractController{
         $categoriesNames = [];
         foreach ($products as $product){
             $categoryId = $product->getCategoryId();
-            $categoryName = $this->categoryManager->getCategoriesName($categoryId);
+            $categoryName = $this->categoryManager->getCategoriesProductsName($categoryId);
             $categoriesNames[] = $categoryName;
         }
         $mediasDesc = [];

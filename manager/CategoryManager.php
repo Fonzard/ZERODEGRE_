@@ -11,7 +11,7 @@ class CategoryManager extends AbstractManager {
         return $results;
     }
     
-    public function getCategoriesName($categoryId) 
+    public function getCategoriesProductsName($categoryId) 
     {
         
         $query = "SELECT categories_products.name FROM categories_products WHERE categories_products.id = :categoryId";
@@ -35,7 +35,7 @@ class CategoryManager extends AbstractManager {
         return $category;
     }
     
-    public function deleteCategoriesProducts(in $categoryId) : void
+    public function deleteCategoriesProducts(int $categoryId) : void
     {
         $query = "DELETE FROM categories_products WHERE id = :id";
         $parameters = array("id" => $categoryId);
@@ -50,5 +50,23 @@ class CategoryManager extends AbstractManager {
         
         $this->getQuery($query, $parameters);
     }
-    
+    //Générale Categories Post
+    public function getAllCategoriesPost()
+    {
+        $class = "Category";
+        $query = "SELECT * FROM categories_post";
+        $results = $this->getResult($query, null, $class, false);
+        return $results;
+    }
+
+    public function getCategoriesPostName($categoryId) 
+    {
+        
+        $query = "SELECT name FROM categories_post WHERE id = :categoryId";
+        $parameters = array(':categoryId' => $categoryId);
+        
+        $result = $this->getQuery($query, $parameters, true);
+        return $result;
+
+    }
 }
