@@ -1,4 +1,82 @@
-#manage-admin .modal {
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+}
+* .header-admin {
+  padding: 0 12px;
+  z-index: 2;
+  width: 100%;
+  background: #111;
+  box-sizing: border-box;
+  border-bottom: 1px solid #fff;
+}
+* .header-admin .header-admin-title {
+  color: #fff;
+  line-height: 50px;
+  font-size: 22px;
+}
+* .header-admin #header-admin-menu-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  background: #fff;
+  color: #000;
+  line-height: 50px;
+  text-align: center;
+  font-size: 40px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+* .header-admin #header-admin-menu-button::after {
+  content: "x";
+}
+* .header-admin #header-admin-menu-button.close {
+  color: #fff;
+  background: #000;
+}
+* .header-admin #header-admin-menu-button.close::after {
+  content: "≡";
+}
+* #header-admin-menu {
+  transition: transfrom 0.5s;
+  position: absolute;
+  width: 50%;
+  max-width: 200px;
+  transform: translateY(-500px);
+  top: 0;
+}
+* #header-admin-menu ul {
+  display: block;
+}
+* #header-admin-menu ul li {
+  height: 50px;
+  line-height: 50px;
+  padding: 0 12px;
+  border-bottom: 1px solid #777;
+  background: #111;
+}
+* #header-admin-menu ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 18px;
+  transition: 0.2s;
+}
+* #header-admin-menu ul li a:hover {
+  color: #ff9900;
+}
+* #header-admin-menu.show-menu {
+  transform: translateY(51px);
+}
+* #manage-admin {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+* #manage-admin .modal {
   display: none;
   position: fixed;
   top: 0;
@@ -8,7 +86,7 @@
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 3;
 }
-#manage-admin .modal-content {
+* #manage-admin .modal-content {
   background-color: white;
   width: 300px;
   padding: 20px;
@@ -18,10 +96,10 @@
   transform: translate(-50%, -50%);
   border-radius: 5px;
 }
-#manage-admin .album-toggle {
+* #manage-admin .album-toggle {
   cursor: pointer;
 }
-#manage-admin .album-dropdown {
+* #manage-admin .album-dropdown {
   display: none;
 }
 
