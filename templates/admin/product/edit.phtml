@@ -1,4 +1,4 @@
-<main id="edit-product">  
+<main id="edit-product" class="admin-form">  
     <h2>Modifier un produit</h2>
     <?php $product = $data['product']; 
         $media = $data['media'];
@@ -22,7 +22,7 @@
         </fieldset>
         <fieldset>
             <label for="product-description"> Description </label>
-            <input type="textarea" name="product-description" id="product-description" value="<?= $product->getDescription() ?>"/>
+            <textarea name="product-description" id="product-description"><?= $product->getDescription() ?></textarea>
         </fieldset>
         <fieldset>
             <label for="product-quantity"> Quantité </label>
@@ -36,18 +36,26 @@
                 <?php endforeach; ?>
             </select>
         </fieldset>
+
+        <h3>Modifier Media</h3>
         <?php if (!empty($data['media'])) : ?>
         <fieldset>
-            <label for="product-mediaId"> Modifier le média </label>
-            <input type="text" name="product-url" id="product-url" value="<?= $media->getUrl() ?>">
-            <input type="text" name="product-altText" id="product-altText" placeholder="Text alternatif" value="<?= $media->getAltText() ?>"/>
+            <label for="product-url"> Url</label>
+            <input type="text" name="product-url" id="product-url" value="<?= $data['media']->getUrl() ?>">
+        </fieldset>
+        <fieldset>
+            <label for="product-altText">Texte descriptif</label>
+            <input type="text" name="product-altText" id="product-altText" placeholder="Texte alternatif" value="<?= $data['media']->getAltText() ?>"/>
             <input type="hidden" name="productMediaId" value="<?= $data['media']->getId() ?>">
         </fieldset>
         <?php else : ?>
-            <fieldset>
-            <label for="product-mediaId"> Modifier le média </label>
-            <input type="text" name="product-url" id="product-url">
-            <input type="text" name="product-altText" id="product-altText" placeholder="Text alternatif"/>
+        <fieldset>
+            <label for="product-url"> Url</label>
+            <input type="text" name="product-url" id="post-url">
+        </fieldset>
+        <fieldset>
+            <label for="product-altText">Texte descriptif</label>
+            <input type="text" name="product-altText" id="product-altText" placeholder="Texte alternatif"/>
             <input type="hidden" name="productMediaId" value="">
         </fieldset>
         <?php endif ; ?>

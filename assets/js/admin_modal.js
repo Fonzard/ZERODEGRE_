@@ -56,11 +56,3 @@ window.addEventListener('click', event => {
     //     // const newAction = baseAction + selectedSongId;
     //     // songDeleteBtn.setAttribute("data-action", newAction);
     // });
-
-
-/////////////////// DROPDOWN ALBUM \\\\\\\\\\\\\\\\\\\\\\\
-
-function toggleSongs(albumId) {
-    const dropdown = document.querySelector(`.album-dropdown[data-album="${albumId}"]`);
-    dropdown.style.display = (dropdown.style.display === 'none') ? 'block' : 'none';
-}

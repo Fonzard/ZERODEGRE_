@@ -1,56 +1,61 @@
-<h3>Modifier un Post</h3>
-<form action="/ZERODEGRE_/admin/post/edit?id=<?= $data['post']->getId() ?>" method="POST">
-    <input type="hidden" name="post_id" value="<?= $data['post']->getId() ?>">
+<main id="edit-post" class="admin-form">  
+    <h3>Modifier un Post</h3>
+    <form action="/ZERODEGRE_/admin/post/edit?id=<?= $data['post']->getId() ?>" method="POST">
+        <input type="hidden" name="post_id" value="<?= $data['post']->getId() ?>">
     
-    <fieldset>
-        <legend>Informations de base</legend>
+        <fieldset>
+            <label for="post_title">Titre :</label>
+            <input type="text" id="post_title" name="post_title" value="<?= htmlspecialchars($data['post']->getTitle()) ?>" required>
+        </fieldset>
+        <fieldset>
+            <label for="post_content">Contenu :</label>
+            <textarea id="post_content" name="post_content" required><?= htmlspecialchars($data['post']->getContent()) ?></textarea>
+        </fieldset>
+        <fieldset>
+            <label for="post_date">Date :</label>
+            <input type="date" id="post_date" name="post_date" value="<?= htmlspecialchars($data['post']->getDate()) ?>" required>
+        </fieldset>
+        <fieldset>
+            <label for="post_author">Auteur :</label>
+            <input type="text" id="post_author" name="post_author" value="<?= htmlspecialchars($data['post']->getAuthor()) ?>" required>
+        </fieldset>
 
-        <label for="post_title">Titre :</label>
-        <input type="text" id="post_title" name="post_title" value="<?= htmlspecialchars($data['post']->getTitle()) ?>" required><br>
+        <fieldset>
+            <label for="post_category">Catégorie :</label>
+            <select id="post_category" name="post_category">
+                <?php foreach ($data['categories'] as $category) : ?>
+                    <option value="<?= $category->getId() ?>" <?php if ($category->getId() === $data['post']->getCategoryId()) echo 'selected' ?>>
+                        <?= htmlspecialchars($category->getName()) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </fieldset>
 
-        <label for="post_content">Contenu :</label>
-        <textarea id="post_content" name="post_content" required><?= htmlspecialchars($data['post']->getContent()) ?></textarea><br>
-
-        <label for="post_date">Date :</label>
-        <input type="date" id="post_date" name="post_date" value="<?= htmlspecialchars($data['post']->getDate()) ?>" required><br>
-
-        <label for="post_author">Auteur :</label>
-        <input type="text" id="post_author" name="post_author" value="<?= htmlspecialchars($data['post']->getAuthor()) ?>" required><br>
-    </fieldset>
-
-    <fieldset>
-        <legend>Catégorie</legend>
-
-        <label for="post_category">Catégorie :</label>
-        <select id="post_category" name="post_category">
-            <?php foreach ($data['categories'] as $category) : ?>
-                <option value="<?= $category->getId() ?>" <?php if ($category->getId() === $data['post']->getCategoryId()) echo 'selected' ?>>
-                    <?= htmlspecialchars($category->getName()) ?>
-                </option>
-            <?php endforeach; ?>
-        </select><br>
-    </fieldset>
-
-    <?php if (!empty($data['media'])) : ?>
-    <fieldset>
-        <legend>Média</legend>
-
-        <label for="post-mediaId"> Modifier le média </label>
-        <input type="text" name="post-url" id="post-url" value="<?= $data['media']->getUrl() ?>">
-        <input type="text" name="post-altText" id="post-altText" placeholder="Texte alternatif" value="<?= $data['media']->getAltText() ?>"/>
-        <input type="hidden" name="postMediaId" value="<?= $data['media']->getId() ?>">
-    </fieldset>
-    <?php else : ?>
-    <fieldset>
-        <legend>Média</legend>
-
-        <label for="post-mediaId"> Modifier le média </label>
-        <input type="text" name="post-url" id="post-url">
-        <input type="text" name="post-altText" id="post-altText" placeholder="Texte alternatif"/>
-        <input type="hidden" name="postMediaId" value="">
-    </fieldset>
-    <?php endif ; ?>
-
-    <button type="submit">Modifier le Post</button>
-    <input type="hidden" name="post-edit-form" value="submit">
-</form>
+        <h3>Modifier Media</h3>
+        <?php if (!empty($data['media'])) : ?>
+        <fieldset>
+            <label for="post-url"> Url</label>
+            <input type="text" name="post-url" id="post-url" value="<?= $data['media']->getUrl() ?>">
+        </fieldset>
+        <fieldset>
+            <label for="post-altText">Texte descriptif</label>
+            <input type="text" name="post-altText" id="post-altText" placeholder="Texte alternatif" value="<?= $data['media']->getAltText() ?>"/>
+            <input type="hidden" name="postMediaId" value="<?= $data['media']->getId() ?>">
+        </fieldset>
+        <?php else : ?>
+        <fieldset>
+            <label for="post-url"> Url</label>
+            <input type="text" name="post-url" id="post-url">
+        </fieldset>
+        <fieldset>
+            <label for="post-altText">Texte descriptif</label>
+            <input type="text" name="post-altText" id="post-altText" placeholder="Texte alternatif"/>
+            <input type="hidden" name="postMediaId" value="">
+        </fieldset>
+        <?php endif ; ?>
+        <fieldset>
+            <button type="submit">Modifier le Post</button>
+        </fieldset>
+        <input type="hidden" name="post-edit-form" value="submit">
+    </form>
+</main>

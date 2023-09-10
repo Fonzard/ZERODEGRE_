@@ -7,7 +7,6 @@ class Router {
     private AuthController $authController;
     private CategoryController $categoryController;
     private HomeController $homeController;
-    private MediaController $mediaController;
     private PostController $postController;
     private ProductController $productController;
     
@@ -50,7 +49,11 @@ class Router {
                 $routeAndParams["route"] = "logout";  
                 
             } else if (isset($_SESSION["role"]) && $_SESSION["role"] === "Admin")  //////////ADMIN USER
-            { 
+            {
+                if ($tab[1] === "dashboard" && !isset($tab[2]))
+                {
+                    $routeAndParams["route"] = "admin/dashboard";
+                }
                 if ($tab[1] === "user" && !isset($tab[2])) 
                 {
                     $routeAndParams["route"] = "admin/user";
@@ -87,9 +90,9 @@ class Router {
                 {
                     $routeAndParams["route"] = "admin/album";
                     
-                } elseif ($tab[1] === "album" && $tab[2] === "add") 
+                } elseif ($tab[1] === "album" && $tab[2] === "create") 
                 {
-                    $routeAndParams["route"] = "admin/album/add";
+                    $routeAndParams["route"] = "admin/album/create";
                     
                 } elseif ($tab[1] === "album" && $tab[2] === "addSong" && isset($_GET["id"])) 
                 {
@@ -172,6 +175,10 @@ class Router {
                 $this->authController->logout();
             } else if (isset($_SESSION["role"]) && $_SESSION["role"] === "Admin") 
             {
+                if($routeAndParams["route"] === "admin/dashboard")
+                {
+                    $this->adminController->dashboard();
+                }
                 // ADMIN / USER \\
                 if ($routeAndParams["route"] === "admin/user") 
                 {
@@ -201,7 +208,7 @@ class Router {
                 elseif ($routeAndParams["route"] === "admin/album") 
                 {
                     $this->adminController->manageAlbum();
-                } elseif ($routeAndParams["route"] === "admin/album/add") 
+                } elseif ($routeAndParams["route"] === "admin/album/create") 
                 {
                     $this->albumController->addAlbum();   
                 } elseif ($routeAndParams["route"] === "admin/album/addSong" && isset($_GET['id'])) 

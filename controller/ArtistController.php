@@ -26,17 +26,12 @@ class ArtistController extends AbstractController {
                 $artist->setAlbums(null);
             } else {
                 $artistWithAlbum = $artist;
-                var_dump($artistWithAlbum);
 
                 foreach($albums as $album)
                 {
-                    
-                    echo "wessh";
                     $artistWithAlbum->setAlbums($album); 
-                }
-                
+                } 
             }
-            var_dump($artistWithAlbum);
             
             return $artistWithAlbum; 
         }
@@ -49,10 +44,10 @@ class ArtistController extends AbstractController {
         if (isset($_POST["artist-edit-form"]) && $_POST["artist-edit-form"] === "submit") 
         {
             // Récupérer les données du formulaire
-            $name = $this->clean($_POST['artistName']);
-            $description = $this->clean($_POST['artistDescription']);
-            $mediaUrl = $this->clean($_POST['artistMediaUrl']);
-            $mediaAltText = $this->clean($_POST['artistMediaAltText']);
+            $name = $this->clean($_POST['artist-name']);
+            $description = $this->clean($_POST['artist-description']);
+            $mediaUrl = $this->clean($_POST['artist-url']);
+            $mediaAltText = $this->clean($_POST['artist-altText']);
     
             if (isset($_POST['artistMediaId'])) 
             {
@@ -91,26 +86,22 @@ class ArtistController extends AbstractController {
     public function createArtist()
     {    
         if (isset($_POST["artist-form"]) && $_POST["artist-form"] === "submit") {
-            var_dump("yooooo");
             $name = $this->clean($_POST['name']);
             $description =$this->clean( $_POST['description']);
-            $mediaUrl = $this->clean($_POST['mediaUrl']);
-            $mediaAltText = $this->clean($_POST['mediaAltText']);
+            $mediaUrl = $this->clean($_POST['url']);
+            $mediaAltText = $this->clean($_POST['altText']);
             
             $media = new Media($mediaUrl, $mediaAltText);
             $this->mm->insertMedia($media);
             
             $mediaId = $media->getId();
             
-            var_dump($media);
             $newArtist = new Artist($name, $description, $mediaId);
-            var_dump($newArtist);
             $this->am->create($newArtist);
             
             $_SESSION['message'] = "L'artiste ". $name ." créé avec succès.";
             header("location: /ZERODEGRE_/admin/artist");
         } else {
-            var_dump("wesshhhh");
             $this->render("admin/artist/create", []);
         }
     }

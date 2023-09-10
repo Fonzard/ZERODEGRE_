@@ -1,0 +1,116 @@
+.manage-admin { // Créer une class ou un main exclusif à la partie admin 
+    max-width:800px;
+    margin:0 auto;
+    h2 {
+        padding:1em;
+    }
+    .button-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding:1em;
+        .custom-button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .custom-button:hover {
+            background-color: #ccc;
+            color: #fff;
+        }
+    }
+
+
+    .admin-message {
+        background-color: #ff5555;
+        color: #fff;
+        width: 50%;
+        padding: 10px;
+        text-align: center;
+        margin: 1em;
+        border-radius: 40px;
+    } 
+    .admin-table-container {
+        width: 100%; /* Ajustez la largeur selon vos besoins */
+        overflow-x: auto; /* Activer le défilement horizontal */
+        padding-left: 1em;
+        .admin-table {
+            width:100%;
+            border-collapse: collapse;
+            th {
+                background-color: #333;
+                color:#ddd;
+            }
+            th, td {
+                padding: 10px;
+                border: 1px solid #333;
+            }
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+            .admin-table-btn {
+                display: flex;
+                gap: 10px; 
+                a {
+                    text-decoration: none;
+                    padding: 8px 16px; 
+                    border: 1px solid #007bff; 
+                    color: #007bff; 
+                    background-color: transparent; 
+                    border-radius: 10px; 
+                    &:hover {
+                        background-color: #007bff; 
+                        color: #fff; 
+                    }
+                }
+            }
+            .album-dropdown {
+                display: none;
+                .album-song-list {
+                    list-style-type: none; /* Supprimer les puces de la liste */
+                    margin: 0; /* Supprimer la marge par défaut */
+                    padding: 0;
+                    li {
+                        display: inline-block; /* Afficher les éléments de liste en ligne */
+                        margin-right: 10px; /* Ajouter un espace entre les éléments si nécessaire */
+                    }
+                }
+            }
+        }
+        .album-toggle {
+            cursor: pointer;
+            color: #007bff; 
+        }
+    }
+    
+    .admin-btn {
+        display: flex;
+        justify-content: space-between;
+        margin: 1em;
+        a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff; 
+            padding: 10px; 
+            border-radius: 10px; 
+            transition: background-color 0.3s ease-in-out; 
+            &:hover {
+                background-color: #0056b3; 
+            }
+        }
+        a:last-child {
+            background-color: #dc3545;
+        } 
+        a:last-child:hover {
+            background-color: #c82333; 
+        }
+    }
+
+}
+

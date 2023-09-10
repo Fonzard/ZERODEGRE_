@@ -1,0 +1,46 @@
+/* Styles de base pour les formulaires d'édition */
+.admin-form {
+    max-width: 100%;
+    padding: 20px;
+    margin: 20px;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    h2 {
+        margin-bottom: 20px;
+    }
+    .form-errors {
+        color: red;
+        margin-bottom: 10px;
+    }
+    fieldset {
+        border: none;
+        label {
+            display: block;
+            font-weight: bold;
+        }
+        input
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px; // Taille de police adaptée aux mobiles
+        }
+    }
+    button[type="submit"] {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        &:hover {
+            background-color: #0056b3;
+        }
+    }
+}

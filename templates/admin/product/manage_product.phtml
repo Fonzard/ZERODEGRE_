@@ -1,13 +1,12 @@
-<section id="manage-admin">
+<main class="manage-admin">
     <h2>Gestion des produits</h2>
-    <p class="message">
-        <?php
-            if(isset($_SESSION['message'])) {
-                echo "<p>" .$_SESSION['message'] ."</p>";
-                unset($_SESSION['message']); // Effacer le message pour qu'il ne s'affiche pas à chaque rafraîchissement
-            }
-        ?>
-    </p>
+
+    <?php
+        if(isset($_SESSION['message'])) {
+            echo "<p class='admin-message'>" .$_SESSION['message'] ."</p>";
+            unset($_SESSION['message']); // Effacer le message pour qu'il ne s'affiche pas à chaque rafraîchissement
+        }
+    ?>
 
     <!--Fenetre Modale Delete-->
     <div id="deleteModal" class="modal">
@@ -17,21 +16,22 @@
             <button id="cancel-delete">Annuler</button>
         </div>
     </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Description</th>
-                <th>Quantité</th>
-                <th>Catégorie</th>
-                <th>Nom du média</th>
-            </tr>
-        </thead>
-        <tbody id="tableBody">
-    <?php foreach ($data['products'] as $key => $product) : ?>
+    <section class="admin-table-container">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Quantité</th>
+                    <th>Catégorie</th>
+                    <th>Nom du média</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+        <?php foreach ($data['products'] as $key => $product) : ?>
                 <tr>
                     <td><?= htmlspecialchars($product->getId()); ?></td>
                     <td><?= htmlspecialchars($product->getName()); ?></td>
@@ -41,16 +41,19 @@
                     <td><?= $data['categoriesNames'][$key]['name']  ?></td> 
                     <td><?= $data['mediasDesc'][$key]['alt_text'] ?></td>   
                     <td>
-                        <a href="/ZERODEGRE_/admin/product/edit&id=<?= htmlspecialchars($product->getId()); ?>" class="edit-btn">Modifier</a>
-                        <a class="open-modal" data-entity-id="<?= htmlspecialchars($product->getId()); ?>" data-entity-type="product">Supprimer</a>
+                        <div class="admin-table-btn">
+                            <a href="/ZERODEGRE_/admin/product/edit&id=<?= htmlspecialchars($product->getId()); ?>" class="edit-btn">Modifier</a>
+                            <a class="open-modal" data-entity-id="<?= htmlspecialchars($product->getId()); ?>" data-entity-type="product">Supprimer</a>
+                        </div>
                     </td>
                 </tr>
-    <?php endforeach; ?>
-        </tbody>
-    </table>
-    
-    <a href="/ZERODEGRE_/admin/product/create">Ajouter un produit</a>
-    
-    <a href="/ZERODEGRE_/homepage">Retour à l'accueil</a>
-</section>
+        <?php endforeach; ?>
+            </tbody>
+        </table>
+        <section class="admin-btn">
+            <a href="/ZERODEGRE_/admin/product/create">Ajouter un produit</a>
+            <a href="/ZERODEGRE_/admin/dashboard">Retour au Dashboard</a>
+        </section>
+    </section>
+</main>
 <script type="text/javascript" src="./../assets/js/admin_modal.js"></script>

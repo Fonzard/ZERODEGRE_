@@ -39,8 +39,6 @@ class AlbumManager extends AbstractManager {
         $parameters = array("artistId" => $artistId);
         $albums = [];
         $albums[] = $this->getResult($query, $parameters, $class, "Album", false);
-        var_dump($albums);
-        echo "<br>";
         return $albums;
     }
     public function add(Album $album) : ?Album

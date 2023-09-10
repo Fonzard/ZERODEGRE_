@@ -1,69 +1,65 @@
-<section class="manage-admin">
-    <p class="message">
-        <?php
-            if(isset($_SESSION['message'])) {
-                echo $_SESSION['message'];
-                unset($_SESSION['message']); // Effacer le message pour qu'il ne s'affiche pas à chaque rafraîchissement
-            }
-        ?>
-    </p>
+<main class="manage-admin">
+    <h2>Gestion des Albums et des chansons</h2>
+
+    <?php
+        if(isset($_SESSION['message'])) {
+            echo "<p class='admin-message'>" .$_SESSION['message'] ."</p>";
+            unset($_SESSION['message']); // Effacer le message pour qu'il ne s'affiche pas à chaque rafraîchissement
+        }
+    ?>
+
+
     <!-- Liste des albums avec chansons -->
-    <h2>Liste des albums avec chansons</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Titre de l'album</th>
-                <th>Chansons</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($data['albumsWithSongs'] as $album): ?>
+    <section class="admin-table-container"> 
+        <table class="admin-table">
+            <thead>
                 <tr>
-                    <td><?= $album->getTitre() ?></td>
-                    <td class="album-toggle" onclick="toggleSongs(<?= $album->getId() ?>)">Voir les chansons</td>
+                    <th>ID</th>
+                    <th>Titre de l'album</th>
+                    <th>Année de sortie</th>
+                    <th>Chanson</th>
+                    <th>Actions</th>
                 </tr>
-                <tr class="album-dropdown" data-album="<?= $album->getId() ?>">
-                    <td colspan="2">
-                        <ul>
-                            
-                            <?php foreach ($album->getSongs() as $song): ?>
-                                <li><?= $song->getTitle() ?> (<?= $song->getDuration() ?>)</li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </td>
-                    <td>
-                        <a href="/ZERODEGRE_/admin/album/edit&id=<?= htmlspecialchars($album->getId()); ?>" class="edi-btn">Modifier</a>
-                        <a class="open-modal" data-entity-id="<?= htmlspecialchars($album->getId()); ?>" data-entity-type="album">Supprimer</a>
-                        <a href="/ZERODEGRE_/admin/album/addSong&id=<?= htmlspecialchars($album->getId()); ?>" class="add-song">Ajouter un son</a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    
-    <!-- Formulaire pour ajouter un nouvel album -->
-    <h2>Ajouter un nouvel album</h2>
-    <form action="/ZERODEGRE_/admin/album/add" method="post">
-        <fieldset>
-            <legend>Informations de l'album</legend>
-            <label for="albumTitle">Titre de l'album:</label>
-            <input type="text" id="albumTitle" name="albumTitle" required><br>
-            <label for="albumYear">Année:</label>
-            <input type="number" id="albumYear" name="albumYear" required><br>
-        </fieldset>
-
-        <fieldset>
-            <legend>Informations du média</legend>
-            <label for="albumMediaUrl">URL du média:</label>
-            <input type="text" id="albumMediaUrl" name="albumMediaUrl" required><br>
-            <label for="albumMediaAltText">Texte alternatif du média:</label>
-            <input type="text" id="albumMediaAltText" name="albumMediaAltText" required><br>
-        </fieldset>
-
-        <button type="submit">Ajouter Album</button>
-        <input type="hidden" name="album-form" value="submit"/>
-    </form>
-
-
-</section>
+            </thead>
+            <tbody id="admin-table-body">
+                <?php foreach ($data['albumsWithSongs'] as $album): ?>
+                    <tr>
+                        <td>
+                            <?= $album->getId() ?>
+                        </td>
+                        <td>
+                            <?= $album->getTitre() ?>
+                        </td>
+                        <td>
+                            <?= $album->getYear() ?>
+                        </td>
+                        <td>
+                            <a class="album-toggle" href="#"onclick="toggleSongs(<?= $album->getId() ?>)">Voir les chansons</a>
+                        </td>
+                        <td>
+                            <div class="admin-table-btn">
+                                <a href="/ZERODEGRE_/admin/album/edit&id=<?= htmlspecialchars($album->getId()); ?>" class="edi-btn">Modifier</a>
+                                <a class="open-modal" data-entity-id="<?= htmlspecialchars($album->getId()); ?>" data-entity-type="album">Supprimer</a>
+                                <a href="/ZERODEGRE_/admin/album/addSong&id=<?= htmlspecialchars($album->getId()); ?>" class="add-song">Ajouter un son</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="album-dropdown" data-album="<?= $album->getId() ?>">
+                        <td colspan="2">
+                            <ul class="album-song-list">
+                                <?php foreach ($album->getSongs() as $song): ?>
+                                    <li><?= $song->getTitle() ?> (<?= $song->getDuration() ?>)</li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </section> 
+    <section class="admin-btn">
+        <a href="/ZERODEGRE_/admin/album/create">Ajouter un album</a>
+        <a href="/ZERODEGRE_/admin/dashboard">Retour au Dashboard</a>
+    </section> 
+</main>
 <script type="text/javascript" src="./../assets/js/admin_toggle.js"></script>

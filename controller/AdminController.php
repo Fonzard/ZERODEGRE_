@@ -25,10 +25,9 @@ class AdminController extends AbstractController{
         $this->songManager = new SongManager();
         $this->userManager = new UserManager();
     }
-    public function index() 
+    public function dashboard() 
     {
-        $template = "admin/dashboard";
-        require "templates/layout.phtml";
+        $this->render("admin/dashboard", []);
     }
     ////// MANAGE USER //////
     public function manageUser()
@@ -49,7 +48,6 @@ class AdminController extends AbstractController{
                         echo json_encode(array("success" => false, "message" => "Aucun Utilisateur disponible."));
                     } else {
                         $responseData = array('success' => true, 'message' => 'Utilisateurs supprimé avec succès.', 'users' => $newUserList);
-                        // var_dump($responseData);
                         echo json_encode($responseData);
                     }
         } else {

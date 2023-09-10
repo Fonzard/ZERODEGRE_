@@ -1,21 +1,39 @@
-<h2>Modifier un artiste</h2>
-<form action="/ZERODEGRE_/admin/artist/edit&id=<?= $data['artist']->getId() ?>" method="post">
-    <label for="artistName">Nom de l'artiste:</label>
-    <input type="text" id="name" name="artistName" value="<?= $data['artist']->getName() ?>" required>
-    <label for="artistDescription">Description:</label>
-    <textarea id="description" name="artistDescription" required><?= $data['artist']->getDescription() ?></textarea>
+<main id="edit-artist" class="admin-form">
+    <h2>Modifier un artiste</h2>
+    <form action="/ZERODEGRE_/admin/artist/edit&id=<?= $data['artist']->getId() ?>" method="post">
+        <fieldset>
+            <label for="artist-name">Nom de l'artiste:</label>
+            <input type="text" name="artist-name" value="<?= $data['artist']->getName() ?>" required>
+        </fieldset>
+        <fieldset>
+            <label for="artist-description">Description:</label>
+            <textarea name="artist-description"><?= $data['artist']->getDescription() ?></textarea>
+        </fieldset>
+        <h3>Modifier Media</h3>
         <?php if (!empty($data['media'])) : ?>
-            <label for="artistMediaUrl">Media URL:</label>
-            <input type="text" id="artistMediaUrl" name="artistMediaUrl" value="<?= $data['media']->getUrl() ?>">
-            <label for="artistMediaAltText">Media Alt Text:</label>
-            <input type="text" id="artistMediaAltText" name="artistMediaAltText" value="<?= $data['media']->getAltText() ?>">
-            <input type="hidden" name="artistMediaId" value="<?= $data['media']->getId() ?>">
+            <fieldset>
+                <label for="artist-url"> Url</label>
+                <input type="text" name="artist-url" id="artist-url" value="<?= $data['media']->getUrl() ?>">
+            </fieldset>
+            <fieldset>
+                <label for="artist-altText">Texte descriptif</label>
+                <input type="text" name="artist-altText" id="artist-altText" placeholder="Texte alternatif" value="<?= $data['media']->getAltText() ?>"/>
+                <input type="hidden" name="artistMediaId" value="<?= $data['media']->getId() ?>">
+            </fieldset>
         <?php else : ?>
-            <label for="artistMediaUrl">Media URL:</label>
-            <input type="text" id="artistMediaUrl" name="artistMediaUrl">
-            <label for="artistMediaAltText">Media Alt Text:</label>
-            <input type="text" id="artistMediaAltText" name="artistMediaAltText">
+            <fieldset>
+                <label for="artist-url"> Url</label>
+                <input type="text" name="artist-url" id="artist-url">
+            </fieldset>
+            <fieldset>
+                <label for="artist-altText">Texte descriptif</label>
+                <input type="text" name="artist-altText" id="artist-altText" placeholder="Texte alternatif"/>
+                <input type="hidden" name="artistMediaId" value="">
+            </fieldset>
         <?php endif ; ?>
-    <button type="submit">Modifier Artiste</button>
-    <input type="hidden" name="artist-edit-form" value="submit"/>
-</form>
+            <fieldset>
+                <button type="submit"> Modifier le l'artiste </button>
+            </fieldset>
+        <input type="hidden" name="artist-edit-form" value="submit"/>
+    </form>
+</main>

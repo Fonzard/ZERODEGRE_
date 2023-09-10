@@ -52,14 +52,13 @@ class AlbumController extends AbstractController{
         if (isset($_POST["album-form"]) && $_POST["album-form"] === "submit") 
         {
             // Récupérer les données du formulaire
-            $titre = $this->clean($_POST['albumTitle']);
-            $year = $this->clean($_POST['albumYear']);
-            $mediaUrl = $this->clean($_POST['albumMediaUrl']);
-            $mediaAltText = $this->clean($_POST['albumMediaAltText']);
+            $titre = $this->clean($_POST['album-title']);
+            $year = $this->clean($_POST['album-year']);
+            $mediaUrl = $this->clean($_POST['album-url']);
+            $mediaAltText = $this->clean($_POST['album-altText']);
         
             // Vérifier si le média existe déjà dans la base de données
             $mediaId = $this->mm->getMediaIdByUrl($mediaUrl);
-            var_dump($mediaId);
             if ($mediaId === false) {
                 // Créer un nouvel objet Media
                 $media = new Media($mediaUrl, $mediaAltText);
@@ -86,6 +85,8 @@ class AlbumController extends AbstractController{
                 header("location: /ZERODEGRE_/admin/album/create");
                 $_SESSION['message'] = "Erreur pour la création d'album, veuillez recommencer.";
             }
+        } else {
+            $this->render("admin/album/create_album", []);
         }
     }
     // GOOOOOOOOOOOOOD
@@ -123,11 +124,10 @@ class AlbumController extends AbstractController{
         
         if (isset($_POST["album-edit-form"]) && $_POST["album-edit-form"] === "edit") 
         {
-            var_dump($_POST);
-            $titre = $this->clean($_POST['albumTitle']);
-            $year = $this->clean($_POST['albumYear']);
-            $mediaUrl = $this->clean($_POST['albumMediaUrl']);
-            $mediaAltText = $this->clean($_POST['albumMediaAltText']);
+            $titre = $this->clean($_POST['album-title']);
+            $year = $this->clean($_POST['album-year']);
+            $mediaUrl = $this->clean($_POST['album-url']);
+            $mediaAltText = $this->clean($_POST['album-altText']);
             $errors = [];
     
             if (!isset($titre))
@@ -181,7 +181,6 @@ class AlbumController extends AbstractController{
             $songAlbum = $this->sm->getAllSongInAlbum($albumId);
             $mediaId = $album->getMediaId();
             $media = $this->mm->getMediaById($mediaId);
-            var_dump($media);
             $this->render("admin/album/edit", ["album" => $album, "media" => $media, "song" =>$songAlbum]);
         }
     }
@@ -190,9 +189,9 @@ class AlbumController extends AbstractController{
     {
         if(isset($_GET['id']))
         {
-            $album = $_GET['id'];
-            $this->am->delete($productId);
-            $newAlbumList = $this->pm->getAllAlbum();
+            $albumId = $_GET['id'];
+            $this->am->delete($albumId);
+            $newAlbumList = $this->am->getAllAlbum();
             // Ne marche pas, Prendre le temps de trouver la soluce !!!!!!!!
                 if (empty($newAlbumList)) {
                     echo json_encode(array("success" => false, "message" => "Aucun album disponible."));

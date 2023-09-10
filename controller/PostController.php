@@ -70,10 +70,10 @@ class PostController extends AbstractController
     public function createPost() {
         if (isset($_POST["post-form"]) && $_POST["post-form"] === "submit") {
             // Récupérer les données du formulaire
-            $title = $this->clean($_POST['post_title']);
-            $content = $this->clean($_POST['post_content']);
-            $date = $_POST['post_date'];
-            $author = $this->clean($_POST['post_author']);
+            $title = $this->clean($_POST['post-title']);
+            $content = $this->clean($_POST['post-content']);
+            $date = $_POST['post-date'];
+            $author = $this->clean($_POST['post-author']);
             $categoryId = $_POST['post-categoryId'];
             $url = $this->clean($_POST['post-url']);
             $altText = $this->clean($_POST['post-altText']);

@@ -1,22 +1,65 @@
 @charset "UTF-8";
-* {
-  margin: 0;
-  padding: 0;
+/* Styles de base pour les formulaires d'édition */
+.admin-form {
+  max-width: 100%;
+  padding: 20px;
+  margin: 20px;
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  border-radius: 10px;
 }
-* .header-admin {
+.admin-form h2 {
+  margin-bottom: 20px;
+}
+.admin-form .form-errors {
+  color: red;
+  margin-bottom: 10px;
+}
+.admin-form fieldset {
+  border: none;
+}
+.admin-form fieldset label {
+  display: block;
+  font-weight: bold;
+}
+.admin-form fieldset input select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+.admin-form button[type=submit] {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+.admin-form button[type=submit]:hover {
+  background-color: #0056b3;
+}
+
+.header-admin {
   padding: 0 12px;
   z-index: 2;
   width: 100%;
-  background: #111;
+  background: #333;
   box-sizing: border-box;
   border-bottom: 1px solid #fff;
 }
-* .header-admin .header-admin-title {
+.header-admin .header-admin-title {
   color: #fff;
   line-height: 50px;
   font-size: 22px;
+  margin-top: 0;
 }
-* .header-admin #header-admin-menu-button {
+.header-admin #header-admin-menu-button {
   position: absolute;
   top: 0;
   right: 0;
@@ -31,17 +74,18 @@
   cursor: pointer;
   transition: all 0.5s;
 }
-* .header-admin #header-admin-menu-button::after {
+.header-admin #header-admin-menu-button::after {
   content: "x";
 }
-* .header-admin #header-admin-menu-button.close {
+.header-admin #header-admin-menu-button.close {
   color: #fff;
-  background: #000;
+  background: #333;
 }
-* .header-admin #header-admin-menu-button.close::after {
+.header-admin #header-admin-menu-button.close::after {
   content: "≡";
 }
-* #header-admin-menu {
+
+#header-admin-menu {
   transition: transfrom 0.5s;
   position: absolute;
   width: 50%;
@@ -49,34 +93,145 @@
   transform: translateY(-500px);
   top: 0;
 }
-* #header-admin-menu ul {
+#header-admin-menu ul {
   display: block;
+  list-style: none;
+  padding-left: 0;
 }
-* #header-admin-menu ul li {
+#header-admin-menu ul li {
   height: 50px;
   line-height: 50px;
   padding: 0 12px;
   border-bottom: 1px solid #777;
-  background: #111;
+  background: #333;
 }
-* #header-admin-menu ul li a {
+#header-admin-menu ul li a {
   text-decoration: none;
   color: #fff;
   font-size: 18px;
   transition: 0.2s;
 }
-* #header-admin-menu ul li a:hover {
+#header-admin-menu ul li a:hover {
   color: #ff9900;
 }
-* #header-admin-menu.show-menu {
+
+#header-admin-menu.show-menu {
   transform: translateY(51px);
 }
-* #manage-admin {
+
+.manage-admin {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
 }
-* #manage-admin .modal {
+.manage-admin h2 {
+  padding: 1em;
+}
+.manage-admin .button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 1em;
+}
+.manage-admin .button-container .custom-button {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.manage-admin .button-container .custom-button:hover {
+  background-color: #ccc;
+  color: #fff;
+}
+.manage-admin .admin-message {
+  background-color: #ff5555;
+  color: #fff;
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+  margin: 1em;
+  border-radius: 40px;
+}
+.manage-admin .admin-table-container {
+  width: 100%; /* Ajustez la largeur selon vos besoins */
+  overflow-x: auto; /* Activer le défilement horizontal */
+  padding-left: 1em;
+}
+.manage-admin .admin-table-container .admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.manage-admin .admin-table-container .admin-table th {
+  background-color: #333;
+  color: #ddd;
+}
+.manage-admin .admin-table-container .admin-table th, .manage-admin .admin-table-container .admin-table td {
+  padding: 10px;
+  border: 1px solid #333;
+}
+.manage-admin .admin-table-container .admin-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+.manage-admin .admin-table-container .admin-table .admin-table-btn {
+  display: flex;
+  gap: 10px;
+}
+.manage-admin .admin-table-container .admin-table .admin-table-btn a {
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 1px solid #007bff;
+  color: #007bff;
+  background-color: transparent;
+  border-radius: 10px;
+}
+.manage-admin .admin-table-container .admin-table .admin-table-btn a:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+.manage-admin .admin-table-container .admin-table .album-dropdown {
+  display: none;
+}
+.manage-admin .admin-table-container .admin-table .album-dropdown .album-song-list {
+  list-style-type: none; /* Supprimer les puces de la liste */
+  margin: 0; /* Supprimer la marge par défaut */
+  padding: 0;
+}
+.manage-admin .admin-table-container .admin-table .album-dropdown .album-song-list li {
+  display: inline-block; /* Afficher les éléments de liste en ligne */
+  margin-right: 10px; /* Ajouter un espace entre les éléments si nécessaire */
+}
+.manage-admin .admin-table-container .album-toggle {
+  cursor: pointer;
+  color: #007bff;
+}
+.manage-admin .admin-btn {
+  display: flex;
+  justify-content: space-between;
+  margin: 1em;
+}
+.manage-admin .admin-btn a {
+  text-decoration: none;
+  color: #fff;
+  background-color: #007bff;
+  padding: 10px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease-in-out;
+}
+.manage-admin .admin-btn a:hover {
+  background-color: #0056b3;
+}
+.manage-admin .admin-btn a:last-child {
+  background-color: #dc3545;
+}
+.manage-admin .admin-btn a:last-child:hover {
+  background-color: #c82333;
+}
+
+.modal {
   display: none;
   position: fixed;
   top: 0;
@@ -86,7 +241,8 @@
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 3;
 }
-* #manage-admin .modal-content {
+
+.modal-content {
   background-color: white;
   width: 300px;
   padding: 20px;
@@ -96,10 +252,12 @@
   transform: translate(-50%, -50%);
   border-radius: 5px;
 }
-* #manage-admin .album-toggle {
+
+.album-toggle {
   cursor: pointer;
 }
-* #manage-admin .album-dropdown {
+
+.album-dropdown {
   display: none;
 }
 

@@ -1,44 +1,46 @@
-<link rel="stylesheet" href="">
-<section class="manage-admin">
-    <p class="message">
-        <?php
-            if(isset($_SESSION['message'])) {
-                echo "<p>" .$_SESSION['message'] ."</p>";
-                unset($_SESSION['message']); // Effacer le message pour qu'il ne s'affiche pas à chaque rafraîchissement
-            }
-        ?>
-    </p>
-    <h2>Gestion des Articles</h2>  
+<main class="manage-admin">
+    <h2>Gestion des Articles</h2> 
+    <?php
+        if(isset($_SESSION['message'])) {
+            echo "<p>" .$_SESSION['message'] ."</p>";
+            unset($_SESSION['message']); // Effacer le message pour qu'il ne s'affiche pas à chaque rafraîchissement
+        }
+    ?>
     <!-- Liste des articles existants -->
-    <h3>Liste des Articles</h3>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Titre</th>
-            <th>Contenu</th>
-            <th>Date</th>
-            <th>Auteur</th>
-            <th>Catégorie</th>
-            <th>Média</th>
-            <th>Actions</th>
-        </tr>
-        <?php foreach ($data['posts'] as $key => $post) : ?>
+    <section class="admin-table-container">
+        <table class="admin-table">
             <tr>
-                <td><?= htmlspecialchars($post->getId()) ?></td>
-                <td><?= htmlspecialchars($post->getTitle()) ?></td>
-                <td><?= htmlspecialchars($post->getContent()) ?></td>
-                <td><?= htmlspecialchars($post->getDate()) ?></td>
-                <td><?= htmlspecialchars($post->getAuthor()) ?></td>
-                <td><?= $data['categoriesNames'][$key]['name']  ?></td>
-                <td><?= $data['mediasDesc'][$key]['alt_text'] ?></td>
-                <td>
-                    <a href="/ZERODEGRE_/admin/post/edit?id=<?= $post->getId() ?>">Modifier</a>
-                    <a href="/ZERODEGRE_/admin/delete_post?id=<?= $post->getId() ?>">Supprimer</a>
-                </td>
+                <th>ID</th>
+                <th>Titre</th>
+                <th>Contenu</th>
+                <th>Date</th>
+                <th>Auteur</th>
+                <th>Catégorie</th>
+                <th>Média</th>
+                <th>Actions</th>
             </tr>
-        <?php endforeach; ?>
-    </table>
-    <a href="/ZERODEGRE_/admin/post/create">Ajouter un article</a>
+            <?php foreach ($data['posts'] as $key => $post) : ?>
+                <tr>
+                    <td><?= htmlspecialchars($post->getId()) ?></td>
+                    <td><?= htmlspecialchars($post->getTitle()) ?></td>
+                    <td><?= htmlspecialchars($post->getContent()) ?></td>
+                    <td><?= htmlspecialchars($post->getDate()) ?></td>
+                    <td><?= htmlspecialchars($post->getAuthor()) ?></td>
+                    <td><?= $data['categoriesNames'][$key]['name']  ?></td>
+                    <td><?= $data['mediasDesc'][$key]['alt_text'] ?></td>
+                    <td>
+                        <div class="admin-table-btn">
+                            <a href="/ZERODEGRE_/admin/post/edit?id=<?= $post->getId() ?>">Modifier</a>
+                            <a href="/ZERODEGRE_/admin/delete_post?id=<?= $post->getId() ?>">Supprimer</a>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+        <div class="admin-btn">
+            <a href="/ZERODEGRE_/admin/post/create">Ajouter un article</a>
+            <a href="/ZERODEGRE_/admin/dashboard">Retour au Dashboard</a>
+        </div>
     
-    <a href="/ZERODEGRE_/homepage">Retour à l'accueil</a>
-</section>
+    </section>
+</main>

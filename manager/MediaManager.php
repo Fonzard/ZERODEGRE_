@@ -46,7 +46,6 @@ class MediaManager extends AbstractManager {
     }
     public function editMedia(Media $media)
     {
-        var_dump("editMedia");
         $query ="UPDATE medias SET url = :url, alt_text = :altText WHERE id = :id";
         $parameters = array("url" => $media->getUrl(), "altText" => $media->getAltText(), "id" => $media->getId());
         

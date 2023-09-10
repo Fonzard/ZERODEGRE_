@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>ZERO DEGRE</title>
-    <link rel="stylesheet" href=".././assets/styles/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="/ZERODEGRE_/assets/styles/css/normalize.css" type="text/css">
+    <link rel="stylesheet" href="/ZERODEGRE_/assets/styles/css/style.css" type="text/css" />
 </head>
 <body>
-    <main>
     <?php 
         if(isset($_SESSION["role"]) && $_SESSION["role"] === "Admin")
         {
@@ -15,6 +15,7 @@
             require 'templates/partials/_header.phtml';
         }
     ?>
+
     <?php require "templates/$template.phtml"; ?>
     
     <?php 
@@ -25,8 +26,7 @@
             require 'partials/_footer.phtml';
         // }
         ?>
-    <!--<script type="text/javascript" src="./assets/js/index.js"></script>-->
-    </main>
+
 </body>
-<script type="text/javascript" src="./../assets/js/admin_toggle.js"></script>
+<script type="text/javascript" src="/ZERODEGRE_/assets/js/admin_toggle.js"></script>
 </html>

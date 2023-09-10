@@ -1,0 +1,28 @@
+<main id="create-album" class="admin-form">
+    <!-- Formulaire pour ajouter un nouvel album -->
+    <h2>Ajouter un nouvel album</h2>
+    <form action="/ZERODEGRE_/admin/album/create" method="post">
+        <fieldset>
+            <label for="album-title">Titre de l'album:</label>
+            <input type="text" id="album-title" name="album-title" required>
+        </fieldset>
+        <fieldset>
+            <label for="album-year">Année:</label>
+            <input type="number" id="album-year" name="albu-year" required>
+        </fieldset>
+
+        <h3>Modifier Media</h3>
+        <fieldset>
+                <label for="album-url"> Url</label>
+                <input type="text" name="album-url" id="album-url" placeholder="Chemin/de/l'image">
+        </fieldset>
+        <fieldset>
+            <label for="album-altText">Texte descriptif</label>
+            <input type="text" name="album-altText" id="album-altText" placeholder="Texte alternatif"/>
+        </fieldset>
+        <fieldset>
+            <button type="submit">Ajouter Album</button>
+        </fieldset>
+        <input type="hidden" name="album-form" value="submit"/>
+    </form>
+</main>

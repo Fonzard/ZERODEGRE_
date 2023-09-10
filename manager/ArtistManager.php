@@ -40,7 +40,6 @@ class ArtistManager extends AbstractManager {
         $lastInsertId = $this->connex->lastInsertId();
         $artist->setId($lastInsertId);
         return $artist;
-        var_dump($artist);
     }
 
     public function editArtist(Artist $artist) {

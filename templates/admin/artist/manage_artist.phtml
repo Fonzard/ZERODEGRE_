@@ -1,47 +1,53 @@
-<section class="manage-admin">
-    <p class="message">
-        <?php
-            if(isset($_SESSION['message'])) {
-                echo $_SESSION['message'];
-                unset($_SESSION['message']); // Effacer le message pour qu'il ne s'affiche pas à chaque rafraîchissement
-            }
-        ?>
-    </p>
-    <h2>Manage Artists</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Nom du média</th>
-                <th>Album</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody> 
-            <?php foreach ($data['artistWithAlbum'] as $key => $artist) : ?>
+<main class="manage-admin">
+    <h2>Gestion des Artistes</h2>
+
+    <?php
+        if(isset($_SESSION['message'])) {
+            echo "<p class='admin-message'>" .$_SESSION['message'] ."</p>";
+            unset($_SESSION['message']); // Effacer le message pour qu'il ne s'affiche pas à chaque rafraîchissement
+        }
+    ?>
+    <section class="admin-table-container">
+        <table class="admin-table">
+            <thead>
                 <tr>
-                    <!-- Il faut que je renvoit des objets Artist remplit ou non d'album // La difficulté va être de rajouter les médias  -->
-                    <td><?= htmlspecialchars($artist->getId()) ?></td>
-                    <td><?= htmlspecialchars($artist->getName()) ?></td>
-                    <td><?= htmlspecialchars($artist->getDescription()) ?></td>
-                    <td><?= htmlspecialchars($data['mediaDesc'][$key]['alt_text']) ?></td>
-                    <?php $albums = $artist->getAlbums(); ?>
-                    <?php if ($albums !== null) : ?>
-                    <td>
-                        <?= htmlspecialchars($albums->getTitre()) ?><br>
-                    </td>
-                    <?php else : ?>
-                        <td></td> <!-- Case vide si pas d'albums associés -->
-                    <?php endif; ?>
-                    <td>
-                        <a href="/ZERODEGRE_/admin/artist/edit&id=<?= $artist->getId() ?>">Edit</a>
-                        <a href="/ZERODEGRE_/admin/artist/delete&id=<?= $artist->getId() ?>">Delete</a>
-                    </td>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Nom du média</th>
+                    <th>Album</th>
+                    <th>Actions</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <a href="/ZERODEGRE_/admin/artist/create">Créer un nouvel artiste</a>
-</section>
+            </thead>
+            <tbody> 
+                <?php foreach ($data['artistWithAlbum'] as $key => $artist) : ?>
+                    <tr>
+                        <!-- Il faut que je renvoit des objets Artist remplit ou non d'album // La difficulté va être de rajouter les médias  -->
+                        <td><?= htmlspecialchars($artist->getId()) ?></td>
+                        <td><?= htmlspecialchars($artist->getName()) ?></td>
+                        <td><?= htmlspecialchars($artist->getDescription()) ?></td>
+                        <td><?= htmlspecialchars($data['mediaDesc'][$key]['alt_text']) ?></td>
+                        <?php $albums = $artist->getAlbums(); ?>
+                        <?php if ($albums !== null) : ?>
+                        <td>
+                            <?= htmlspecialchars($albums->getTitre()) ?><br>
+                        </td>
+                        <?php else : ?>
+                            <td></td> <!-- Case vide si pas d'albums associés -->
+                        <?php endif; ?>
+                        <td>
+                            <div class="admin-table-btn">
+                                <a href="/ZERODEGRE_/admin/artist/edit&id=<?= $artist->getId() ?>">Modifier</a>
+                                <a href="/ZERODEGRE_/admin/artist/delete&id=<?= $artist->getId() ?>">Supprimer</a>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <div class="admin-btn">
+            <a href="/ZERODEGRE_/admin/artist/create">Créer un nouvel artiste</a>
+            <a href="/ZERODEGRE_/admin/dashboard">Retour au Dashboard</a>
+        </div>
+    </section>
+</main>
