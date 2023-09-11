@@ -1,8 +1,10 @@
 /* Styles de base pour les formulaires d'édition */
 .admin-form {
-    max-width: 100%;
+    max-width: 300px;
     padding: 20px;
-    margin: 20px;
+    margin: auto;
+    margin-top:40px;
+    margin-bottom:40px;
     background-color: #f4f4f4;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -17,7 +19,7 @@
         border: none;
         label {
             display: block;
-            font-weight: bold;
+            padding-bottom:5px;
         }
         input
         select {
@@ -44,3 +46,4 @@
         }
     }
 }
+

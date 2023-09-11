@@ -1,0 +1,34 @@
+
+$font-text-primary: 'Satoshi-Regular', sans-serif;
+$font-text-italic: 'Satoshi-Italic';
+$font-text-bold: 'Satoshi-Bold';
+
+$font-title-primary: 'libreCaslonText-Regular', sans-serif;
+$font-title-italic: "libreCaslonText-Italic";
+$font-title-bold: 'libreCaslonText-Bold';
+
+$base-font-size: 16px;
+
+$partials-color:#EDEEE9;
+$input-color:#EFECE5;
+$background-color: linear-gradient(180deg, rgba(21,19,42,1) 0%, rgba(60,76,173,1) 100%);  // background: rgb(21,19,42);
+
+
+body {
+    font-family:$font-text-primary;
+    background-color: $background-color;
+}
+h1, h2, h3, h4 {
+    font-family: $font-title-primary;
+}
+label {
+    font-family: $font-text-bold;
+}
+textarea, input {
+    background-color: $input-color;
+    border-radius: 6px;
+}
+a { 
+    text-decoration: none;
+    color:#fff;
+}

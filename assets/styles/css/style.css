@@ -1,9 +1,31 @@
 @charset "UTF-8";
+.footer {
+  background-color: #333;
+  height: 100px;
+  width: 100%;
+}
+.footer .footer-container {
+  width: 90%;
+  height: 100%;
+  display: flex;
+  margin: 0 5%;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer .footer-container .footer-logo h1 {
+  color: #fff;
+}
+.footer .footer-container .footer-nav a {
+  padding-right: 15px;
+}
+
 /* Styles de base pour les formulaires d'édition */
 .admin-form {
-  max-width: 100%;
+  max-width: 300px;
   padding: 20px;
-  margin: 20px;
+  margin: auto;
+  margin-top: 40px;
+  margin-bottom: 40px;
   background-color: #f4f4f4;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -20,7 +42,7 @@
 }
 .admin-form fieldset label {
   display: block;
-  font-weight: bold;
+  padding-bottom: 5px;
 }
 .admin-form fieldset input select {
   width: 100%;
@@ -48,13 +70,12 @@
 .header-admin {
   padding: 0 12px;
   z-index: 2;
-  width: 100%;
+  max-width: 769px;
   background: #333;
   box-sizing: border-box;
   border-bottom: 1px solid #fff;
 }
 .header-admin .header-admin-title {
-  color: #fff;
   line-height: 50px;
   font-size: 22px;
   margin-top: 0;
@@ -119,8 +140,19 @@
   transform: translateY(51px);
 }
 
+@media (min-width: 769px) and (max-width: 1024px) {
+  .header-admin {
+    max-width: 1024px;
+  }
+}
+@media (min-width: 1024px) {
+  .header-admin {
+    max-width: none;
+    width: 100%;
+  }
+}
 .manage-admin {
-  max-width: 800px;
+  max-width: 769px;
   margin: 0 auto;
 }
 .manage-admin h2 {
@@ -132,7 +164,7 @@
   gap: 10px;
   padding: 1em;
 }
-.manage-admin .button-container .custom-button {
+.manage-admin .button-container .dashboard-button {
   display: inline-block;
   padding: 10px 20px;
   border: 2px solid #ccc;
@@ -143,8 +175,8 @@
   font-weight: bold;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-.manage-admin .button-container .custom-button:hover {
-  background-color: #ccc;
+.manage-admin .button-container .dashboard-button:hover {
+  background-color: #333;
   color: #fff;
 }
 .manage-admin .admin-message {
@@ -210,7 +242,7 @@
 }
 .manage-admin .admin-btn {
   display: flex;
-  justify-content: space-between;
+  gap: 20px;
   margin: 1em;
 }
 .manage-admin .admin-btn a {
@@ -231,6 +263,16 @@
   background-color: #c82333;
 }
 
+@media (min-width: 769px) and (max-width: 1024px) {
+  .manage-admin {
+    max-width: 1024px;
+  }
+}
+@media (min-width: 1024px) {
+  .manage-admin {
+    width: 100%;
+  }
+}
 .modal {
   display: none;
   position: fixed;
@@ -259,6 +301,78 @@
 
 .album-dropdown {
   display: none;
+}
+
+@font-face {
+  font-family: "Satoshi-Regular";
+  src: url("/ZERODEGRE_/assets/fonts/Satoshi-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Satoshi-Italic";
+  src: url("/ZERODEGRE_/assets/fonts/Satoshi-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Satoshi-Bold";
+  src: url("/ZERODEGRE_/assets/fonts/Satoshi-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Satoshi-Black";
+  src: url("/ZERODEGRE_/assets/fonts/Satoshi-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "libreCaslonText-Regular";
+  src: url("/ZERODEGRE_/assets/fonts/libreCaslonText-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: "libreCaslonText-Italic";
+  src: url("/ZERODEGRE_/assets/fonts/libreCaslonText-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+  font-style: italic;
+}
+@font-face {
+  font-family: "libreCaslonText-Bold";
+  src: url("/ZERODEGRE_/assets/fonts/libreCaslonText-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+  font-style: bold;
+}
+body {
+  font-family: "Satoshi-Regular", sans-serif;
+  background-color: linear-gradient(180deg, rgb(21, 19, 42) 0%, rgb(60, 76, 173) 100%);
+}
+
+h1, h2, h3, h4 {
+  font-family: "libreCaslonText-Regular", sans-serif;
+}
+
+label {
+  font-family: "Satoshi-Bold";
+}
+
+textarea, input {
+  background-color: #EFECE5;
+  border-radius: 6px;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
 }
 
 /*# sourceMappingURL=style.css.map */

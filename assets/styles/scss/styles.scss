@@ -1,7 +1,9 @@
+// Public //
+@use 'public/_footer.scss';
+
 // ADMIN //
 @use 'admin/_form.scss';
 @use 'admin/_header.scss';
-@use 'admin/_footer.scss';
 @use 'admin/_main.scss';
 @use 'admin/_modal.scss';
 

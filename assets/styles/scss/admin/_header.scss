@@ -2,13 +2,12 @@
     padding:0 12px;
     // position:fixed;
     z-index:2;
-    width:100%;
+    max-width:769px;
     background:#333;
     box-sizing:border-box;
     border-bottom:1px solid #fff;
     
     .header-admin-title {
-        color:#fff;
         line-height:50px;
         font-size:22px;
         margin-top:0; //Pour s'adapter au normalize.scss
@@ -73,3 +72,14 @@
 #header-admin-menu.show-menu {
     transform:translateY(51px);
 }
+@media (min-width: 769px) and (max-width: 1024px) {
+    .header-admin {
+        max-width: 1024px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .header-admin {
+        max-width:none;
+        width:100%;
+    }
+  }
