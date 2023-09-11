@@ -1,6 +1,6 @@
 <main id="edit-album" class="admin-form">
     <!-- Form for editing an existing album -->
-    <h2>Editer un Album</h2>
+    <h3>Editer un Album</h3>
     <p class="form-errors">
     <?php
         if(isset($data['errors']))
@@ -21,21 +21,21 @@
         <h3>Modifier Media</h3>
             <?php if (!empty($data['media'])) : ?>
             <fieldset>
-                <label for="album-url"> Url</label>
+                <label for="album-url"> Url :</label>
                 <input type="text" name="album-url" id="album-url" value="<?= $data['media']->getUrl() ?>">
             </fieldset>
             <fieldset>
-                <label for="album-altText">Texte descriptif</label>
+                <label for="album-altText">Texte descriptif :</label>
                 <input type="text" name="album-altText" id="album-altText" placeholder="Texte alternatif" value="<?= $data['media']->getAltText() ?>"/>
                 <input type="hidden" name="albumMediaId" value="<?= $data['media']->getId() ?>">
             </fieldset>
             <?php else : ?>
             <fieldset>
-                <label for="album-url"> Url</label>
+                <label for="album-url"> Url :</label>
                 <input type="text" name="album-url" id="album-url">
             </fieldset>
             <fieldset>
-                <label for="album-altText">Texte descriptif</label>
+                <label for="album-altText">Texte descriptif :</label>
                 <input type="text" name="album-altText" id="album-altText" placeholder="Texte alternatif"/>
                 <input type="hidden" name="albumMediaId" value="">
             </fieldset>

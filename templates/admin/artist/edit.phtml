@@ -1,5 +1,5 @@
 <main id="edit-artist" class="admin-form">
-    <h2>Modifier un artiste</h2>
+    <h3>Modifier un artiste</h3>
     <form action="/ZERODEGRE_/admin/artist/edit&id=<?= $data['artist']->getId() ?>" method="post">
         <fieldset>
             <label for="artist-name">Nom de l'artiste:</label>
@@ -9,7 +9,7 @@
             <label for="artist-description">Description:</label>
             <textarea name="artist-description"><?= $data['artist']->getDescription() ?></textarea>
         </fieldset>
-        <h3>Modifier Media</h3>
+        <h3>Modifier un media</h3>
         <?php if (!empty($data['media'])) : ?>
             <fieldset>
                 <label for="artist-url"> Url</label>
