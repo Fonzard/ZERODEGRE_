@@ -14,7 +14,6 @@ class ArtistController extends AbstractController {
 
     public function getArtistWithAlbums($artistId) 
     {
-        
         $artist = $this->am->getArtistById($artistId); 
         
         if ($artist) 
@@ -32,10 +31,8 @@ class ArtistController extends AbstractController {
                     $artistWithAlbum->setAlbums($album); 
                 } 
             }
-            
             return $artistWithAlbum; 
         }
-        
         return $artist; 
     }
     // GOOOOOOOOD
@@ -90,7 +87,7 @@ class ArtistController extends AbstractController {
             $description =$this->clean( $_POST['description']);
             $mediaUrl = $this->clean($_POST['url']);
             $mediaAltText = $this->clean($_POST['altText']);
-            
+
             $media = new Media($mediaUrl, $mediaAltText);
             $this->mm->insertMedia($media);
             

@@ -40,6 +40,7 @@ class ArtistManager extends AbstractManager {
         $lastInsertId = $this->connex->lastInsertId();
         $artist->setId($lastInsertId);
         return $artist;
+
     }
 
     public function editArtist(Artist $artist) {
@@ -52,6 +53,13 @@ class ArtistManager extends AbstractManager {
     public function deleteArtist($artistId) {
         $query = "DELETE FROM artists WHERE id = :id";
         $parameters = array("id" => $artistId);
+        $this->getQuery($query, $parameters, true);
+    }
+
+    public function associateArtistAlbum($artistId, $albumId)
+    {
+        $query = "INSERT INTO artist_album SET artists_id = :artists_id, album_id = :album_id";
+        $parameters = array("artists_id" => $artistId, "album_id" => $albumId);
         $this->getQuery($query, $parameters, true);
     }
 }

@@ -1,6 +1,6 @@
 <main id="create-album" class="admin-form">
     <!-- Formulaire pour ajouter un nouvel album -->
-    <h2>Ajouter un nouvel album</h2>
+    <h3>Ajouter un nouvel album</h3>
     <form action="/ZERODEGRE_/admin/album/create" method="post">
         <fieldset>
             <label for="album-title">Titre de l'album:</label>
@@ -8,9 +8,18 @@
         </fieldset>
         <fieldset>
             <label for="album-year">Année:</label>
-            <input type="number" id="album-year" name="albu-year" required>
+            <input type="number" id="album-year" name="album-year" required>
         </fieldset>
-
+        <h3>Associer à un artiste</h3>
+        <fieldset>
+            <select name="associated-artist">
+                <?php foreach($data['artist'] as $artist) : ?>
+                    <option value="<?= $artist->getId() ?>">
+                            <?= htmlspecialchars($artist->getName())?>
+                    </option>
+                <?php endforeach;?>
+            </select>
+        </fieldset>
         <h3>Modifier Media</h3>
         <fieldset>
                 <label for="album-url"> Url</label>

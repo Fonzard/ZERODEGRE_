@@ -2,12 +2,14 @@
 class AlbumController extends AbstractController{
     
     private AlbumManager $am;
+    private ArtistManager $artistManager;
     private SongManager $sm;
     private MediaManager $mm;
     
     public function __construct()
     {
         $this->am = new AlbumManager();
+        $this->artistManager = new ArtistManager();
         $this->sm = new SongManager();
         $this->mm = new MediaManager();
     }
@@ -54,6 +56,7 @@ class AlbumController extends AbstractController{
             // Récupérer les données du formulaire
             $titre = $this->clean($_POST['album-title']);
             $year = $this->clean($_POST['album-year']);
+            $artistId = $this->clean($_POST['associated-artist']);
             $mediaUrl = $this->clean($_POST['album-url']);
             $mediaAltText = $this->clean($_POST['album-altText']);
         
@@ -76,7 +79,9 @@ class AlbumController extends AbstractController{
             $newAlbum = new Album($titre, $year, $editedMedia->getId()); 
             // Ajouter l'album à la base de données
             $addedAlbum = $this->am->add($newAlbum);
-        
+
+            $this->artistManager->associateArtistAlbum($artistId, $addedAlbum->getId());
+
             if ($addedAlbum) 
             {
                 header("location: /ZERODEGRE_/admin/album");
@@ -86,7 +91,8 @@ class AlbumController extends AbstractController{
                 $_SESSION['message'] = "Erreur pour la création d'album, veuillez recommencer.";
             }
         } else {
-            $this->render("admin/album/create_album", []);
+            $artists =$this->artistManager->getAllArtists();
+            $this->render("admin/album/create_album", ["artist" => $artists]);
         }
     }
     // GOOOOOOOOOOOOOD

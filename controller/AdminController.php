@@ -179,7 +179,6 @@ class AdminController extends AbstractController{
             {
                 $artistAlbum[] = $artistWithAlbum;
             }
-
         }
         $this->render("admin/artist/manage_artist", ["artistWithAlbum" => $artistAlbum, "mediaDesc" => $mediasDesc]);
     }
