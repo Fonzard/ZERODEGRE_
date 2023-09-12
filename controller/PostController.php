@@ -109,7 +109,25 @@ class PostController extends AbstractController
             // Gérer l'accès non autorisé ou d'autres erreurs
         }
     }
-
+    public function postIndex()
+    {
+        $categories = $this->cm->getAllCategoriesPost();
+        $posts = $this->pm->getAllPost();
+        foreach ($posts as $post){
+            $categoryId = $post->getCategoryId();
+            $categoryName = $this->cm->getCategoriesPostName($categoryId);
+            $categoriesNames[] = $categoryName;
+        }
+        $mediasDesc = [];
+        foreach ($posts as $post){
+            $mediaId = $post->getMediaId();
+            if ($mediaId !== null) {
+                $mediaDesc = $this->mm->getMediaDescription($mediaId);
+                $mediasDesc[] = $mediaDesc;
+            }
+        }
+        $this->render("admin/post/manage_post", ["posts" => $posts, "categoriesNames" => $categoriesNames, "mediasDesc" => $mediasDesc, "categories" => $categories]);
+    }
 }
 
 ?>

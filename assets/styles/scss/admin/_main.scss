@@ -73,12 +73,12 @@
             .album-dropdown {
                 display: none;
                 .album-song-list {
-                    list-style-type: none; /* Supprimer les puces de la liste */
-                    margin: 0; /* Supprimer la marge par défaut */
+                    list-style-type: none; 
+                    margin: 0; 
                     padding: 0;
                     li {
-                        display: inline-block; /* Afficher les éléments de liste en ligne */
-                        margin-right: 10px; /* Ajouter un espace entre les éléments si nécessaire */
+                        display: inline-block; 
+                        margin: 10px; 
                     }
                 }
             }
@@ -120,7 +120,7 @@
   }
 @media (min-width: 1024px) {
     .manage-admin {
-        width:100%;
+        min-width:1024px;
     }
   }
 

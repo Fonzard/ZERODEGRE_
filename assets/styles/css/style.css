@@ -29,6 +29,7 @@
   background-color: #f4f4f4;
   border: 1px solid #ccc;
   border-radius: 10px;
+  box-shadow: 0 10px 30px 0 rgba(25, 46, 59, 0.3);
 }
 .admin-form h2 {
   margin-bottom: 20px;
@@ -228,13 +229,13 @@
   display: none;
 }
 .manage-admin .admin-table-container .admin-table .album-dropdown .album-song-list {
-  list-style-type: none; /* Supprimer les puces de la liste */
-  margin: 0; /* Supprimer la marge par défaut */
+  list-style-type: none;
+  margin: 0;
   padding: 0;
 }
 .manage-admin .admin-table-container .admin-table .album-dropdown .album-song-list li {
-  display: inline-block; /* Afficher les éléments de liste en ligne */
-  margin-right: 10px; /* Ajouter un espace entre les éléments si nécessaire */
+  display: inline-block;
+  margin: 10px;
 }
 .manage-admin .admin-table-container .album-toggle {
   cursor: pointer;
@@ -270,7 +271,7 @@
 }
 @media (min-width: 1024px) {
   .manage-admin {
-    width: 100%;
+    min-width: 1024px;
   }
 }
 .modal {

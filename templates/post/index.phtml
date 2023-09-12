@@ -1,9 +1,11 @@
 <main class="main-post">
-    <article>
-        <img src=""></img>
-        <h3>Titre post</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda illum ducimus perspiciatis aut necessitatibus sequi quibusdam aliquam quidem officiis labore.</p>
+    <?php foreach($data["post"] as $post): ?>
+    <article class="article-post">
+        <img src="<?= ?>" alt="<?= ?>"></img>
+        <h3><?= $post->getTitle() ?></h3>
+        <p><?= $post->getContent() ?></p>
         <!--Possibilité de créer generateUrl() en method router-->
-        <button><a href="<?= index.php?route=product&id=<?= $productId ?>">Voir les détails du produits</a></button>
+        <button><a>Voir les détails du produits</a></button>
     </article>
+    <?php endforeach;?>
 </main>

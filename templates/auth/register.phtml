@@ -1,12 +1,10 @@
 <main id="register">  
     <h2>Inscription</h2>
     <form action="/ZERODEGRE_/register" method="post">
-        <p class="form-errors">
             <?php
                 if(isset($data['errors']))
-                    echo $data["errors"][0];
+                    echo "<p class='errors-message'>". $data["errors"][0]. "</p>";
             ?>
-        </p>
         <fieldset>
             <label for="register-firstName">
                 Prénom

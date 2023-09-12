@@ -2,10 +2,12 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>ZERO DEGRE</title>
+    <title>ZERODEGRE_</title>
     <link rel="stylesheet" href="/ZERODEGRE_/assets/styles/css/normalize.css" type="text/css">
     <link rel="stylesheet" href="/ZERODEGRE_/assets/styles/css/style.css" type="text/css" />
     <script src="https://kit.fontawesome.com/051e0c28d9.js" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/png" sizes="96x96" href="/ZERODEGRE_/assets/img/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/ZERODEGRE_/assets/img/favicon/favicon-16x16.png">
 </head>
 <body>
     <?php 
@@ -20,7 +22,7 @@
     <?php require "templates/$template.phtml"; ?>
     
     <?php         
-        if(isset($_SESSION["role"]) && $_SESSION["role"] !== "Admin")
+        if(isset($_SESSION["route"]) && $_SESSION["route"] !== "Admin")
             {
                 require 'partials/_footer.phtml';
             }

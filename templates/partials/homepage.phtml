@@ -1,9 +1,7 @@
-<main id="homepage">
-    <p class="register-done">
+<main id="homepage" class="">
         <?php
-            if(isset($data['message'])) {
-                echo $data['message'][0];
+            if(isset($data['errors'])) {
+                echo "<p class='errors-message'>".$data['errors'][0]."</p>";
             }
         ?>
-    </p>
 </main>

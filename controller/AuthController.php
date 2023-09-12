@@ -113,8 +113,7 @@ class AuthController extends AbstractController{
                     if(isset($_SESSION) && $_SESSION["role"] === "Admin")
                     {
                         //Rajouter un élément pour qu'admin sois montré actif
-                        echo ("weshhhhhh");
-                        header("location: /ZERODEGRE_/admin/user");
+                        header("location: /ZERODEGRE_/admin/dashboard");
                     } else {
                         $this->render("partials/homepage", [
                         "message" => ["Vous êtes bien connecté"]
