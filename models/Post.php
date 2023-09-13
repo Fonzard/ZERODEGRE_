@@ -7,6 +7,7 @@ class Post {
     private string $author;
     private ?int $category_id;
     private ?int $media_id;
+    private array $media = [];
 
     public function __construct(string $title, string $content, string $date, string $author, ?int $category_id, ?int $media_id) {
         $this->id = null;
@@ -54,6 +55,11 @@ class Post {
         return $this->media_id;
     }
 
+    public function getMedia(): array
+    {
+        return $this->media;
+    }
+
     //////////// Setters ////////////
     public function setId(?int $id) : void
     {
@@ -88,6 +94,11 @@ class Post {
     public function setMediaId(?int $media_id) : void
     {
         $this->media_id = $media_id;
+    }
+
+    public function setMedia(array $media) : void
+    {
+        $this->media = $media;
     }
 
     public function jsonSerialize()

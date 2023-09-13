@@ -1,11 +1,19 @@
 <main class="main-post">
-    <?php foreach($data["post"] as $post): ?>
+<section class="post-title">
+    <h2>Viens découvrir nos dernières activitées !</h2>
+    <p>ZeroDegrés ne se limite pas à la musique, c'est bien plus. Ils <span>produisent</span> des <span>artistes</span> et leur <span>musique</span>, mènent des <span>actions culturelles</span> et <span>sociales inspirantes</span>, et offrent des <span>concerts inoubliables</span> !! Le label est une véritable force créative dans le domaine musical et culturel.</p>
+</section>
+<section class="section-post">  
+    <?php foreach ($data['postsWithMedias'] as $key => $post) : ?>
     <article class="article-post">
-        <img src="<?= ?>" alt="<?= ?>"></img>
+        <?php foreach($post->getMedia() as $media) :?>
+        <img src="<?= $media->getUrl() ?>" alt="<?= $media->getAltText() ?>"></img>
+        <?php endforeach;?>
         <h3><?= $post->getTitle() ?></h3>
-        <p><?= $post->getContent() ?></p>
-        <!--Possibilité de créer generateUrl() en method router-->
-        <button><a>Voir les détails du produits</a></button>
+        <p><?= $post->getAuthor() ?></p>
+        <p><?= $data['categoriesNames'][$key]['name'] ?></p>
+        <button class="show-post"><a href="/ZERODEGRE_/post/show&id=<?= $post->getId() ?>">Découvrir l'article</a></button>
     </article>
     <?php endforeach;?>
+</section>
 </main>

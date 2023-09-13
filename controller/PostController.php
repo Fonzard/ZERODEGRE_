@@ -109,6 +109,27 @@ class PostController extends AbstractController
             // Gérer l'accès non autorisé ou d'autres erreurs
         }
     }
+
+    public function getPostWithMedia($postId) 
+    {
+        
+        $post = $this->pm->getPostById($postId); 
+        $mediaId = $post->getMediaId();
+        if ($post) 
+        {
+            $medias = $this->mm->getAllMediaInPost($mediaId); 
+            if ($medias === null) 
+            {
+                // Aucune chanson associée à l'album, renvoyer null
+                $post->setMedia([]);
+            } else {
+                $post->setMedia($medias); 
+            }
+            return $post; 
+        }
+        return $post; 
+    }
+
     public function postIndex()
     {
         $categories = $this->cm->getAllCategoriesPost();
@@ -118,15 +139,27 @@ class PostController extends AbstractController
             $categoryName = $this->cm->getCategoriesPostName($categoryId);
             $categoriesNames[] = $categoryName;
         }
-        $mediasDesc = [];
-        foreach ($posts as $post){
-            $mediaId = $post->getMediaId();
-            if ($mediaId !== null) {
-                $mediaDesc = $this->mm->getMediaDescription($mediaId);
-                $mediasDesc[] = $mediaDesc;
+        $postsWithMedias = [];
+        foreach ($posts as $post) {
+            $postWithMedias = $this->getPostWithMedia($post->getId());
+            if ($postWithMedias === null) 
+            {
+                // Aucune chanson associée à cet album, gérer l'erreur ici
+                $_SESSIONS['message'] = "Aucune média n'est associée à cette article en base de données.";
+                header("location: /ZERODEGRE_/post");
+            } else {
+                $postsWithMedias[] = $postWithMedias;
             }
         }
-        $this->render("admin/post/manage_post", ["posts" => $posts, "categoriesNames" => $categoriesNames, "mediasDesc" => $mediasDesc, "categories" => $categories]);
+        $this->render("post/index", ["posts" => $posts, "categoriesNames" => $categoriesNames, "postsWithMedias" => $postsWithMedias, "categories" => $categories]);
+    }
+
+    public function show($postId)
+    {
+        $post = $this->getPostWithMedia($postId);
+        $categoryId = $post->getCategoryId();
+        $categoryName = $this->cm->getCategoriesPostName($categoryId);
+        $this->render("post/show", ["post" => $post, "categoryName" => $categoryName]);
     }
 }
 

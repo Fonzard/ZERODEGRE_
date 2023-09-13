@@ -48,10 +48,15 @@ class Router {
             {
                 $routeAndParams["route"] = "logout";  
                 
-            } else if($tab[0] === "post") {
+            } else if($tab[0] === "post" && !isset($tab[1])) {
                 $routeAndParams["route"] = "post";
-            }
-            
+
+            } 
+            else if($tab[0] === "post" && $tab[1] === "show" && isset($_GET["id"]))
+            {
+                $routeAndParams["route"] = "post/show";
+                $routeAndParams["postId"] = $_GET["id"];
+            }   
             else if (isset($_SESSION["role"]) && $_SESSION["role"] === "Admin")  //////////ADMIN USER
             {
                 if ($tab[1] === "dashboard" && !isset($tab[2]))
@@ -179,6 +184,10 @@ class Router {
                 $this->authController->logout();
             } elseif ($routeAndParams["route"] === "post") {
                 $this->postController->postIndex();
+            } 
+            else if ($routeAndParams["route"] === "post/show" && isset($_GET["id"]))
+            {
+                $this->postController->show($_GET["id"]);
             }
             
             else if (isset($_SESSION["role"]) && $_SESSION["role"] === "Admin") 

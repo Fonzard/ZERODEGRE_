@@ -1,6 +1,9 @@
-// Public //
+// PUBLIC //
 @use 'public/_footer.scss';
 
+// post
+@use 'public/post/main-post.scss';
+@use 'public/post/main-show-post.scss';
 // ADMIN //
 @use 'admin/_form.scss';
 @use 'admin/_header.scss';
@@ -10,3 +13,4 @@
 // BASE //
 @use 'base/typography.scss';
 @use 'base/variable.scss';
+
