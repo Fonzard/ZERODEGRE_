@@ -1,7 +1,7 @@
 <main class="main-post">
 <section class="post-title">
     <h2>Viens découvrir nos dernières activitées !</h2>
-    <p>ZeroDegrés ne se limite pas à la musique, c'est bien plus. Ils <span>produisent</span> des <span>artistes</span> et leur <span>musique</span>, mènent des <span>actions culturelles</span> et <span>sociales inspirantes</span>, et offrent des <span>concerts inoubliables</span> !! Le label est une véritable force créative dans le domaine musical et culturel.</p>
+    <p>ZeroDegrés ne se limite pas à la musique, c'est bien plus. Nous <span>produisont</span> des <span>artistes</span> et leur <span>musique</span>, nous menons des <span>actions culturelles</span> et <span>sociales inspirantes</span>, et offront des <span>concerts inoubliables</span> !! Le label est une véritable force créative dans le domaine musical et culturel.</p>
 </section>
 <section class="section-post">  
     <?php foreach ($data['postsWithMedias'] as $key => $post) : ?>
@@ -12,7 +12,7 @@
         <h3><?= $post->getTitle() ?></h3>
         <p><?= $post->getAuthor() ?></p>
         <p><?= $data['categoriesNames'][$key]['name'] ?></p>
-        <button class="show-post"><a href="/ZERODEGRE_/post/show&id=<?= $post->getId() ?>">Découvrir l'article</a></button>
+        <button class="show-post"><a class="show-post-a" href="/ZERODEGRE_/post/show&id=<?= $post->getId() ?>">Découvrir l'article</a></button>
     </article>
     <?php endforeach;?>
 </section>

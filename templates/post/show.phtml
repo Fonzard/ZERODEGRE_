@@ -1,17 +1,17 @@
-<main class="show-post">
+<main class="main-show-post">
         <?php $article = $data['post'];
             $media = $article->getMedia();
         ?>
     <?php if ($article) : ?>
-        <article>
+        <section>
             <h2><?= $article->getTitle() ?></h2>
             <p class="author">Auteur : <?= $article->getAuthor() ?></p>
             <p class="category">Catégorie : <?= $data["categoryName"]['name'] ?></p>
             <p class="date">Date de publication : <?= $article->getDate() ?></p>
             <img src="<?= $media["0"]->getUrl() ?>" alt="<?= $media["0"]->getAltText() ?>">
             <p class="content"><?= $article->getContent() ?></p>
-            <a href="/ZERODEGRE_/post">Retour à la liste des articles</a>
-        </article>
+            <a href="/ZERODEGRE_/post">Tous les articles</a>
+    </section>
     <?php else : ?>
         <p>L'article que vous cherchez n'existe pas.</p>
     <?php endif; ?>
