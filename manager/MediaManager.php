@@ -39,7 +39,15 @@ class MediaManager extends AbstractManager {
         $results = $this->getResult($query,$parameters, $class, false);
         return $results;
     }
-    
+    //Album
+    public function getAllMediaInAlbum($albumId)
+    {
+        $class = "Media";
+        $query = "SELECT * FROM medias WHERE medias.id = :album_id";
+        $parameters = array("album_id" => $albumId);
+        $results = $this->getResult($query,$parameters, $class, false);
+        return $results;
+    }
     //Générale 
     public function insertMedia(Media $media)
     {

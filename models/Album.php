@@ -3,13 +3,16 @@ class Album implements JsonSerializable {
     private ?int $id;
     private string $titre;
     private int $year;
+    private string $info;
     private int $media_id;
     private array $songs = [];
+    private array $media = [];
 
-    public function __construct(string $titre, int $year, int $media_id) {
+    public function __construct(string $titre, int $year, string $info, int $media_id) {
         $this->id = null;
         $this->titre = $titre;
         $this->year = $year;
+        $this->info = $info;
         $this->media_id = $media_id;
     }
 
@@ -25,19 +28,29 @@ class Album implements JsonSerializable {
     public function getYear(): int {
         return $this->year;
     }
+
+    public function getInfo(): string {
+        return $this->info;
+    }
     
     public function getMediaId(): int 
     {
         return $this->media_id;
     }
+    
+    public function getSongs(): array 
+    {
+        return $this->songs;
+    }
+    
+    public function getMedia(): array
+    {
+        return $this->media;
+    }
     //////////// Setters ////////////
     public function setId(?int $id) : void
     {
         $this->id = $id;
-    }
-    public function getSongs(): array 
-    {
-        return $this->songs;
     }
     
     public function setTitre(string $titre): void {
@@ -46,6 +59,10 @@ class Album implements JsonSerializable {
 
     public function setYear(int $year): void {
         $this->year = $year;
+    }
+
+    public function setInfo(string $info): void {
+        $this->info = $info;
     }
     
     public function setMediaId(int $media_id): void {
@@ -57,12 +74,18 @@ class Album implements JsonSerializable {
         $this->songs = $songs;
     }
     
+    public function setMedia(array $media) : void
+    {
+        $this->media = $media;
+    }
+    
     public function jsonSerialize()
     {
         $array = [];
         $array["id"] = $this->id;
         $array["titre"] = $this->titre;
         $array["year"] = $this->year;
+        $array["info"] = $this->info;
         $array["media_id"] = $this->media_id;
 
         return $array;

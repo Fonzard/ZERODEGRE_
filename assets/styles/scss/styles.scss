@@ -1,9 +1,13 @@
 // PUBLIC //
 @use 'public/_footer.scss';
 
-// post
+// POST 
 @use 'public/post/main-post.scss';
 @use 'public/post/main-show-post.scss';
+
+// ALBUM
+@use 'public/album/main-album.scss';
+
 // ADMIN //
 @use 'admin/_form.scss';
 @use 'admin/_header.scss';

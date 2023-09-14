@@ -56,7 +56,15 @@ class Router {
             {
                 $routeAndParams["route"] = "post/show";
                 $routeAndParams["postId"] = $_GET["id"];
-            }   
+            } 
+            else if($tab[0] === "album" && !isset($tab[1])) {
+                $routeAndParams["route"] = "album";
+            }
+            else if($tab[0] === "album" && $tab[1] === "show" && isset($_GET["id"]))
+            {
+                $routeAndParams["route"] = "album";
+                $routeAndParams["albumId"] = $_GET["id"];
+            }
             else if (isset($_SESSION["role"]) && $_SESSION["role"] === "Admin")  //////////ADMIN USER
             {
                 if ($tab[1] === "dashboard" && !isset($tab[2]))
@@ -182,14 +190,19 @@ class Router {
             } else if ($routeAndParams["route"] === "logout") 
             {
                 $this->authController->logout();
-            } elseif ($routeAndParams["route"] === "post") {
+            } else if ($routeAndParams["route"] === "post") {
                 $this->postController->postIndex();
-            } 
-            else if ($routeAndParams["route"] === "post/show" && isset($_GET["id"]))
+            } else if ($routeAndParams["route"] === "post/show" && isset($_GET["id"]))
             {
                 $this->postController->show($_GET["id"]);
-            }
-            
+            } else if ($routeAndParams["route"] === "album")
+            {
+                $this->albumController->albumIndex();
+            } 
+            //else if ($routeAndParams{"route"} === "album/show" && isset($_GET["id"]))
+            //{
+                
+            //}
             else if (isset($_SESSION["role"]) && $_SESSION["role"] === "Admin") 
             {
                 if($routeAndParams["route"] === "admin/dashboard")

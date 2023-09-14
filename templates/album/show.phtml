@@ -1,0 +1,38 @@
+<main class = "main-show-album">
+    <?php $album = $data['albumWithMedia'] ;?>
+    <?php $media = $album->getMedia() ?>
+    <article class = "album-infos">
+        <img src="<? = $media->getUrl() ?>" alt="<?= $media->getAltText() ?>"></img>
+        <h2><?= $album->getTitre()?></h2>
+        <?php if($artist->getRoleId() === "4") : ?>
+        <p>Produit par : 
+            <?php
+            // Récupération du tableau des artistes depuis $data
+            $artists = $data['albumArtist'];
+    
+            // Utilisation de la fonction array_map pour transformer chaque objet artiste en son nom
+            $artistNames = array_map(function($artist) {
+                return $artist->getName();
+            }, $artists);
+    
+            // Utilisation de la fonction implode pour joindre les noms des artistes avec des virgules et un espace
+            echo implode(', ', $artistNames);
+            ?>
+        </p>
+        <?php else :?>
+        <p>Featurings : <?= $album->getInfo()?></p>
+        <?php endif; ?>
+        <p>12 titres – 52min – Triple 4 Gear – 2020</p> <!--Créer nouvelle colonne en BDD infos générales-->
+    </article>
+    
+    <ul class = "song-container">
+        <?php foreach($data["albumWithSong"] as $albumSong) : ?>
+        <?php $song = $albumSong->getSong()?>
+        <Li class = "song-only">
+            <h2><?= $song->getTitle() ?></h2>
+            <div class="points"></div>
+            <p><?= $song->getDuration() ?></p>
+            <button class="play-button">Lancer la musique</button>
+        </Li>
+    </ul>
+</main>

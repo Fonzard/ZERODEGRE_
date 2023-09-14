@@ -10,12 +10,16 @@
     </p>
     <form action="/ZERODEGRE_/admin/album/edit&id=<?= $_GET['id'] ?>" method="post">
         <fieldset>
-            <label for="album-title">Album Title:</label>
+            <label for="album-title">Titre de l'album:</label>
             <input type="text" id="album-title" name="album-title" value="<?= $data['album']->getTitre() ?>">
         </fieldset>
         <fieldset>
-            <label for="album-year">Year:</label>
+            <label for="album-year">Année:</label>
             <input type="number" id="album-year" name="album-year" value="<?= $data['album']->getYear() ?>">
+        </fieldset>
+        <fieldset>
+            <label for="album-info">Info :</label>
+            <input type="text" id="album-info" name="album-info" value="<?= $data['album']->getInfo() ?>">
         </fieldset>
         
         <h3>Modifier Media</h3>

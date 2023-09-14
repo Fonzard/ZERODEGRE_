@@ -23,6 +23,7 @@
                     <th>ID</th>
                     <th>Titre de l'album</th>
                     <th>Année de sortie</th>
+                    <th>Info Générale</th>
                     <th>Chanson</th>
                     <th>Actions</th>
                 </tr>
@@ -38,6 +39,9 @@
                         </td>
                         <td>
                             <?= $album->getYear() ?>
+                        </td>
+                        <td>
+                            <?= $album->getInfo() ?>
                         </td>
                         <td>
                             <a class="album-toggle" href="#"onclick="toggleSongs(<?= $album->getId() ?>)">Voir les chansons</a>

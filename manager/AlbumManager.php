@@ -43,8 +43,8 @@ class AlbumManager extends AbstractManager {
     }
     public function add(Album $album) : ?Album
     {
-        $query = "INSERT INTO album(titre, year, media_id) VALUES (:titre, :year, :media_id)";
-        $parameters = array("titre" => $album->getTitre(), "year" => $album->getYear(), "media_id" => $album->getMediaId());
+        $query = "INSERT INTO album(titre, year, media_id) VALUES (:titre, :year, :info, :media_id)";
+        $parameters = array("titre" => $album->getTitre(), "year" => $album->getYear(), "info" => $album->getInfo(), "media_id" => $album->getMediaId());
         
         $this->getQuery($query, $parameters);
         
@@ -65,8 +65,8 @@ class AlbumManager extends AbstractManager {
     
     public function edit(Album $album) : void
     {
-        $query ="UPDATE album SET titre = :titre, year = :year, media_id = :media_id WHERE id = :id";
-        $parameters = array("titre" => $album->getTitre(), "year" => $album->getYear(), "media_id" => $album->getMediaId(), "id" => $album->getId());
+        $query ="UPDATE album SET titre = :titre, year = :year, info = :info, media_id = :media_id WHERE id = :id";
+        $parameters = array("titre" => $album->getTitre(), "year" => $album->getYear(), "info" => $album->getInfo(), "media_id" => $album->getMediaId(), "id" => $album->getId());
         
         $this->getQuery($query, $parameters);
     } 

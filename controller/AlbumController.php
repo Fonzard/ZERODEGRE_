@@ -16,7 +16,7 @@ class AlbumController extends AbstractController{
     
     public function createAlbumWithSongs($albumData, $songsData) {
         
-        $album = new Album($albumData['titre'], $albumData['year'], $albumData['media_id']);
+        $album = new Album($albumData['titre'], $albumData['year'], $albumData['info'], $albumData['media_id']);
         $createdAlbum = $this->am->add($album);
 
         foreach ($songsData as $songData) {
@@ -48,6 +48,52 @@ class AlbumController extends AbstractController{
         return $album; 
     }
     
+    public function getAlbumWithMedia($albumId) 
+    {
+        
+        $album = $this->am->getAlbumById($albumId); 
+        $mediaId = $album->getMediaId();
+        if ($album) 
+        {
+            $medias = $this->mm->getAllMediaInPost($mediaId); 
+            if ($medias === null) 
+            {
+                // Aucune chanson associée à l'album, renvoyer null
+                $album->setMedia([]);
+            } else {
+                $album->setMedia($medias); 
+            }
+            return $album; 
+        }
+        return $album; 
+    }
+
+    public function albumIndex()
+    {
+        $albums = $this->am->getAllAlbum();
+        if (empty($albums)) {
+        
+            $_SESSION['message'] = "Aucun album n'a été trouvé en base de données.";
+            header("location: /ZERODEGRE_/album");
+            return;
+        }
+        $albumsWithMedias = [];
+        
+        foreach($albums as $album)
+        {
+            $albumWithMedias = $this->getAlbumWithMedia($album->getId());
+            if ($albumWithMedias === null) {
+                // Aucune média associée à cet article, gérer l'erreur ici
+                $_SESSION['message'] = "Aucun média n'est associé à cet album en base de données.";
+                header("location: /ZERODEGRE_/post");
+                return;
+            } else {
+                $albumsWithMedias[] = $albumWithMedias;
+            }
+        }
+        $this->render("album/index", ["albumWithMedia" => $albumsWithMedias]);
+    }
+
     public function AddAlbum()
     {
 
@@ -56,6 +102,7 @@ class AlbumController extends AbstractController{
             // Récupérer les données du formulaire
             $titre = $this->clean($_POST['album-title']);
             $year = $this->clean($_POST['album-year']);
+            $info = $this->clean($_POST['album-info']);
             $artistId = $this->clean($_POST['associated-artist']);
             $mediaUrl = $this->clean($_POST['album-url']);
             $mediaAltText = $this->clean($_POST['album-altText']);
@@ -76,7 +123,7 @@ class AlbumController extends AbstractController{
                 $editedMedia = $this->mm->getMediaById($media->getId());
             }
             
-            $newAlbum = new Album($titre, $year, $editedMedia->getId()); 
+            $newAlbum = new Album($titre, $year, $info, $editedMedia->getId()); 
             // Ajouter l'album à la base de données
             $addedAlbum = $this->am->add($newAlbum);
 
@@ -132,6 +179,7 @@ class AlbumController extends AbstractController{
         {
             $titre = $this->clean($_POST['album-title']);
             $year = $this->clean($_POST['album-year']);
+            $info = $this->clean($_POST['info']);
             $mediaUrl = $this->clean($_POST['album-url']);
             $mediaAltText = $this->clean($_POST['album-altText']);
             $errors = [];
@@ -169,10 +217,10 @@ class AlbumController extends AbstractController{
                 
                 $album->setTitre($titre);
                 $album->setYear($year);
+                $album->setInfo($info);
                 $album->setMediaId($editedMedia->getId());
                 $this->am->edit($album);
                 
-                // Redirect to the manage album
                 $_SESSION['message'] = "L'album a bien été modifié";
                 header("Location: /ZERODEGRE_/admin/album");
 
