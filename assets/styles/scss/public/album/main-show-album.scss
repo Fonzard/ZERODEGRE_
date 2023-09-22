@@ -1,0 +1,104 @@
+.main-show-album {
+    display: grid;
+    grid-template-columns: 1fr; // Une seule colonne
+    grid-gap: 20px;
+    align-items: center;
+    margin-top: 20px;
+
+    .album-header {
+        max-width:600px;
+        margin:0 auto;
+        img {
+            max-width: 300px;
+            margin: 0 auto; // Centrer l'image horizontalement
+            display: block; // Supprime les marges blanches sous l'image
+        }
+
+        .article-info {
+            margin-top:1.5em;
+            h2 {
+                font-size: 1.5em;
+                margin: 0;
+            }
+        }
+    }
+
+    .song-container {
+        list-style: none;
+        padding: 0;
+        width: 80%;
+        max-width:600px;
+        margin:0 auto;
+
+        .song-only {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+
+            h2 {
+                margin: 0;
+                font-weight: bold;
+                overflow: hidden;
+            }
+
+            .points {
+                flex: 1;
+                border: 1px dotted #000;
+                margin: 0 10px;
+            }
+
+            p {
+                font-size: 14px;
+                margin: 0;
+            }
+
+            .play-button {
+                background-color: #007BFF;
+                color: #fff;
+                border: none;
+                padding: 5px 10px;
+                cursor: pointer;
+                font-size: 14px;
+                border-radius: 5px;
+
+                &:hover {
+                    background-color: #0056b3;
+                }
+            }
+        }
+    }
+}
+
+// Styles pour les paragraphes "Produit par" et "Featurings"
+p {
+    font-size: 16px;
+    margin: 0;
+}
+
+@media screen and (min-width: 768px) {
+    .main-show-album {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .album-header {
+        display: flex;
+        flex-direction: row; // Disposition en ligne pour les tablettes et les ordinateurs
+        align-items: center;
+        margin-bottom: 20px;
+
+        img {
+            max-width: 300px;
+            margin-right: 20px; // Marge à droite de l'image
+        }
+        .article-info {
+            margin-left : 2em;
+            margin-top:0;
+        }
+    }
+
+    .song-container {
+        max-width: 950px; // Largeur maximale pour les tablettes et les ordinateurs
+    }
+}

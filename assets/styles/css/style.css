@@ -211,6 +211,97 @@
   }
 }
 
+.main-show-album {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+  align-items: center;
+  margin-top: 20px;
+}
+.main-show-album .album-header {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.main-show-album .album-header img {
+  max-width: 300px;
+  margin: 0 auto;
+  display: block;
+}
+.main-show-album .album-header .article-info {
+  margin-top: 1.5em;
+}
+.main-show-album .album-header .article-info h2 {
+  font-size: 1.5em;
+  margin: 0;
+}
+.main-show-album .song-container {
+  list-style: none;
+  padding: 0;
+  width: 80%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.main-show-album .song-container .song-only {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.main-show-album .song-container .song-only h2 {
+  margin: 0;
+  font-weight: bold;
+  overflow: hidden;
+}
+.main-show-album .song-container .song-only .points {
+  flex: 1;
+  border: 1px dotted #000;
+  margin: 0 10px;
+}
+.main-show-album .song-container .song-only p {
+  font-size: 14px;
+  margin: 0;
+}
+.main-show-album .song-container .song-only .play-button {
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 5px;
+}
+.main-show-album .song-container .song-only .play-button:hover {
+  background-color: #0056b3;
+}
+
+p {
+  font-size: 16px;
+  margin: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .main-show-album {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .album-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .album-header img {
+    max-width: 300px;
+    margin-right: 20px;
+  }
+  .album-header .article-info {
+    margin-left: 2em;
+    margin-top: 0;
+  }
+  .song-container {
+    max-width: 950px;
+  }
+}
 /* Styles de base pour les formulaires d'édition */
 .admin-form {
   max-width: 300px;
