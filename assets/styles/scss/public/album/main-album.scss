@@ -1,23 +1,21 @@
 .main-album {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centre les éléments horizontalement */
-    justify-content: center; /* Centre les éléments verticalement */
-    
-    .cover {
-      margin: 20px;
-      padding: 10px;
-      background-color: #f7f7f7;
-      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-      
-          img {
-            max-width: 100%;
-          }
-      }
-      @media (min-width: 768px) {
-      /* Pour les tablettes, afficher au maximum 2 pochettes par ligne */
-      flex-direction: row;
-      flex-wrap: wrap;
-      }
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centre les éléments horizontalement */
+  justify-content: center; /* Centre les éléments verticalement */
   
+  .cover {
+    margin: 20px;
+    background-color: #f7f7f7;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    
+        img {
+          max-width: 100%;
+        }
+    }
+    @media (min-width: 768px) {
+    /* Pour les tablettes, afficher au maximum 2 pochettes par ligne */
+    flex-direction: row;
+    flex-wrap: wrap;
+    }
+}

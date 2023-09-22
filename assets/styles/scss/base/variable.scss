@@ -11,12 +11,12 @@ $base-font-size: 18px;
 
 $partials-color:#EDEEE9;
 $input-color:#EFECE5;
-$background-color: linear-gradient(180deg, rgba(21,19,42,1) 0%, rgba(60,76,173,1) 100%);  // background: rgb(21,19,42);
+$background-gradient: linear-gradient(185deg, rgba(21,19,42,1) 0%, rgba(60,76,173,1) 58%);  // background: rgb(21,19,42);
 
 
 body {
     font-family:$font-text-primary;
-    background-color: $background-color;
+    background: $background-gradient;
 }
 h1, h2, h3, h4 {
     font-family: $font-title-primary;
@@ -30,6 +30,7 @@ textarea, input {
 }
 a { 
     text-decoration: none;
+    color:#fff;
 }
 p {
     font-size:$base-font-size;
