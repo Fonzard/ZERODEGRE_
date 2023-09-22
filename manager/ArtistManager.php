@@ -33,8 +33,8 @@ class ArtistManager extends AbstractManager {
     public function create(Artist $artist) 
     {
         $class = "Artist";
-        $query = "INSERT INTO artists (name, description, media_id) VALUES (:name, :description, :media_id)";
-        $parameters = array("name" => $artist->getName(), "description" => $artist->getDescription(), "media_id" => $artist->getMediaId());
+        $query = "INSERT INTO artists (name, description, media_id, role_id) VALUES (:name, :description, :media_id, :role_id)";
+        $parameters = array("name" => $artist->getName(), "description" => $artist->getDescription(), "media_id" => $artist->getMediaId(), "role_id" => $artist->getRoleId());
         $this->getQuery($query, $parameters, true);
 
         $lastInsertId = $this->connex->lastInsertId();
@@ -45,8 +45,8 @@ class ArtistManager extends AbstractManager {
 
     public function editArtist(Artist $artist) {
         
-        $query = "UPDATE artists SET name = :name, description = :description, media_id = :media_id WHERE id = :id";
-        $parameters = array("name" => $artist->getName(), "description" => $artist->getDescription(), "media_id" => $artist->getMediaId(),"id" => $artist->getId());
+        $query = "UPDATE artists SET name = :name, description = :description, media_id = :media_id, role_id = :role_id WHERE id = :id";
+        $parameters = array("name" => $artist->getName(), "description" => $artist->getDescription(), "media_id" => $artist->getMediaId(), "role_id" => $artist->getRoleId(), "id" => $artist->getId());
         $this->getQuery($query, $parameters, true);
     }
 

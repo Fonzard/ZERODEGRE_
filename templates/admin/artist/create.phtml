@@ -9,6 +9,20 @@
              <label for="description">Description:</label>
         <textarea id="description" name="description" required></textarea>
         </fieldset>
+        <fieldset>
+            <label for="roleId"> Modifier le rôle </label>
+            <?php if($data['artist']->getRoleId() == "3") : ?>
+                <select name="roleId">
+                    <option value="3">Rappeur</option>
+                    <option value="4">Beatmaker</option>
+                </select>
+            <?php else: ?>
+                <select name="roleId">
+                    <option value="4">Beatmaker</option>
+                    <option value="3">Rappeur</option>
+                </select>
+            <?php endif; ?>
+        </fieldset>
         <h3>Ajouter un média</h3>
         <fieldset>
             <label for="url"> Url </label>

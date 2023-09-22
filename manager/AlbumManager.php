@@ -31,16 +31,16 @@ class AlbumManager extends AbstractManager {
     public function getAllAlbumOfArtist($artistId) 
     {
         $class = "Album";
-        $query = "SELECT al.id, al.titre, al.year, al.media_id
+        $query = "SELECT al.id, al.titre, al.year, al.media_id, al.info
         FROM album al
         JOIN artist_album aa ON al.id = aa.album_id
         WHERE aa.artists_id = :artistId";
         
         $parameters = array("artistId" => $artistId);
-        $albums = [];
-        $albums[] = $this->getResult($query, $parameters, $class, "Album", false);
+        $albums = $this->getResult($query, $parameters, $class, false);
         return $albums;
     }
+    
     public function add(Album $album) : ?Album
     {
         $query = "INSERT INTO album(titre, year, media_id) VALUES (:titre, :year, :info, :media_id)";
@@ -65,7 +65,7 @@ class AlbumManager extends AbstractManager {
     
     public function edit(Album $album) : void
     {
-        $query ="UPDATE album SET titre = :titre, year = :year, info = :info, media_id = :media_id WHERE id = :id";
+        $query ="UPDATE album SET titre = :titre, year = :year, info =:info, media_id = :media_id WHERE id = :id";
         $parameters = array("titre" => $album->getTitre(), "year" => $album->getYear(), "info" => $album->getInfo(), "media_id" => $album->getMediaId(), "id" => $album->getId());
         
         $this->getQuery($query, $parameters);

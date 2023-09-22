@@ -19,6 +19,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Role</th>
                     <th>Description</th>
                     <th>Nom du média</th>
                     <th>Album</th>
@@ -31,16 +32,20 @@
                         <!-- Il faut que je renvoit des objets Artist remplit ou non d'album // La difficulté va être de rajouter les médias  -->
                         <td><?= htmlspecialchars($artist->getId()) ?></td>
                         <td><?= htmlspecialchars($artist->getName()) ?></td>
+                        <?php if($artist->getRoleId() === 3) : ?>
+                        <td>Rappeur</td>
+                        <?php else : ?>
+                        <td>Beatmaker</td>
+                        <?php endif; ?>
                         <td><?= htmlspecialchars($artist->getDescription()) ?></td>
                         <td><?= htmlspecialchars($data['mediaDesc'][$key]['alt_text']) ?></td>
-                        <?php $albums = $artist->getAlbums(); ?>
-                        <?php if ($albums !== null) : ?>
                         <td>
-                            <?= htmlspecialchars($albums->getTitre()) ?><br>
-                        </td>
-                        <?php else : ?>
-                            <td></td> <!-- Case vide si pas d'albums associés -->
-                        <?php endif; ?>
+                            <ul class="artist-album-list">
+                                <?php foreach ($artist->getAlbums() as $album): ?>
+                                    <li><?= $album->getTitre() ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                            </td>
                         <td>
                             <div class="admin-table-btn">
                                 <a href="/ZERODEGRE_/admin/artist/edit&id=<?= $artist->getId() ?>">Modifier</a>
