@@ -1,38 +1,45 @@
 <main class = "main-show-album">
-    <?php $album = $data['albumWithMedia'] ;?>
-    <?php $media = $album->getMedia() ?>
-    <article class = "album-infos">
-        <img src="<? = $media->getUrl() ?>" alt="<?= $media->getAltText() ?>"></img>
-        <h2><?= $album->getTitre()?></h2>
-        <?php if($artist->getRoleId() === "4") : ?>
-        <p>Produit par : 
+    <?php $album = $data['albumWithMedias'];
+    $media = $album->getMedia();
+    $artists = $data['artistInAlbum'];
+    var_dump($data["albumWithSongs"]);
+    ?>
+    <header class = "album-header">
+        <img src="<?= $media[0]->getUrl() ?>" alt="<?= $media[0]->getAltText() ?>"></img>
+        <article class="article-info">
+            <h2><?= $album->getTitre() ?></h2>
             <?php
-            // Récupération du tableau des artistes depuis $data
-            $artists = $data['albumArtist'];
-    
-            // Utilisation de la fonction array_map pour transformer chaque objet artiste en son nom
-            $artistNames = array_map(function($artist) {
-                return $artist->getName();
-            }, $artists);
-    
-            // Utilisation de la fonction implode pour joindre les noms des artistes avec des virgules et un espace
-            echo implode(', ', $artistNames);
+            $producers = [];
+            $featurings = [];
+            foreach ($artists as $key => $artist) :
+                if ($artist->getRoleId() === 4) {
+                    // Artiste de type "Produit par"
+                    $producers[] = $artist->getName();
+                } elseif ($artist->getRoleId() === 3) {
+                    // Artiste de type "Featurings"
+                    $featurings[] = $artist->getName();
+                }
+            endforeach;
             ?>
-        </p>
-        <?php else :?>
-        <p>Featurings : <?= $album->getInfo()?></p>
-        <?php endif; ?>
-        <p>12 titres – 52min – Triple 4 Gear – 2020</p> <!--Créer nouvelle colonne en BDD infos générales-->
-    </article>
+            <?php if (!empty($producers)) : ?>
+                <p>Produit par : <?= implode(', ', $producers) ?></p>
+            <?php endif; ?>
+            <?php if (!empty($featurings)) : ?>
+                <p>Featurings : <?= implode(', ', $featurings) ?></p>
+            <?php endif; ?>
+            <p><?= $album->getInfo()?></p> <!--Créer nouvelle colonne en BDD infos générales-->
+        </article>
+    </header>
     
-    <ul class = "song-container">
-        <?php foreach($data["albumWithSong"] as $albumSong) : ?>
-        <?php $song = $albumSong->getSong()?>
+    <ul class ="song-container">
+        <?php $songs = $data["albumWithSongs"]->getSongs()?>
+        <?php foreach($songs as $song): ?>
         <Li class = "song-only">
             <h2><?= $song->getTitle() ?></h2>
             <div class="points"></div>
             <p><?= $song->getDuration() ?></p>
             <button class="play-button">Lancer la musique</button>
         </Li>
+        <?php endforeach; ?>
     </ul>
 </main>

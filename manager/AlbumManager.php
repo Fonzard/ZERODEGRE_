@@ -19,15 +19,6 @@ class AlbumManager extends AbstractManager {
         return $result;
     }
 
-    public function getArtistByAlbumId($albumId)
-    {
-        $class = "Artist";
-        $query = "SELECT * FROM Artist WHERE id = :albumId";
-        $parameters = array ("id" => $albumId);
-        $results = $this->getResult($query,$parameters, $class, false);
-        return $results;
-    }
-
     public function getAllAlbumOfArtist($artistId) 
     {
         $class = "Album";

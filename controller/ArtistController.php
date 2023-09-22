@@ -11,30 +11,27 @@ class ArtistController extends AbstractController {
         $this->alm = new AlbumManager();
         $this->mm = new MediaManager();
     }
-
+    //A Vérifier 
     public function getArtistWithAlbums($artistId) 
     {
         $artist = $this->am->getArtistById($artistId); 
-        
+    
         if ($artist) 
         {
-            $albums = $this->alm->getAllAlbumOfArtist($artistId); 
+            $albums = $this->alm->getAllAlbumOfArtist($artistId);
             if ($albums === null) 
             {
-                // Aucun album associée à l'artiste, renvoit tableau vide
-                $artist->setAlbums(null);
+                // Aucun album associé à l'artiste, renvoie un tableau vide
+                $artist->setAlbums([]);
             } else {
-                $artistWithAlbum = $artist;
-
-                foreach($albums as $album)
-                {
-                    $artistWithAlbum->setAlbums($album); 
-                } 
+                // Ajoutez chaque album au tableau des albums de l'artiste
+                $artist->setAlbums($albums); 
             }
-            return $artistWithAlbum; 
+            return $artist; 
         }
         return $artist; 
     }
+
     // GOOOOOOOOD
     public function editArtist($artistId)
     {
@@ -43,6 +40,7 @@ class ArtistController extends AbstractController {
             // Récupérer les données du formulaire
             $name = $this->clean($_POST['artist-name']);
             $description = $this->clean($_POST['artist-description']);
+            $roleId = $this->clean($_POST["artist-roleId"]);
             $mediaUrl = $this->clean($_POST['artist-url']);
             $mediaAltText = $this->clean($_POST['artist-altText']);
     
@@ -63,7 +61,7 @@ class ArtistController extends AbstractController {
                 $editedArtist = $this->mm->getMediaById($mediaId);
             }
             
-            $editedArtist = new Artist($name, $description, $mediaId);
+            $editedArtist = new Artist($name, $description, $mediaId, $roleId);
             // Set the ID of the album
             $editedArtist->setId($artistId);
             // Update the album in the database
@@ -84,7 +82,8 @@ class ArtistController extends AbstractController {
     {    
         if (isset($_POST["artist-form"]) && $_POST["artist-form"] === "submit") {
             $name = $this->clean($_POST['name']);
-            $description =$this->clean( $_POST['description']);
+            $description = $this->clean( $_POST['description']);
+            $roleId = $this->clean( $_POST['roleId']);
             $mediaUrl = $this->clean($_POST['url']);
             $mediaAltText = $this->clean($_POST['altText']);
 
@@ -93,7 +92,7 @@ class ArtistController extends AbstractController {
             
             $mediaId = $media->getId();
             
-            $newArtist = new Artist($name, $description, $mediaId);
+            $newArtist = new Artist($name, $description, $mediaId, $roleId);
             $this->am->create($newArtist);
             
             $_SESSION['message'] = "L'artiste ". $name ." créé avec succès.";

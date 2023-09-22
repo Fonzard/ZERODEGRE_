@@ -62,7 +62,7 @@ class Router {
             }
             else if($tab[0] === "album" && $tab[1] === "show" && isset($_GET["id"]))
             {
-                $routeAndParams["route"] = "album";
+                $routeAndParams["route"] = "album/show";
                 $routeAndParams["albumId"] = $_GET["id"];
             }
             else if (isset($_SESSION["role"]) && $_SESSION["role"] === "Admin")  //////////ADMIN USER
@@ -198,11 +198,10 @@ class Router {
             } else if ($routeAndParams["route"] === "album")
             {
                 $this->albumController->albumIndex();
-            } 
-            //else if ($routeAndParams{"route"} === "album/show" && isset($_GET["id"]))
-            //{
-                
-            //}
+            } else if ($routeAndParams["route"] === "album/show" && isset($_GET["id"]))
+            {
+                $this->albumController->show($_GET["id"]);
+            }
             else if (isset($_SESSION["role"]) && $_SESSION["role"] === "Admin") 
             {
                 if($routeAndParams["route"] === "admin/dashboard")
@@ -288,8 +287,5 @@ class Router {
             }
         }
     }
-    
-    
-    
 }
 ?>
