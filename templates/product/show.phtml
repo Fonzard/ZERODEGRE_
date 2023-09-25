@@ -1,0 +1,18 @@
+<main class="main-show-product">
+    <?php $product = $data['product'];
+        $media = $product->getMedia();
+    ?>
+    <section class="container-show-product">
+        <article class="show-product-image">
+            <img src="<?= $media[0]->getUrl() ?>" alt="<?= $media[0]->getAltText() ?>">
+        </article>
+        <article class=show-product-details>
+            <h2><?= $product->getName()?></h2>
+            <p><?= $product->getDescription()?></p>
+            <p><?= $product->getPrice()?>€</p>
+            <p>Si vous êtes intéressé par ce produit, veuillez nous contacter via instagram ou par mail</p>
+            <a href="https://www.instagram.com/zerodegre_/"><i class="fa-brands fa-instagram fa-lg"></i></a>
+            <a href="mailto:"><i class="fa-regular fa-envelope"></i></a>
+        </article>
+    </section>
+</main>

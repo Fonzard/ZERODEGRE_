@@ -57,6 +57,14 @@ class ProductController extends AbstractController{
             "categories" => $categories
         ]);
     }
+    
+    public function show($productId)
+    {
+        $product = $this->mc->getProductWithMedia($productId);
+        $categoryId = $product->getCategoryId();
+        $categoryName = $this->cm->getCategoriesProductsName($categoryId);
+        $this->render("product/show", ["product" => $product, "categoryName" => $categoryName]);
+    }
 
     public function createProduct() : void 
     {

@@ -48,7 +48,8 @@ class Router {
             {
                 $routeAndParams["route"] = "logout";  
                 
-            } else if($tab[0] === "post" && !isset($tab[1])) {
+            } else if($tab[0] === "post" && !isset($tab[1])) 
+            {
                 $routeAndParams["route"] = "post";
 
             } 
@@ -57,13 +58,23 @@ class Router {
                 $routeAndParams["route"] = "post/show";
                 $routeAndParams["postId"] = $_GET["id"];
             } 
-            else if($tab[0] === "album" && !isset($tab[1])) {
+            else if($tab[0] === "album" && !isset($tab[1])) 
+            {
                 $routeAndParams["route"] = "album";
             }
             else if($tab[0] === "album" && $tab[1] === "show" && isset($_GET["id"]))
             {
                 $routeAndParams["route"] = "album/show";
                 $routeAndParams["albumId"] = $_GET["id"];
+            }
+            else if($tab[0] === "product" && !isset($tab[1])) 
+            {
+                $routeAndParams["route"] = "product";
+            }
+            else if($tab[0] === "product" && $tab[1] === "show" && isset($_GET["id"]))
+            {
+                $routeAndParams["route"] = "product/show";
+                $routeAndParams["productId"] = $_GET["id"];
             }
             else if (isset($_SESSION["role"]) && $_SESSION["role"] === "Admin")  //////////ADMIN USER
             {
@@ -201,8 +212,13 @@ class Router {
             } else if ($routeAndParams["route"] === "album/show" && isset($_GET["id"]))
             {
                 $this->albumController->show($_GET["id"]);
-            }
-            else if (isset($_SESSION["role"]) && $_SESSION["role"] === "Admin") 
+            } else if ($routeAndParams["route"] === "product")
+            {
+                $this->productController->productIndex();
+            } else if($routeAndParams["route"] === "product/show" && isset($_GET["id"]))
+            {
+                $this->productController->show($_GET["id"]);
+            } else if (isset($_SESSION["role"]) && $_SESSION["role"] === "Admin") 
             {
                 if($routeAndParams["route"] === "admin/dashboard")
                 {
@@ -287,5 +303,8 @@ class Router {
             }
         }
     }
+    
+    
+    
 }
 ?>
