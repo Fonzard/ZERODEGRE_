@@ -1,12 +1,29 @@
 /////////////////// DROPDOWN NAV \\\\\\\\\\\\\\\\\\\\\\\
+// Fonction toggleMenu générique
+function toggleMenu(menuButton, menu) {
+    menu.classList.toggle("show-menu");
+    menuButton.classList.toggle('close');
+}
 
+// PUBLIC \\
+const headerPublicMenuButton = document.querySelector("#header-public-menu-button");
+const headerPublicMenu = document.querySelector("#header-public-menu");
+if (headerPublicMenuButton) {
+    headerPublicMenuButton.addEventListener("click", () => {
+        toggleMenu(headerPublicMenuButton, headerPublicMenu);
+    });
+}
+
+// ADMIN \\
 const headerAdminMenuButton = document.querySelector("#header-admin-menu-button");
 const headerAdminMenu = document.querySelector("#header-admin-menu");
+if (headerAdminMenuButton) {
+    headerAdminMenuButton.addEventListener("click", () => {
+        toggleMenu(headerAdminMenuButton, headerAdminMenu);
+    });
+}
 
-headerAdminMenuButton.addEventListener("click", () => {
-    headerAdminMenu.classList.toggle("show-menu");
-    headerAdminMenuButton.classList.toggle('close');
-});
+
 
 
 /////////////////// DROPDOWN ALBUM \\\\\\\\\\\\\\\\\\\\\\\
