@@ -41,8 +41,8 @@
 #header-public-menu {
     transition:transfrom .5s;
     position:absolute;
-    width:50%;
-    max-width:200px;
+    width:100%;
+    text-align:center;
     transform:translateY(-500px);
     top:0;
     ul {
@@ -72,9 +72,13 @@
 #header-public-menu.show-menu {
     transform:translateY(51px);
 }
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 769px){
     .header-public {
         max-width: 1024px;
+    }
+    #header-public-menu {
+        width:50%;
+        max-width:200px;
     }
   }
   @media (min-width: 1024px) {
