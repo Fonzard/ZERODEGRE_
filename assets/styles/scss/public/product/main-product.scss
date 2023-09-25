@@ -1,0 +1,102 @@
+.main-product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+
+    .admin-message {
+        // Styles pour le message d'administration (s'il y en a un)
+        font-size: 16px;
+        background-color: #ffcc00;
+        padding: 10px;
+        text-align: center;
+    }
+    h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: #333;
+    }
+    .product-container {
+        margin: 20px 0;
+        padding: 10px; // Ajout de marge intérieure pour l'espace entre les catégories
+
+        &:hover {
+            // Styles pour l'effet de survol
+            border: 1px solid #333; // Bordure de 1 pixel solide
+            cursor: pointer;
+        }
+
+        .product-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap; // Pour que les produits passent à la ligne s'ils ne tiennent pas
+            gap: 20px; // Espacement entre les produits
+            
+            li {
+                width: calc(50% - 10px); // Largeur de 50% moins l'espacement entre les produits
+                margin-bottom: 20px;
+
+                a {
+                    text-decoration: none;
+                    color: #333;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+
+                    .product-image {
+                        img {
+                            max-width: 100%;
+                            height: auto;
+                        }
+                    }
+
+                    p {
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 768px) {
+    // Styles spécifiques pour les écrans plus larges (tablettes et ordinateurs)
+    .main-product {
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr; // Deux colonnes
+            gap: 20px;
+
+            h2 {
+                font-size: 24px;
+                margin-bottom: 10px;
+                color: #333;
+                grid-column: span 2; // Étendre le titre sur deux colonnes
+            }
+
+            .product-list {
+                list-style: none;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+
+                li {
+                    width: 100%; // Largeur à 100% pour une colonne
+                }
+            }
+        }
+    }
+}
+@media (min-width: 1024px) {
+    .main-product {
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr; // Quatres colonnes
+            gap: 20px;
+        }
+    }
+}
+

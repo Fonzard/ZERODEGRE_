@@ -7,7 +7,7 @@ class Product implements JsonSerializable {
     private int $quantity;
     private ?int $category_id;
     private ?int $media_id;
-
+    private array $media = [];
     public function __construct(string $name, ?float $price, string $description, int $quantity, ?int $category_id, ?int $media_id) {
         $this->id = null;
         $this->name = $name;
@@ -53,6 +53,11 @@ class Product implements JsonSerializable {
     {
         return $this->media_id;
     }
+    
+    public function getMedia(): array
+    {
+        return $this->media;
+    }
 
     //////////// Setters ////////////
     public function setId(?int $id) : void
@@ -87,6 +92,11 @@ class Product implements JsonSerializable {
     public function setMediaId(?int $media_id) : void
     {
         $this->media_id = $media_id;
+    }
+
+    public function setMedia(array $media) : void
+    {
+        $this->media = $media;
     }
     
     public function jsonSerialize()

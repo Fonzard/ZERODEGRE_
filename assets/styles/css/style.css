@@ -302,6 +302,87 @@ p {
     max-width: 950px;
   }
 }
+.main-product {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+.main-product .admin-message {
+  font-size: 16px;
+  background-color: #ffcc00;
+  padding: 10px;
+  text-align: center;
+}
+.main-product h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+.main-product .product-container {
+  margin: 20px 0;
+  padding: 10px;
+}
+.main-product .product-container:hover {
+  border: 1px solid #333;
+  cursor: pointer;
+}
+.main-product .product-container .product-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.main-product .product-container .product-list li {
+  width: calc(50% - 10px);
+  margin-bottom: 20px;
+}
+.main-product .product-container .product-list li a {
+  text-decoration: none;
+  color: #333;
+}
+.main-product .product-container .product-list li a:hover {
+  text-decoration: underline;
+}
+.main-product .product-container .product-list li a .product-image img {
+  max-width: 100%;
+  height: auto;
+}
+.main-product .product-container .product-list li a p {
+  margin: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .main-product .product-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .main-product .product-container h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+    grid-column: span 2;
+  }
+  .main-product .product-container .product-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .main-product .product-container .product-list li {
+    width: 100%;
+  }
+}
+@media (min-width: 1024px) {
+  .main-product .product-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+  }
+}
 /* Styles de base pour les formulaires d'édition */
 .admin-form {
   max-width: 300px;

@@ -1,14 +1,18 @@
 // PUBLIC //
 @use 'public/_footer.scss';
+@use 'public/_header_public.scss';
 
 // POST
 @use 'public/post/main-post.scss';
 @use 'public/post/main-show-post.scss';
 
-//ALBUM
+// ALBUM
 @use 'public/album/main-album.scss';
 @use 'public/album/main-show-album.scss';
 
+// PRODUCT
+@use 'public/product/main-product.scss';
+@use 'public/product/main-show-product.scss';
 // ADMIN //
 @use 'admin/_form.scss';
 @use 'admin/_header.scss';
