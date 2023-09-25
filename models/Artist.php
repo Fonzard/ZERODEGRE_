@@ -30,7 +30,7 @@ class Artist implements JsonSerializable {
     {
         return $this->description;
     }
-
+   
     public function getMediaId(): ?int 
     {
         return $this->media_id;

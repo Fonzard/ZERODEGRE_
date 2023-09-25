@@ -1,18 +1,20 @@
-<header>
-    <nav class="header-menu">
-        <ul>
-            <li><a href="/ZERODEGRE_/register">Register</a></li>
-            <li><a href="">Label</a></li>
-            <li><a href="">Mixtape</a></li>
-            <li><a href="/ZERODEGRE_/post">Blog</a></li>
-            <li><a href="">Merch</a></li>
-            <?php 
-            if(isset($_SESSION['user'])){
-            ?>
-            <li><a href="/ZERODEGRE_/logout">Deconnexion</a></li> 
-            <?php } else { ?>
-            <li><a href="/ZERODEGRE_/login">Connexion</a></li>
-            <?php } ?>
-        </ul>
-    </nav>
+<header class="header-public">
+    <h1 class="header-public-title"><a href="/ZERODEGRE_/homepage">ZERODEGRE_</a></h1>
+    <div id="header-public-menu-button" class="close"></div>
 </header>
+<nav id="header-public-menu">
+    <ul>
+        <li><a href="/ZERODEGRE_/register">Register</a></li>
+        <li><a href="">Label</a></li>
+        <li><a href="/ZERODEGRE_/album">Mixtape</a></li>
+        <li><a href="/ZERODEGRE_/post">Blog</a></li>
+        <li><a href="/ZERODEGRE_/product">Merch</a></li>
+        <?php 
+        if(isset($_SESSION['user'])){
+        ?>
+        <li><a href="/ZERODEGRE_/logout">Deconnexion</a></li> 
+        <?php } else { ?>
+        <li><a href="/ZERODEGRE_/login">Connexion</a></li>
+        <?php } ?>
+    </ul>
+</nav>
