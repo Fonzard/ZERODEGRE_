@@ -5,6 +5,7 @@ class AlbumController extends AbstractController{
     private ArtistManager $artistManager;
     private SongManager $sm;
     private MediaManager $mm;
+    private MediaController $mc;
     
     public function __construct()
     {
@@ -12,6 +13,7 @@ class AlbumController extends AbstractController{
         $this->artistManager = new ArtistManager();
         $this->sm = new SongManager();
         $this->mm = new MediaManager();
+        $this->mc = new MediaController();
     }
     
     public function createAlbumWithSongs($albumData, $songsData) {
@@ -47,26 +49,6 @@ class AlbumController extends AbstractController{
         }
         return $album; 
     }
-    
-    public function getAlbumWithMedia($albumId) 
-    {
-        
-        $album = $this->am->getAlbumById($albumId); 
-        $mediaId = $album->getMediaId();
-        if ($album) 
-        {
-            $medias = $this->mm->getAllMediaInPost($mediaId); 
-            if ($medias === null) 
-            {
-                // Aucune chanson associée à l'album, renvoyer null
-                $album->setMedia([]);
-            } else {
-                $album->setMedia($medias); 
-            }
-            return $album; 
-        }
-        return $album; 
-    }
 
     public function albumIndex()
     {
@@ -81,7 +63,7 @@ class AlbumController extends AbstractController{
         
         foreach($albums as $album)
         {
-            $albumWithMedias = $this->getAlbumWithMedia($album->getId());
+            $albumWithMedias = $this->mc->getAlbumWithMedia($album->getId());
             if ($albumWithMedias === null) {
                 // Aucune média associée à cet article, gérer l'erreur ici
                 $_SESSION['message'] = "Aucun média n'est associé à cet album en base de données.";
@@ -92,6 +74,33 @@ class AlbumController extends AbstractController{
             }
         }
         $this->render("album/index", ["albumWithMedia" => $albumsWithMedias]);
+    }
+    
+    public function show($albumId)
+    {
+        $albumWithSongs = $this->getAlbumWithSongs($albumId);
+        if ($albumWithSongs === null) 
+        {
+            $_SESSIONS['message'] = "Aucune chanson n'est associée à cette album en base de données.";
+            header("location: /ZERODEGRE_/album");
+        }
+        
+        $albumWithMedias = $this->mc->getAlbumWithMedia($albumId);
+        if ($albumWithMedias === null) 
+        {
+            $_SESSION['message'] = "Aucun média n'est associé à cet album en base de données.";
+            header("location: /ZERODEGRE_/album");
+            return;
+        } 
+        
+        $artistInAlbum = $this->artistManager->getArtistsByAlbumId($albumId);
+        if ($albumWithMedias === null) 
+        {
+            $_SESSION['message'] = "Aucun artiste n'est associé à cet album en base de données.";
+            header("location: /ZERODEGRE_/album");
+            return;
+        } 
+        $this->render("album/show", ["albumWithSongs" => $albumWithSongs, "albumWithMedias" => $albumWithMedias, "artistInAlbum" => $artistInAlbum]);
     }
 
     public function AddAlbum()

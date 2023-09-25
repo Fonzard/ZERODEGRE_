@@ -4,13 +4,16 @@ class PostController extends AbstractController
     private CategoryManager $cm;
     private PostManager $pm;
     private MediaManager $mm;
+    private MediaController $mc;
     
     public function __construct ()
     {
         $this->cm = new CategoryManager();
         $this->pm = new PostManager();
         $this->mm = new MediaManager();
+        $this->mc = new MediaController();
     }
+    
     public function editPost() {
         if (isset($_POST["post-edit-form"]) && $_POST["post-edit-form"] === "submit") {
             // Récupérer les données du formulaire
@@ -110,43 +113,32 @@ class PostController extends AbstractController
         }
     }
 
-    public function getPostWithMedia($postId) 
-    {
-        
-        $post = $this->pm->getPostById($postId); 
-        $mediaId = $post->getMediaId();
-        if ($post) 
-        {
-            $medias = $this->mm->getAllMediaInPost($mediaId); 
-            if ($medias === null) 
-            {
-                // Aucune chanson associée à l'album, renvoyer null
-                $post->setMedia([]);
-            } else {
-                $post->setMedia($medias); 
-            }
-            return $post; 
-        }
-        return $post; 
-    }
-
     public function postIndex()
     {
         $categories = $this->cm->getAllCategoriesPost();
         $posts = $this->pm->getAllPost();
-        foreach ($posts as $post){
+        if (empty($posts)) {
+        
+            $_SESSION['message'] = "Aucun article n'a été trouvé en base de données.";
+            header("location: /ZERODEGRE_/post");
+            return;
+        }
+
+        $categoriesNames = [];
+        $postsWithMedias = [];
+
+        foreach ($posts as $post) {
             $categoryId = $post->getCategoryId();
             $categoryName = $this->cm->getCategoriesPostName($categoryId);
             $categoriesNames[] = $categoryName;
-        }
-        $postsWithMedias = [];
-        foreach ($posts as $post) {
-            $postWithMedias = $this->getPostWithMedia($post->getId());
-            if ($postWithMedias === null) 
-            {
-                // Aucune chanson associée à cet album, gérer l'erreur ici
-                $_SESSIONS['message'] = "Aucune média n'est associée à cette article en base de données.";
+        
+            $postWithMedias = $this->mc->getPostWithMedia($post->getId());
+
+            if ($postWithMedias === null) {
+                // Aucune média associée à cet article, gérer l'erreur ici
+                $_SESSION['message'] = "Aucun média n'est associé à cet article en base de données.";
                 header("location: /ZERODEGRE_/post");
+                return;
             } else {
                 $postsWithMedias[] = $postWithMedias;
             }
@@ -156,7 +148,7 @@ class PostController extends AbstractController
 
     public function show($postId)
     {
-        $post = $this->getPostWithMedia($postId);
+        $post = $this->mc->getPostWithMedia($postId);
         $categoryId = $post->getCategoryId();
         $categoryName = $this->cm->getCategoriesPostName($categoryId);
         $this->render("post/show", ["post" => $post, "categoryName" => $categoryName]);
