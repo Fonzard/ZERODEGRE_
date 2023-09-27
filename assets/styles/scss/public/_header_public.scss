@@ -72,18 +72,26 @@
 #header-public-menu.show-menu {
     transform:translateY(51px);
 }
-@media (min-width: 769px){
+@media (min-width: 860px){
     .header-public {
         max-width: 1024px;
+        #header-public-menu-button {
+            display:none;   
+        }
     }
     #header-public-menu {
-        width:50%;
-        max-width:200px;
+    
+        transform:none;
+        ul {
+            display: flex;
+            justify-content:flex-end;
+        }
     }
-  }
-  @media (min-width: 1024px) {
+}
+
+@media (min-width: 1024px) {
     .header-public {
         max-width:none;
         width:100%;
     }
-  }
+}

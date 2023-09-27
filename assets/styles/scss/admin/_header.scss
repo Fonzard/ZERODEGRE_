@@ -72,18 +72,24 @@
 #header-admin-menu.show-menu {
     transform:translateY(51px);
 }
-@media (min-width: 769px) {
+@media (min-width: 860px){
     .header-admin {
         max-width: 1024px;
+        #header-admin-menu-button {
+            display:none;   
+        }
     }
     #header-admin-menu {
-        width:50%;
-        max-width:200px;
+        transform:none;
+        ul {
+            display: flex;
+            justify-content:flex-end;
+        }
     }
-  }
-  @media (min-width: 1024px) {
+}
+@media (min-width: 1024px) {
     .header-admin {
         max-width:none;
         width:100%;
     }
-  }
+}
