@@ -15,4 +15,27 @@
             <a href="mailto:"><i class="fa-regular fa-envelope"></i></a>
         </article>
     </section>
+    <h2>Tu pourrais aussi aimer </h2>
+    <section class="container-other-show-product">
+        <ul class="other-show-product">
+            <?php 
+            $productCounter = 0; // Initialise le compteur de produits
+            foreach ($data["productsWithMedias"] as $otherProduct) :
+                $otherMedia = $otherProduct->getMedia();
+                ?>
+                <?php if ($productCounter < 4) : // Vérifie si le nombre de produits affichés est inférieur à 4 ?>
+                    <li class="other-product">
+                        <a href="/ZERODEGRE_/product/show&id=<?= $otherProduct->getId() ?>">
+                            <img src="<?= $otherMedia[0]->getUrl() ?>" alt="<?= $otherMedia[0]->getAltText() ?>">
+                            <p><?= $otherProduct->getName() ?></p>
+                            <p><?= $otherProduct->getPrice() ?></p>
+                        </a>
+                    </li>
+                    <?php
+                    $productCounter++; // Incrémente le compteur de produits
+                endif;
+            endforeach;
+            ?>
+        </ul>
+    </section>
 </main>
