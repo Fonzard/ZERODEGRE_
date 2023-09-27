@@ -1,310 +1,220 @@
 <?php
-class AlbumController extends AbstractController{
+class AdminController extends AbstractController{
     
-    private AlbumManager $am;
     private ArtistManager $artistManager;
-    private SongManager $sm;
-    private MediaManager $mm;
+    private ArtistController $artistController;
+    private AlbumManager $albumManager;
+    private AlbumController $albumController;
+    private PostManager $postManager;
+    private CategoryManager $categoryManager;
+    private MediaManager $mediaManager;
+    private ProductManager $productManager;
+    private UserManager $userManager;
+    private SongManager $songManager;
     
     public function __construct()
     {
-        $this->am = new AlbumManager();
         $this->artistManager = new ArtistManager();
-        $this->sm = new SongManager();
-        $this->mm = new MediaManager();
+        $this->artistController = new ArtistController();
+        $this->albumManager = new AlbumManager();
+        $this->albumController = new AlbumController();
+        $this->categoryManager = new CategoryManager();
+        $this->postManager = new PostManager();
+        $this->mediaManager = new MediaManager();
+        $this->productManager = new ProductManager();
+        $this->songManager = new SongManager();
+        $this->userManager = new UserManager();
     }
-    
-    public function createAlbumWithSongs($albumData, $songsData) {
-        
-        $album = new Album($albumData['titre'], $albumData['year'], $albumData['info'], $albumData['media_id']);
-        $createdAlbum = $this->am->add($album);
-
-        foreach ($songsData as $songData) {
-            $song = new Song($songData['title'], $songData['duration'], $songData['url'], $createdAlbum->getId());
-            $this->sm->add($song);
-        }
-
-        return $createdAlbum;
-    }
-    
-    public function getAlbumWithSongs($albumId) 
+    public function dashboard() 
     {
-        
-        $album = $this->am->getAlbumById($albumId); 
-        
-        if ($album) 
+        $this->render("admin/dashboard", []);
+    }
+    ////// MANAGE USER //////
+    public function manageUser()
+    {
+        $users = $this->userManager->getAllUsers();
+        $this->render("admin/user/manage_user", ["users" => $users]);
+    }
+    
+    public function deleteUser()
+    {
+        if(isset($_GET['id']))
         {
-            $songs = $this->sm->getAllSongInAlbum($albumId); 
-            if ($songs === null) 
-            {
-                // Aucune chanson associée à l'album, renvoyer null
-                $album->setSongs([]);
-            } else {
-                $album->setSongs($songs); 
-            }
+            $userId = $_GET['id'];
+            $this->userManager->delete($userId);
+            $newUserList = $this->userManager->getAllUsers();
             
-            return $album; 
+                    if (empty($newUserList)) {
+                        echo json_encode(array("success" => false, "message" => "Aucun Utilisateur disponible."));
+                    } else {
+                        $responseData = array('success' => true, 'message' => 'Utilisateurs supprimé avec succès.', 'users' => $newUserList);
+                        echo json_encode($responseData);
+                    }
+        } else {
+                echo json_encode(array("success" => false, "message" => "L'utilisateur n'a pas été supprimé"));
         }
-        return $album; 
-    }
-    
-    public function getAlbumWithMedia($albumId) 
-    {
-        
-        $album = $this->am->getAlbumById($albumId); 
-        $mediaId = $album->getMediaId();
-        if ($album) 
-        {
-            $medias = $this->mm->getAllMediaInPost($mediaId); 
-            if ($medias === null) 
-            {
-                // Aucune chanson associée à l'album, renvoyer null
-                $album->setMedia([]);
-            } else {
-                $album->setMedia($medias); 
-            }
-            return $album; 
-        }
-        return $album; 
     }
 
-    public function albumIndex()
+    public function editUser($userId)
     {
-        $albums = $this->am->getAllAlbum();
-        if (empty($albums)) {
-        
-            $_SESSION['message'] = "Aucun album n'a été trouvé en base de données.";
-            header("location: /ZERODEGRE_/album");
-            return;
-        }
-        $albumsWithMedias = [];
-        
-        foreach($albums as $album)
+        if (isset($_POST["edit-form"]) && $_POST["edit-form"] === "edit") 
         {
-            $albumWithMedias = $this->getAlbumWithMedia($album->getId());
-            if ($albumWithMedias === null) {
-                // Aucune média associée à cet article, gérer l'erreur ici
-                $_SESSION['message'] = "Aucun média n'est associé à cet album en base de données.";
-                header("location: /ZERODEGRE_/post");
-                return;
-            } else {
-                $albumsWithMedias[] = $albumWithMedias;
-            }
-        }
-        $this->render("album/index", ["albumWithMedia" => $albumsWithMedias]);
-    }
-    
-    public function show($albumId)
-    {
-        $albumWithSongs = $this->getAlbumWithSongs($albumId);
-        if ($albumWithSongs === null) 
-        {
-            $_SESSIONS['message'] = "Aucune chanson n'est associée à cette album en base de données.";
-            header("location: /ZERODEGRE_/album");
-        }
-        
-        $albumWithMedias = $this->getAlbumWithMedia($albumId);
-        if ($albumWithMedias === null) 
-        {
-            $_SESSION['message'] = "Aucun média n'est associé à cet album en base de données.";
-            header("location: /ZERODEGRE_/album");
-            return;
-        } 
-        
-        $artistInAlbum = $this->artistManager->getArtistsByAlbumId($albumId);
-        if ($albumWithMedias === null) 
-        {
-            $_SESSION['message'] = "Aucun artiste n'est associé à cet album en base de données.";
-            header("location: /ZERODEGRE_/album");
-            return;
-        } 
-        $this->render("album/show", ["albumWithSongs" => $albumWithSongs, "albumWithMedias" => $albumWithMedias, "artistInAlbum" => $artistInAlbum]);
-    }
-
-    public function AddAlbum()
-    {
-
-        if (isset($_POST["album-form"]) && $_POST["album-form"] === "submit") 
-        {
-            // Récupérer les données du formulaire
-            $titre = $this->clean($_POST['album-title']);
-            $year = $this->clean($_POST['album-year']);
-            $info = $this->clean($_POST['album-info']);
-            $artistId = $this->clean($_POST['associated-artist']);
-            $mediaUrl = $this->clean($_POST['album-url']);
-            $mediaAltText = $this->clean($_POST['album-altText']);
-        
-            // Vérifier si le média existe déjà dans la base de données
-            $mediaId = $this->mm->getMediaIdByUrl($mediaUrl);
-            if ($mediaId === false) {
-                // Créer un nouvel objet Media
-                $media = new Media($mediaUrl, $mediaAltText);
-                $this->mm->insertMedia($media);
-                $mediaId = $media->getid();
-                $editedMedia = $this->mm->getMediaById($mediaId);
-            } else {
-                $media = $this->mm->getMediaById($mediaId);
-                $media->setUrl($mediaUrl);
-                $media->setAltText($mediaAltText);
-                $this->mm->editMedia($media);
-                $editedMedia = $this->mm->getMediaById($media->getId());
-            }
+            $email = $this->clean($_POST["edit-email"]);
+            $firstName = $this->clean($_POST["edit-firstName"]);
+            $lastName = $this->clean($_POST["edit-lastName"]);
+            $password = $_POST["edit-password"];
+            $confirmPassword = $_POST["edit-confirm-password"];
+            $roleId = $this->clean($_POST["edit-roleId"]);
             
-            $newAlbum = new Album($titre, $year, $info, $editedMedia->getId()); 
-            // Ajouter l'album à la base de données
-            $addedAlbum = $this->am->add($newAlbum);
-
-            $this->artistManager->associateArtistAlbum($artistId, $addedAlbum->getId());
-
-            if ($addedAlbum) 
-            {
-                header("location: /ZERODEGRE_/admin/album");
-                $_SESSION['message'] = "L'album". $titre ." a bien été créé";
-            } else {
-                header("location: /ZERODEGRE_/admin/album/create");
-                $_SESSION['message'] = "Erreur pour la création d'album, veuillez recommencer.";
-            }
-        } else {
-            $artists =$this->artistManager->getAllArtists();
-            $this->render("admin/album/create_album", ["artist" => $artists]);
-        }
-    }
-    // GOOOOOOOOOOOOOD
-    public function addSong($albumId)
-    {
-        if (isset($_POST["song-form"]) && $_POST["song-form"] === "submit") 
-        {
-            // Récupérer les données du formulaire
-            $title = $this->clean($_POST['songTitle']);
-            $duration = $_POST['songDuration'];
-            $url = $_POST['songUrl'];
-            $albumId = $_POST['albumSelect'];
-        
-            // Créer un nouvel objet Song
-            $newSong = new Song($title, $duration, $url, $albumId);
-        
-            // Ajouter la chanson à la base de données
-            $addedSong = $this->sm->add($newSong);
-
-            if ($addedSong) {
-                $_SESSION['message'] = $title ." ajoutée avec succès!";
-                header ("location: /ZERODEGRE_/admin/album");
-            } else {
-                $_SESSION['message'] = "Erreur lors de l'ajout de la chanson.";
-            }
-        } else {
-            $album = $this->am->getAlbumById($albumId);
-            $albums = $this->am->getAllAlbum();;
-            $this->render("admin/album/create_song", ["album" => $album, "albums" => $albums]);
-        }
-    }
-    //GOOOOOOOOOOOOOOOOOD Album et Média
-    public function editAlbum($albumId)
-    {
-        
-        if (isset($_POST["album-edit-form"]) && $_POST["album-edit-form"] === "edit") 
-        {
-            $titre = $this->clean($_POST['album-title']);
-            $year = $this->clean($_POST['album-year']);
-            $info = $this->clean($_POST['info']);
-            $mediaUrl = $this->clean($_POST['album-url']);
-            $mediaAltText = $this->clean($_POST['album-altText']);
             $errors = [];
     
-            if (!isset($titre))
-            {
-                $errors[] = "Veuillez saisir votre titre.";
+            if (strlen($email) > 50) {
+                $errors[] = "L'email ne doit pas dépasser 50 caractères";
             }
-            if (!isset($year))
-            {
-                $errors[] = "Veuillez choisir une date";
+    
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors[] = "L'email n'est pas écrit correctement";
             }
-   
+    
+            if (strlen($firstName) > 50) {
+                $errors[] = "Le prénom ne doit pas dépasser 50 caractères";
+            }
+    
+            if (strlen($lastName) > 50) {
+                $errors[] = "Le nom ne doit pas dépasser 50 caractères";
+            }
+    
+            if ($password !== $confirmPassword) {
+                $errors[] = "Les mots de passe ne correspondent pas";
+            }
+    
+            $passwordErrors = $this->validatePassword($password);
+            $errors = array_merge($errors, $passwordErrors);
+    
             if (!$errors) {
-
-                    if (isset($_POST['albumMediaId'])) 
-                    {
-                        $mediaId = $_POST['albumMediaId'];
-                        $media = $this->mm->getMediaById($mediaId);
-                        
-                        $media->setUrl($mediaUrl);
-                        $media->setAltText($mediaAltText);
-                        $this->mm->editMedia($media);
-                        $editedMedia = $this->mm->getMediaById($media->getId());
-
-                    } else {
-                        $media = new Media($mediaUrl, $mediaAltText);
-                        $this->mm->insertMedia($media);
-                        $mediaId = $media->getid();
-                        $editedMedia = $this->mm->getMediaById($mediaId);
-                        
-                    }
                 
-                $album = $this->am->getAlbumById($albumId);
+                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
                 
-                $album->setTitre($titre);
-                $album->setYear($year);
-                $album->setInfo($info);
-                $album->setMediaId($editedMedia->getId());
-                $this->am->edit($album);
+                $user = $this->userManager->getUserById($_GET["id"]);
                 
-                $_SESSION['message'] = "L'album a bien été modifié";
-                header("Location: /ZERODEGRE_/admin/album");
+                $user->setFirstName($firstName);
+                $user->setLastName($lastName);
+                $user->setEmail($email);
+                $user->setPassword($hashedPassword);
+                $user->setRoleId($roleId);
+                
+                $this->userManager->edit($user);
+                
+                // Redirect to the manage user
+                $_SESSION['message'] = "L'utilisateur a bien été modifié";
+                header("Location: /ZERODEGRE_/admin/user");
 
             } else {
-                 $this->render("admin/album/edit", [
+                 $this->render("admin/user/edit", [
                      "errors" => $errors
                      ]);
             }
             
         } else {
-            $album = $this->am->getAlbumById($albumId);
-            $songAlbum = $this->sm->getAllSongInAlbum($albumId);
-            $mediaId = $album->getMediaId();
-            $media = $this->mm->getMediaById($mediaId);
-            $this->render("admin/album/edit", ["album" => $album, "media" => $media, "song" =>$songAlbum]);
-        }
-    }
-    // A vérifier
-    public function deleteAlbum()
-    {
-        if(isset($_GET['id']))
-        {
-            $albumId = $_GET['id'];
-            $this->am->delete($albumId);
-            $newAlbumList = $this->am->getAllAlbum();
-            // Ne marche pas, Prendre le temps de trouver la soluce !!!!!!!!
-                if (empty($newAlbumList)) {
-                    echo json_encode(array("success" => false, "message" => "Aucun album disponible."));
-                } else {
-                    $responseData = array('success' => true, 'message' => 'Album supprimé avec succès.', 'album' => $newAlbumList);
-                    echo json_encode($responseData);
-                }
-        } else {
-            echo json_encode(array("success" => false, "message" => "L'album n'a pas été supprimé."));
-        }
-    }
-    // A vérifier ET réfléchir à l'utilité du fetch pour un musique
-    public function deleteSong()
-    {
-
-        if(isset($_GET['id']))
-        {
-            $songId = $_GET['id'];
-            $this->sm->delete($songId);
-            $newSongList = $this->sm->getAllSong();
-            
-            // Ne marche pas, Prendre le temps de trouver la soluce !!!!!!!!
-                if (empty($newSongList)) {
-                    echo json_encode(array("success" => false, "message" => "Aucun produit disponible."));
-                } else {
-                    $responseData = array('success' => true, 'message' => 'Produit supprimé avec succès.', 'song' => $newSongList);
-                    echo json_encode($responseData);
-                }
-        } else {
-            echo json_encode(array("success" => false, "message" => "Le produit n'a pas été supprimé."));
+            $user = $this->userManager->getUserById($userId);
+            $this->render("admin/user/edit", ["user" => $user]);
         }
     }
     
+    public function managePost()
+    {
+        $categories = $this->categoryManager->getAllCategoriesPost();
+        $posts = $this->postManager->getAllPost();
+        
+        foreach ($posts as $post){
+            $categoryId = $post->getCategoryId();
+            $categoryName = $this->categoryManager->getCategoriesPostName($categoryId);
+            $categoriesNames[] = $categoryName;
+        }
+        $mediasDesc = [];
+        foreach ($posts as $post){
+            $mediaId = $post->getMediaId();
+            if ($mediaId !== null) {
+                $mediaDesc = $this->mediaManager->getMediaDescription($mediaId);
+                $mediasDesc[] = $mediaDesc;
+            }
+        }
+        $this->render("admin/post/manage_post", ["posts" => $posts, "categoriesNames" => $categoriesNames, "mediasDesc" => $mediasDesc, "categories" => $categories]);
+    }
+    
+    public function manageProduct()
+    {
+        $products = $this->productManager->getAllProducts();
+        //Récupère le nom des catégories pour l'afficher
+        $categoriesNames = [];
+        foreach ($products as $product){
+            $categoryId = $product->getCategoryId();
+            $categoryName = $this->categoryManager->getCategoriesProductsName($categoryId);
+            $categoriesNames[] = $categoryName;
+        }
+        $mediasDesc = [];
+        foreach ($products as $product){
+            $mediaId = $product->getMediaId();
+            if ($mediaId !== null) {
+                $mediaDesc = $this->mediaManager->getMediaDescription($mediaId);
+                $mediasDesc[] = $mediaDesc;
+            }
+        }
+        $this->render("admin/product/manage_product", ["products" => $products, "categoriesNames" => $categoriesNames, "mediasDesc" => $mediasDesc]);
+    }
+    
+    public function manageArtist()
+    {
+        $artists = $this->artistManager->getAllArtists();
+        $mediasDesc = [];
+        $artistAlbum = [];
+        foreach ($artists as $artist) {
+            $mediaId = $artist->getMediaId();
+            $mediaDesc = $this->mediaManager->getMediaDescription($mediaId);
+            $mediasDesc[] = $mediaDesc;
+            
+            $artistId = $artist->getId();
+            $artistWithAlbum = $this->artistController->getArtistWithAlbums($artistId);
+            
+            if (!empty($artistWithAlbum))
+            {
+                $artistAlbum[] = $artistWithAlbum;
+            }
+        }
+        $this->render("admin/artist/manage_artist", ["artistWithAlbum" => $artistAlbum, "mediaDesc" => $mediasDesc]);
+    }
+    
+    public function manageAlbum()
+    {
+        $songs = $this->songManager->getAllSong();
+        
+        $albums = $this->albumManager->getAllAlbum();
+        $albumsWithSongs = [];
+        
+        foreach ($albums as $album) {
+            
+            $albumWithSongs = $this->albumController->getAlbumWithSongs($album->getId());
+            if ($albumWithSongs === null) 
+            {
+                // Aucune chanson associée à cet album, gérer l'erreur ici
+                $_SESSIONS['message'] = "Aucune chanson n'est associée à cette album en base de données.";
+                header("location: /ZERODEGRE_/admin/album");
+            } else {
+                $albumsWithSongs[] = $albumWithSongs;
+            }
+        }
+        $this->render("admin/album/manage_album", ["albumsWithSongs" => $albumsWithSongs, "songs" => $songs, "albums" => $albums]);
+    }
+    
+    //Gestion des pages d'erreurs
+    public function manageError($errorCode)
+    {
+        if ($errorCode === 403)
+        {
+            $this->render("error/403", []);
+        } elseif ($errorCode === 404) {
+            $this->render("error/404", []);
+        }
+    }
 }
 ?>
