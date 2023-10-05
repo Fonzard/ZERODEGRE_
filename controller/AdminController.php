@@ -110,8 +110,9 @@ class AdminController extends AbstractController{
                 header("Location: /ZERODEGRE_/admin/user");
 
             } else {
-                 $this->render("admin/user/edit", [
-                     "errors" => $errors
+                $user = $this->userManager->getUserById($userId);
+                $this->render("admin/user/edit", [
+                     "errors" => $errors, "user" => $user
                      ]);
             }
             
