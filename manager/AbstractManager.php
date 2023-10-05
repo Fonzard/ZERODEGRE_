@@ -94,7 +94,7 @@ abstract class AbstractManager {
                 
                 if (isset($result[$paramName])) {
                     
-                    // Si la colonne correspondante existe dans le résultat, l'ajouter aux arguments du     constructeur
+                    // Si la colonne correspondante existe dans le résultat, l'ajouter aux arguments du constructeur
                     $constructorArguments[] = $result[$paramName];
 
                 } else {

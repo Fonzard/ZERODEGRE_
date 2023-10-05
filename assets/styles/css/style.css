@@ -1040,7 +1040,6 @@ body .invisible-menu {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 100vh;
   min-height: calc(100vh - 2rem);
   margin: auto;
   padding: 5em;
@@ -1074,19 +1073,20 @@ body .invisible-menu {
   min-height: calc(100vh - 2rem);
 }
 .main-show-album .album-header {
-  display: flex;
-  flex-wrap: wrap;
   max-width: 70vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin: 0 auto;
 }
 .main-show-album .album-header img {
-  max-width: 100%;
+  max-width: 80%;
   margin: 0 auto;
   display: block;
 }
 .main-show-album .album-header .article-info {
-  padding-left: 1em;
-  margin-top: 1.5em;
+  margin: auto;
+  padding-top: 1em;
 }
 .main-show-album .album-header p {
   font-size: 1em;
@@ -1128,32 +1128,21 @@ body .invisible-menu {
 .main-show-album .song-container .song-only .play-button:hover {
   background-color: #0056b3;
 }
-
-@media screen and (min-width: 768px) {
-  .main-show-album {
+@media screen and (min-width: 860px) {
+  .main-show-album .main-show-album {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
     align-items: center;
   }
-  .album-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 20px;
+  .main-show-album .album-header img {
+    max-width: 70%;
   }
-  .album-header img {
-    max-width: 300px;
-    margin-right: 20px;
-  }
-  .album-header .article-info {
-    margin-left: 2em;
-    margin-top: 0;
-  }
-  .song-container {
+  .main-show-album .song-container {
     width: 70%;
   }
 }
+
 .main-artist {
   padding: 5em;
   min-height: calc(100vh - 2rem);

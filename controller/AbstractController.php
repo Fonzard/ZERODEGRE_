@@ -16,8 +16,7 @@ abstract class AbstractController {
     }
     
     protected function validatePassword($password): array
-    {
-        
+    {  
         $passwordErrors = [];
         
         if (strlen($password) < 12) {
@@ -42,37 +41,5 @@ abstract class AbstractController {
         
         return $passwordErrors;
     }
-    
-    //Vérifier le fonctionnement ??
-    protected function redirectToPreviousPage() {
-        if (isset($_SERVER['HTTP_REFERER'])) {
-            header("Location: " . $_SERVER['HTTP_REFERER']);
-            exit();
-        } else {
-            // Si la page précédente n'est pas disponible, rediriger vers une page d'accueil par exemple
-            header("Location: /");
-            exit();
-        }
-    }
-    // Voir comment faire appelle au Manager ????
-    // protected function checkEntityExistence($entityId, $entityType) 
-    // {
-    //     if ($entityType === 'album') {
-    //         $existingEntity = $albumManager->getAlbumById($entityId);
-    //     } elseif ($entityType === 'product') {
-    //         $existingEntity = $productManager->getProductById($entityId);
-    //     } elseif ($entityType === 'user') {
-    //         $existingEntity = $userManager->getUserById($entityId);
-    //     } else {
-    //         $existingEntity = null;
-    //     }
-
-    //     if (!$existingEntity) {
-    //         $_SESSION['message'] = "L'$entityType que vous souhaitez éditer n'existe pas.";
-    //         // A Remplacer par page d'accueil ADMIN
-    //         header("location : /ZERODEGRE_/admin/album");
-    //     }
-    // }
-
 }
 ?>

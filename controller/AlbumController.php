@@ -33,59 +33,84 @@ class AlbumController extends AbstractController{
     
     public function getAlbumWithSongs($albumId) 
     {
-        
+        // Je récupère les informations de l'album 
         $album = $this->am->getAlbumById($albumId); 
-        
+    
         if ($album) 
         {
+            // Si l'album existe, je tente de récupérer toutes les chansons associées à cet album
             $songs = $this->sm->getAllSongInAlbum($albumId); 
+    
             if ($songs === null) 
             {
-                // Aucune chanson associée à l'album, renvoyer null
+                // Si aucune chanson n'est associée à l'album, je définis la liste des chansons de l'album comme vide
                 $album->setSongs([]);
             } else {
+                // Sinon, j'attribue la liste des chansons à l'album
                 $album->setSongs($songs); 
             }
-            
+    
+            // Je renvoie l'objet album avec ou sans chansons, en fonction des résultats de la recherche
             return $album; 
         }
+        // Si l'album n'existe pas, je renvoie null
         return $album; 
     }
 
+
+    // Fonction pour récupérer un album avec ses featuring
     public function getAlbumWithFeat($albumId)
     {
-        $album = $this->am->getAlbumById($albumId);
-        if ($album) 
-        {
-            $feats = $this->fm->getAllFeatInAlbum($albumId);
-            foreach($feats as $feat)
-            {
-                $artistId = $feat->getArtistId();
-                $featName[] = $this->artistManager->getArtistById($artistId);
-                
-                if ($feats === null) 
-                {
-                    $album->setFeats([]);
-                } else {
-                    $album->setFeats($featName); 
-                }
-            }
-            return $album;
-        }
-    }
-    public function getAlbumWithSongsAndFeats($albumId) 
-    {
+        // Je récupère les informations de l'album 
         $album = $this->am->getAlbumById($albumId);
     
         if ($album) 
         {
+            // Je tente de récupérer tous les featurings de l'album
+            $feats = $this->fm->getAllFeatInAlbum($albumId);
+            $featName = [];
+    
+            foreach ($feats as $feat) 
+            {
+                // Pour chaque artiste invité, je récupère son nom en utilisant son id
+                $artistId = $feat->getArtistId();
+                $featName[] = $this->artistManager->getArtistById($artistId);
+            }
+    
+            if ($feats === null) 
+            {
+                // Si aucun artiste invité n'est trouvé, j'initialise la liste des feats de l'album comme vide
+                $album->setFeats([]);
+            } else {
+                // Sinon, j'attribue la liste des feats à l'album
+                $album->setFeats($featName); 
+            }
+    
+            // Je renvoie l'objet album avec la liste des feats
+            return $album;
+        }
+        // Si l'album n'existe pas, je renvoie null
+        return $album;
+    }
+    
+    // Fonction pour récupérer un album avec ses chansons et ses feauturing
+    public function getAlbumWithSongsAndFeats($albumId) 
+    {
+        // Je récupère les informations de l'album 
+        $album = $this->am->getAlbumById($albumId);
+    
+        if ($album) 
+        {
+            // Je tente de récupérer toutes les chansons de l'album.
             $songs = $this->sm->getAllSongInAlbum($albumId);
             $feats = $this->fm->getAllFeatInAlbum($albumId);
     
             if ($songs === null) 
             {
+                // Si aucune chanson n'est trouvée, j'initialise la liste des chansons de l'album comme vide.
                 $album->setSongs([]);
             } else {
+                // Sinon, j'attribue la liste des chansons à l'album.
                 $album->setSongs($songs); 
             }
     
@@ -93,20 +118,25 @@ class AlbumController extends AbstractController{
     
             foreach ($feats as $feat) 
             {
+                // Pour chaque artiste invité, je récupère son nom en utilisant son id
                 $artistId = $feat->getArtistId();
                 $featName[] = $this->artistManager->getArtistById($artistId);
             }
     
             if ($feats === null) 
             {
+                // Si aucun artiste invité n'est trouvé, j'initialise la liste des feats de l'album comme vide.
                 $album->setFeats([]);
             } else {
+                // Sinon, j'attribue la liste des feats à l'album
                 $album->setFeats($featName); 
             }
     
+            // Je renvoie l'objet album avec la liste des chansons et des feats
             return $album; 
         }
     
+        // Si l'album n'existe pas, je renvoie null.
         return $album; 
     }
 
@@ -125,7 +155,7 @@ class AlbumController extends AbstractController{
         {
             $albumWithMedias = $this->mc->getAlbumWithMedia($album->getId());
             if ($albumWithMedias === null) {
-                // Aucune média associée à cet article, gérer l'erreur ici
+                
                 $_SESSION['message'] = "Aucun média n'est associé à cet album en base de données.";
                 header("location: /ZERODEGRE_/post");
                 return;
@@ -209,16 +239,16 @@ class AlbumController extends AbstractController{
     {
         if (isset($_POST["song-form"]) && $_POST["song-form"] === "submit") 
         {
-            // Récupérer les données du formulaire
+            // Je récupère les données du formulaire
             $title = $this->clean($_POST['songTitle']);
             $duration = $this->clean($_POST['songDuration']);
             $url = $this->clean($_POST['songUrl']);
             $albumId = $this->clean($_POST['albumId']);
         
-            // Créer un nouvel objet Song
+            // Je créer un nouvel objet Song
             $newSong = new Song ($title, $duration, $url, $albumId);
         
-            // Ajouter la chanson à la base de données
+            // J'ajouter la chanson à la base de données
             $addedSong = $this->sm->add($newSong);
 
             if ($addedSong) {
@@ -300,7 +330,7 @@ class AlbumController extends AbstractController{
             $this->render("admin/album/edit", ["album" => $album, "media" => $media, "song" =>$songAlbum]);
         }
     }
-    // A vérifier
+
     public function deleteAlbum()
     {
         if(isset($_GET['id']))
@@ -319,7 +349,6 @@ class AlbumController extends AbstractController{
     
     public function deleteSong()
     {
-
         if(isset($_GET['id']))
         {
             $songId = $_GET['id'];
