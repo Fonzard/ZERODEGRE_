@@ -39,6 +39,7 @@
 
 body {
     background-image: url('/ZERODEGRE_/assets/media/img/bg/bg_img.webp'), url('/ZERODEGRE_/assets/media/img/bg/bg_img.png');
+    background: vars.$background-gradient;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
