@@ -1,6 +1,6 @@
 <main class="main-album">
     <?php foreach($data["albumWithMedia"] as $key =>$album) : ?>
-        <a title="Click to go to album <?= $album->getTitre()  ?>"href="/ZERODEGRE_/album/show&id=<?= $album->getId() ?>" title="<?=$album->getTitre()?>">
+        <a title="Click to go to album <?= $album->getTitre()  ?>" aria-label="Click to go to album <?= $album->getTitre()  ?>" href="/ZERODEGRE_/album/show&id=<?= $album->getId() ?>" title="<?=$album->getTitre()?>">
             <article class="cover">
                 <?php foreach($album->getMedia() as $media) :?>
                 <img src="<?= $media->getUrl()?>" alt="<?=$media->getAltText()?>">

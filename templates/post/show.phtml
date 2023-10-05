@@ -10,7 +10,7 @@
                 <p class="date">Date de publication : <?= $article->getDate() ?></p>
             <img src="<?= $media["0"]->getUrl() ?>" alt="<?= $media["0"]->getAltText() ?>">
             <p class="content"><?= $article->getContent() ?></p>
-            <a title="Click to go back to post page" href="/ZERODEGRE_/post">Retour</a>
+            <a title="Click to go back to post page" aria-label="Click to go back to post page" href="/ZERODEGRE_/post">Retour</a>
         </section>
     <?php else : ?>
         <p>L'article que vous cherchez n'existe pas.</p>

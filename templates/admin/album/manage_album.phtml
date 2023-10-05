@@ -1,9 +1,9 @@
 <main class="manage-admin">
     <section class="button-container">
-        <a title="Click to go to admin user page" href="/ZERODEGRE_/admin/user" class="dashboard-button">Utilisateur</a>
-        <a title="Click to go to admin album and song page" href="/ZERODEGRE_/admin/album" class="dashboard-button">Album (song)</a>
-        <a title="Click to go to admin artist page" href="/ZERODEGRE_/admin/artist" class="dashboard-button">Artiste</a>
-        <a title="Click to go to admin post page" href="/ZERODEGRE_/admin/post" class="dashboard-button">Article</a>
+        <a title="Click to go to admin user page" aria-label="Click to go to admin user page" href="/ZERODEGRE_/admin/user" class="dashboard-button">Utilisateur</a>
+        <a title="Click to go to admin artist page" aria-label="Click to go to admin artist page" href="/ZERODEGRE_/admin/artist" class="dashboard-button">Artiste</a>
+        <a title="Click to go to admin post page" aria-label="Click to go to admin post page" href="/ZERODEGRE_/admin/post" class="dashboard-button">Article</a>
+        <a title="Click to go to admin product page" aria-label="Click to go to admin product page" href="/ZERODEGRE_/admin/product" class="dashboard-button">Produits</a>
     </section>
     <h2>Gestion des Albums et des chansons</h2>
 
@@ -66,9 +66,9 @@
                         </td>
                         <td>
                             <div class="admin-table-btn">
-                                <a title="Click to go to edit <?= $album->getTitre() ?>" href="/ZERODEGRE_/admin/album/edit&id=<?= htmlspecialchars($album->getId()); ?>" class="edi-btn">Modifier</a>
-                                <a title="Click to go to remove <?= $album->getTitre() ?>" href="/ZERODEGRE_/admin/album/delete&id=<?= htmlspecialchars($album->getId()); ?>">Supprimer</a>
-                                <a title="Click to go to add song for <?= $album->getTitre() ?>" href="/ZERODEGRE_/admin/album/addSong&id=<?= htmlspecialchars($album->getId()); ?>" class="add-song">Ajouter un son</a>
+                                <a title="Click to go to edit <?= $album->getTitre() ?>" aria-label="Click to go to edit <?= $album->getTitre() ?>" href="/ZERODEGRE_/admin/album/edit&id=<?= htmlspecialchars($album->getId()); ?>" class="edi-btn">Modifier</a>
+                                <a title="Click to go to remove <?= $album->getTitre() ?>" aria-label="Click to go to remove <?= $album->getTitre() ?>" href="/ZERODEGRE_/admin/album/delete&id=<?= htmlspecialchars($album->getId()); ?>">Supprimer</a>
+                                <a title="Click to go to add song for <?= $album->getTitre() ?>" aria-label="Click to go to add song for <?= $album->getTitre() ?>" href="/ZERODEGRE_/admin/album/addSong&id=<?= htmlspecialchars($album->getId()); ?>" class="add-song">Ajouter un son</a>
                             </div>
                         </td>
                     </tr>
@@ -87,8 +87,8 @@
         </table>
     </section> 
     <section class="admin-btn">
-        <a title="Click to got to create an album" href="/ZERODEGRE_/admin/album/create">Ajouter un album</a>
-        <a title="Click to got to admin dashboard" href="/ZERODEGRE_/admin/dashboard">Retour au Dashboard</a>
+        <a title="Click to got to create an album" aria-label="Click to got to create an album" href="/ZERODEGRE_/admin/album/create">Ajouter un album</a>
+        <a title="Click to got to admin dashboard" aria-label="Click to got to admin dashboard" href="/ZERODEGRE_/admin/dashboard">Retour au Dashboard</a>
     </section> 
 </main>
 <script type="text/javascript" src="./../assets/js/admin_toggle.js"></script>

@@ -1,9 +1,9 @@
 <main class="manage-admin">
     <section class="button-container">
-        <a title="Click to go to admin user page" href="/ZERODEGRE_/admin/user" class="dashboard-button">Utilisateur</a>
-        <a title="Click to go to admin album and song page" href="/ZERODEGRE_/admin/album" class="dashboard-button">Album (song)</a>
-        <a title="Click to go to admin artist page" href="/ZERODEGRE_/admin/artist" class="dashboard-button">Artiste</a>
-        <a title="Click to go to admin post page" href="/ZERODEGRE_/admin/post" class="dashboard-button">Article</a>
+        <a title="Click to go to admin user page" aria-label="Click to go to admin user page" href="/ZERODEGRE_/admin/user" class="dashboard-button">Utilisateur</a>
+        <a title="Click to go to admin album and song page" aria-label="Click to go to admin album and song page" href="/ZERODEGRE_/admin/album" class="dashboard-button">Album (song)</a>
+        <a title="Click to go to admin artist page" aria-label="Click to go to admin artist page" href="/ZERODEGRE_/admin/artist" class="dashboard-button">Artiste</a>
+        <a title="Click to go to admin product page" aria-label="Click to go to admin product page" href="/ZERODEGRE_/admin/product" class="dashboard-button">Produits</a>
     </section>
     <h2>Gestion des Articles</h2> 
     <?php
@@ -44,16 +44,16 @@
                     <td><?= $data['mediasDesc'][$key]['alt_text'] ?></td>
                     <td>
                         <div class="admin-table-btn">
-                            <a title="Click to got to edit <?= $post->Title() ?>" href="/ZERODEGRE_/admin/post/edit&id=<?= $post->getId() ?>">Modifier</a>
-                            <a title="Click to got to remove <?= $post->Title() ?>" href="/ZERODEGRE_/admin/post/delete&id=<?= $post->getId() ?>">Supprimer</a>
+                            <a title="Click to got to edit <?= $post->Title() ?>" aria-label="Click to got to edit <?= $post->Title() ?>" href="/ZERODEGRE_/admin/post/edit&id=<?= $post->getId() ?>">Modifier</a>
+                            <a title="Click to got to remove <?= $post->Title() ?>" aria-label="Click to got to remove <?= $post->Title() ?>" href="/ZERODEGRE_/admin/post/delete&id=<?= $post->getId() ?>">Supprimer</a>
                         </div>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </table>
         <div class="admin-btn">
-            <a title="Click to got to create a post" href="/ZERODEGRE_/admin/post/create">Ajouter un article</a>
-            <a title="Click to got to admin dashboard" href="/ZERODEGRE_/admin/dashboard">Retour au Dashboard</a>
+            <a title="Click to got to create a post" aria-label="Click to got to create a post" href="/ZERODEGRE_/admin/post/create">Ajouter un article</a>
+            <a title="Click to got to admin dashboard" aria-label="Click to got to admin dashboard" href="/ZERODEGRE_/admin/dashboard">Retour au Dashboard</a>
         </div>
     
     </section>

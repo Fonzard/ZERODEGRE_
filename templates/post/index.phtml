@@ -18,7 +18,7 @@
         <p><?= $post->getAuthor() ?></p>
         <p><?= $data['categoriesNames'][$key]['name'] ?></p>
         <button class="show-post">
-            <a title="Click to go to post <?=$post->getTitle()?>" class="show-post-a" href="/ZERODEGRE_/post/show&id=<?= $post->getId() ?>">Découvrir l'article</a>
+            <a title="Click to go to post <?=$post->getTitle()?>" aria-label="Click to go to post <?=$post->getTitle()?>" class="show-post-a" href="/ZERODEGRE_/post/show&id=<?= $post->getId() ?>">Découvrir l'article</a>
         </button>
     </article>
     <?php endforeach;?>

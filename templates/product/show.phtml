@@ -36,7 +36,7 @@
                 ?>
                 <?php if ($productCounter < 4) : // Vérifie si le nombre de produits affichés est inférieur à 4 ?>
                     <li class="other-product">
-                        <a title="Click to go to product <?= $otherProduct->getName() ?> page" href="/ZERODEGRE_/product/show&id=<?= $otherProduct->getId() ?>">
+                        <a title="Click to go to product <?= $otherProduct->getName() ?> page" aria-label="Click to go to product <?= $otherProduct->getName() ?> page" href="/ZERODEGRE_/product/show&id=<?= $otherProduct->getId() ?>">
                             <img src="<?= $otherMedia[0]->getUrl() ?>" alt="<?= $otherMedia[0]->getAltText() ?>">
                             <p><?= $otherProduct->getName() ?></p>
                             <p><?= $otherProduct->getPrice() ?> €</p>

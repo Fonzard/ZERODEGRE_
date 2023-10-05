@@ -12,7 +12,7 @@
         <?php if (isset($data["productsByCategory"][$category->getName()])) : ?>
             <section class="product-container">
                 <?php foreach ($data["productsByCategory"][$category->getName()] as $product) : ?>
-                    <a title="Click to go to product <?= $product->getName() ?>"  href="/ZERODEGRE_/product/show&id=<?= $product->getId() ?>" title="<?= $product->getName() ?>">
+                    <a title="Click to go to product <?= $product->getName() ?>" aria-label="Click to go to product <?= $product->getName() ?>" href="/ZERODEGRE_/product/show&id=<?= $product->getId() ?>" title="<?= $product->getName() ?>">
                         <article class="product-image">
                             <?php foreach ($product->getMedia() as $media) : ?>
                                 <img src="<?= $media->getUrl() ?>" alt="<?= $media->getAltText() ?>"></img>

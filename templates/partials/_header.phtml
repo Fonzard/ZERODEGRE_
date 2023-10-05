@@ -4,16 +4,16 @@
 </header>
 <nav id="header-public-menu">
     <ul>
-        <li><a title="Click to go to artist page" href="/ZERODEGRE_/artist">Label</a></li>
-        <li><a title="Click to go to album page" href="/ZERODEGRE_/album">Mixtape</a></li>
-        <li><a title="Click to go to post page" href="/ZERODEGRE_/post">Blog</a></li>
-        <li><a title="Click to go to product page" href="/ZERODEGRE_/product">Merch</a></li>
+        <li><a title="Click to go to artist page" aria-label="Click to go to artist page" href="/ZERODEGRE_/artist">Label</a></li>
+        <li><a title="Click to go to album page" aria-label="Click to go to album page" href="/ZERODEGRE_/album">Mixtape</a></li>
+        <li><a title="Click to go to post page" aria-label="Click to go to post page" href="/ZERODEGRE_/post">Blog</a></li>
+        <li><a title="Click to go to product page" aria-label="Click to go to product page" href="/ZERODEGRE_/product">Merch</a></li>
         <?php 
         if(isset($_SESSION['user'])){
         ?>
-            <li><a title="Click to logout" href="/ZERODEGRE_/logout">Deconnexion</a></li> 
+            <li><a title="Click to logout" aria-label="Click to logout" href="/ZERODEGRE_/logout">Deconnexion</a></li> 
         <?php } else { ?>
-            <li><a title="Click to go to login page" href="/ZERODEGRE_/login"><i class="fa-solid fa-user fa-lg"></i></a></li>
+            <li><a title="Click to go to login page" aria-label="Click to go to login page" href="/ZERODEGRE_/login"><i class="fa-solid fa-user fa-lg"></i></a></li>
         <?php } ?>
     </ul>
 </nav>

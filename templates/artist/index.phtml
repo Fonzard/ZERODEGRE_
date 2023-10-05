@@ -21,7 +21,7 @@
                     <h4>Projets :</h4>
                     <ul>
                         <?php foreach($albums as $key => $album) :?>
-                        <li class="artist-zoom-project"><a title="CLick to go to album <?= $album->getTitre()  ?>" href="/ZERODEGRE_/album/show&id=<?= $album->getId() ?>"><?= $album->getTitre()  ?></a></li>
+                        <li class="artist-zoom-project"><a title="CLick to go to album <?= $album->getTitre()  ?>" aria-label="CLick to go to album <?= $album->getTitre()  ?>" href="/ZERODEGRE_/album/show&id=<?= $album->getId() ?>"><?= $album->getTitre()  ?></a></li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
