@@ -317,8 +317,12 @@ class AlbumController extends AbstractController{
                 header("Location: /ZERODEGRE_/admin/album");
 
             } else {
-                 $this->render("admin/album/edit", [
-                     "errors" => $errors
+                $album = $this->am->getAlbumById($albumId);
+                $songAlbum = $this->sm->getAllSongInAlbum($albumId);
+                $mediaId = $album->getMediaId();
+                $media = $this->mm->getMediaById($mediaId);
+                $this->render("admin/album/edit", [
+                     "errors" => $errors, "album" => $album, "media" => $media, "song" =>$songAlbum
                      ]);
             }
             
