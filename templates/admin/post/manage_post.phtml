@@ -44,8 +44,8 @@
                     <td><?= $data['mediasDesc'][$key]['alt_text'] ?></td>
                     <td>
                         <div class="admin-table-btn">
-                            <a title="Click to got to edit <?= $post->Title() ?>" aria-label="Click to got to edit <?= $post->Title() ?>" href="/ZERODEGRE_/admin/post/edit&id=<?= $post->getId() ?>">Modifier</a>
-                            <a title="Click to got to remove <?= $post->Title() ?>" aria-label="Click to got to remove <?= $post->Title() ?>" href="/ZERODEGRE_/admin/post/delete&id=<?= $post->getId() ?>">Supprimer</a>
+                            <a title="Click to got to edit <?= $post->getTitle() ?>" aria-label="Click to got to edit <?= $post->getTitle() ?>" href="/ZERODEGRE_/admin/post/edit&id=<?= $post->getId() ?>">Modifier</a>
+                            <a title="Click to got to remove <?= $post->getTitle() ?>" aria-label="Click to got to remove <?= $post->getTitle() ?>" href="/ZERODEGRE_/admin/post/delete&id=<?= $post->getId() ?>">Supprimer</a>
                         </div>
                     </td>
                 </tr>
