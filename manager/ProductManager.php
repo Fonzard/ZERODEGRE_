@@ -5,7 +5,7 @@ class ProductManager extends AbstractManager {
     public function getAllProducts() : array
     {
         $class = "Product";
-        $query = ("SELECT * FROM products");
+        $query = "SELECT id, name, price, description, quantity, category_id, media_id FROM products";
         $results = $this->getResult($query, null, $class, false);
         // var_dump($results);
         return $results;
@@ -14,7 +14,7 @@ class ProductManager extends AbstractManager {
     public function getProductByName(string $name) 
     {
         $class = "Product";
-        $query = "SELECT * FROM products WHERE products.name = :name";
+        $query = "SELECT id, name, price, description, quantity, category_id, media_id FROM products WHERE products.name = :name";
         $parameters = array(":name" => $name);
         
         $result = $this->getResult($query, $parameters, $class, true);
@@ -24,7 +24,7 @@ class ProductManager extends AbstractManager {
     public function getProductById(int $id)
     {
         $class = "Product";
-        $query = "SELECT * FROM products WHERE products.id = :id";
+        $query = "SELECT id, name, price, description, quantity, category_id, media_id FROM products WHERE products.id = :id";
         $parameters = array(":id" => $id);
         
         $result = $this->getResult($query, $parameters, $class, true);
@@ -34,7 +34,7 @@ class ProductManager extends AbstractManager {
     public function getProductsByPriceAscending() : ?Product 
     {
         $class = "Product";
-        $query = "SELECT * FROM products ORDER BY price ASC";
+        $query = "SELECT id, name, price, description, quantity, category_id, media_id FROM products ORDER BY price ASC";
         $parameters = null;
         
         $results = $this->getResult($query, $parameters, $class, false);

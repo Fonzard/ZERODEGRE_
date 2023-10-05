@@ -1,6 +1,6 @@
 <main id="edit-album" class="admin-form">
     <!-- Form for editing an existing album -->
-    <h3>Editer un Album</h3>
+    
     <p class="form-errors">
     <?php
         if(isset($data['errors']))
@@ -9,6 +9,7 @@
     ?>
     </p>
     <form action="/ZERODEGRE_/admin/album/edit&id=<?= $_GET['id'] ?>" method="post">
+        <h2>Editer un Album</h2>
         <fieldset>
             <label for="album-title">Titre de l'album:</label>
             <input type="text" id="album-title" name="album-title" value="<?= $data['album']->getTitre() ?>">
@@ -51,18 +52,19 @@
     </form>
     
     <!--Supprimer musique à l'unité-->
-    <h3>Supprimer une chanson</h3>
-    <form id="song-delete-form" method="post">
-    <fieldset>
-        <select id="songIdList" name="songIdList">
-            <?php foreach ($data['song'] as $song) : ?>
-                <option value="<?= $song->getId() ?>"><?= $song->getTitle() ?></option>
-            <?php endforeach; ?>
-        </select>
-    </fieldset>
-    <fieldset>
-        <button type="submit" id="song-delete-btn" data-action="/ZERODEGRE_/admin/album/deleteSong&id=">Supprimer</button>
-    </fieldset>
+    
+    <form class="song-delete-form" method="post">
+        <h2>Supprimer une chanson</h2>
+        <fieldset>
+            <select id="songIdList" name="songIdList">
+                <?php foreach ($data['song'] as $song) : ?>
+                    <option value="<?= $song->getId() ?>"><?= $song->getTitle() ?></option>
+                <?php endforeach; ?>
+            </select>
+        </fieldset>
+        <fieldset>
+            <button type="submit" id="song-delete-btn" data-action="/ZERODEGRE_/admin/album/deleteSong&id=">Supprimer</button>
+        </fieldset>
         <input type="hidden" name="song-delete-form"  value="submit"/>
     </form>
 

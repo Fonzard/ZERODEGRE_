@@ -3,9 +3,11 @@
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
-
+    min-height:calc(100vh - 2rem);
+    h2 {
+        margin-bottom:20px;
+    }
     .admin-message {
-        // Styles pour le message d'administration (s'il y en a un)
         font-size: 16px;
         background-color: #ffcc00;
         padding: 10px;
@@ -14,7 +16,7 @@
     h3 {
         font-size: 20px;
         margin-bottom: 10px;
-        color: #333;
+        color: #fff;
     }
     .product-container {
         margin: 20px 0;
@@ -22,46 +24,50 @@
 
         &:hover {
             // Styles pour l'effet de survol
-            border: 1px solid #333; // Bordure de 1 pixel solide
+            border: 1px solid #ffcaca; // Bordure de 1 pixel solide
             cursor: pointer;
         }
+        a {
+            text-decoration: none;
+            color: #fff;
+            margin:10px;
 
-        .product-list {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap; // Pour que les produits passent à la ligne s'ils ne tiennent pas
-            gap: 20px; // Espacement entre les produits
-            
-            li {
-                width: calc(50% - 10px); // Largeur de 50% moins l'espacement entre les produits
-                margin-bottom: 20px;
+            &:hover {
+                text-decoration: underline;
+            }
 
-                a {
-                    text-decoration: none;
-                    color: #333;
-
-                    &:hover {
-                        text-decoration: underline;
-                    }
-
-                    .product-image {
-                        img {
-                            max-width: 100%;
-                            height: auto;
-                        }
-                    }
-
-                    p {
-                        margin: 0;
-                    }
+            .product-image {
+                img {
+                    max-width: 300px;
+                    max-height: 300px;
+                    transition: transform 0.3s;
+                }
+                img:hover {
+                    transform: scale(1.05); 
                 }
             }
+            .detail-product{
+                margin-top:1em;
+                p {
+                    color:#fff;
+                    margin: 0;
+                } 
+            }
+        }
+            
+        
+    }
+}
+@media screen and (min-width: 760px) {
+    .main-product {
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
         }
     }
 }
-
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 900px) {
     // Styles spécifiques pour les écrans plus larges (tablettes et ordinateurs)
     .main-product {
         .product-container {
@@ -90,7 +96,7 @@
         }
     }
 }
-@media (min-width: 1024px) {
+@media (min-width: 1350px) {
     .main-product {
         .product-container {
             display: grid;

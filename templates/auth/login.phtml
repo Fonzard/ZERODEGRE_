@@ -1,18 +1,10 @@
-<main id="login">   
-    <h2>Connexion</h2>
-    <form action="login" method="post">
-        <p class="form-errors">
-            <?php
-                if(!empty($data['errors'])) {
-                     echo $data["errors"][0];
-                }
-            ?>
-        </p>
+<main class="main-login">   
+    <form id="login-form" action="login" method="post">
+        <h2>Connexion</h2>
         <p class="register-done">
             <?php
-                if(isset($data['message'])) {
-                    echo $data['message'][0];
-                }
+                if(isset($data['errors']))
+                    echo "<p class='errors-message'>". $data["errors"][0]. "</p>";
             ?>
         </p>
         <fieldset>
@@ -25,7 +17,7 @@
         </fieldset>
         <fieldset>
             <button type="submit">
-                Connexion
+                Connecte-toi 
             </button>
         </fieldset>
         <input type="hidden" name="login-form" id="login-form" value="login"/>

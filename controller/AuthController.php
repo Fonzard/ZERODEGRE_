@@ -2,11 +2,11 @@
 
 class AuthController extends AbstractController{
 
-    private UserManager $manager;
+    private UserManager $um;
     
     public function __construct()
     {
-        $this->manager = new UserManager();
+        $this->um = new UserManager();
     }
     
     public function register(): void
@@ -14,7 +14,6 @@ class AuthController extends AbstractController{
         // Voir si je peux envoyer le formulaire sans avoir remplit toutes les cases
         if (isset($_POST["register-form"]) && $_POST["register-form"] === "register") 
         {
-            var_dump("wesh");
             $email = $this->clean($_POST["register-email"]);
             $firstName = $this->clean($_POST["register-firstName"]);
             $lastName = $this->clean($_POST["register-lastName"]);
@@ -43,7 +42,7 @@ class AuthController extends AbstractController{
                 $errors[] = "L'email n'est pas écrit correctement";
             }
             
-            if ($this->manager->getUserByEmail($email) !== null) {
+            if ($this->um->getUserByEmail($email) !== null) {
                 $errors[] = "L'email existe déjà";
             }
             
@@ -69,7 +68,7 @@ class AuthController extends AbstractController{
                
                 $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
                 $user = new User($firstName, $lastName, $email, $hashedPassword, $roleId);
-                $this->manager->createUser($user);
+                $this->um->createUser($user);
                 
                 // Manually log the user
                 $_SESSION["user"] = $user->getId();
@@ -98,7 +97,7 @@ class AuthController extends AbstractController{
             $password = $_POST["login-password"];
     
             //Check if the user exists
-            $user = $this->manager->getUserByEmail($email);
+            $user = $this->um->getUserByEmail($email);
     
             if ($user !== null) 
             {
@@ -107,7 +106,7 @@ class AuthController extends AbstractController{
                 {
                     //Log the user    
                     $_SESSION["user"] = $user->getId();
-                    $roleName = $this->manager->getUserRoleName($user->getRoleId());
+                    $roleName = $this->um->getUserRoleName($user->getRoleId());
                     $_SESSION["role"] = $roleName['name'];
                     
                     if(isset($_SESSION) && $_SESSION["role"] === "Admin")
@@ -144,13 +143,8 @@ class AuthController extends AbstractController{
     
     public function logout()
     {
-        //Se renseigner sur le fonctionnement 
         session_destroy();
         header("location:/ZERODEGRE_/homepage");
-        // $this->render("partials/homepage", [
-        //     "logoutSuccess" => ["Vous êtes bien deconnecté"
-        //             ]
-        //         ]);
     }
 }
 ?>

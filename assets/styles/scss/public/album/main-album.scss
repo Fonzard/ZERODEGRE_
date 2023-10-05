@@ -1,21 +1,32 @@
 .main-album {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centre les éléments horizontalement */
-  justify-content: center; /* Centre les éléments verticalement */
-  
+  align-items: center;
+  justify-content: center;
+  max-width: 100vh;
+  min-height:calc(100vh - 2rem);
+  margin: auto;
+  padding:5em;
+
   .cover {
-    margin: 20px;
+    max-width: 40vh;
+    margin: 2em;
     background-color: #f7f7f7;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-    
-        img {
-          max-width: 100%;
-        }
+    box-shadow: 11px 12px 13px -3px rgba(90, 221, 255, 0.79);
+
+    img {
+      max-width: 100%;
+      transition: transform 0.3s ease; // Ajoute une transition pour une animation en douceur
     }
-    @media (min-width: 768px) {
-    /* Pour les tablettes, afficher au maximum 2 pochettes par ligne */
-    flex-direction: row;
-    flex-wrap: wrap;
+
+    &:hover img {
+      transform: translateY(-10px); // Déplace l'image vers le haut de 10 pixels au survol
+    }
+  }
+}
+@media (min-width: 860px) {
+    .main-album {
+      flex-direction: row;
+      flex-wrap: wrap;
     }
 }

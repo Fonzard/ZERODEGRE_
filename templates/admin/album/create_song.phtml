@@ -1,31 +1,25 @@
 <main id="create-song" class="admin-form">
     <!-- Formulaire pour ajouter une nouvelle chanson -->
-    <h3>Ajouter une nouvelle chanson</h3>
+    
     <form action="/ZERODEGRE_/admin/album/addSong&id=<?= $_GET['id'] ?>" method="post">
+        <h2>Ajouter une nouvelle chanson</h2>
         <fieldset>
             <label for="songTitle">Titre de la chanson:</label>
             <input type="text" id="songTitle" name="songTitle" required>
         </fieldset>
         <fieldset>
             <label for="songDuration">Durée:</label>
-            <input type="text" id="songDuration" name="songDuration" required>
+            <input type="text" id="songDuration" name="songDuration" placeholder="00:00:00"  required>
         </fieldset>
         <fieldset>
             <label for="songUrl">Url:</label>
             <input type="text" id="songUrl" name="songUrl" required>
-        </fieldset>
-        <fieldset>
-            <label for="albumSelect">Album:</label>
-            <select id="albumSelect" name="albumSelect">
-                <?php foreach ($data['albums'] as $album): ?>
-                    <option value="<?= $album->getId() ?>"><?= $album->getTitre() ?></option>
-                <?php endforeach; ?>
-            </select>
-        </fieldset>
+        </fieldset
+        >
         <fieldset>
             <button type="submit">Ajouter Chanson</button>
         </fieldset>
-        
+        <input type="hidden" name="albumId" value="<?= $_GET['id'] ?>"/>
         <input type="hidden" name="song-form" value="submit"/>
     </form>
 </main>

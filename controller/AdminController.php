@@ -44,12 +44,12 @@ class AdminController extends AbstractController{
             $this->userManager->delete($userId);
             $newUserList = $this->userManager->getAllUsers();
             
-                    if (empty($newUserList)) {
-                        echo json_encode(array("success" => false, "message" => "Aucun Utilisateur disponible."));
-                    } else {
-                        $responseData = array('success' => true, 'message' => 'Utilisateurs supprimé avec succès.', 'users' => $newUserList);
-                        echo json_encode($responseData);
-                    }
+            if (empty($newUserList)) {
+                echo json_encode(array("success" => false, "message" => "Aucun Utilisateur disponible."));
+            } else {
+                $responseData = array('success' => true, 'message' => 'Utilisateurs supprimé avec succès.', 'users' => $newUserList);
+                echo json_encode($responseData);
+            }
         } else {
                 echo json_encode(array("success" => false, "message" => "L'utilisateur n'a pas été supprimé"));
         }
@@ -190,6 +190,7 @@ class AdminController extends AbstractController{
         
         $albums = $this->albumManager->getAllAlbum();
         $albumsWithSongs = [];
+        $feats = [];
         
         foreach ($albums as $album) {
             
@@ -202,8 +203,22 @@ class AdminController extends AbstractController{
             } else {
                 $albumsWithSongs[] = $albumWithSongs;
             }
+            
+            $artistInAlbum = $this->artistManager->getArtistsByAlbumId($album->getId());
+            
+            if ($artistInAlbum === null) 
+            {
+                $_SESSION['message'] = "Aucun artiste n'est associé à cet album en base de données.";
+                header("location: /ZERODEGRE_/admin/album");
+                return;
+            } else {
+                 $artistsInAlbum[] = $artistInAlbum;
+            }
+            
+            $featInAlbum = $this->albumController->getAlbumWithFeat($album->getId());
+            $feats[] = $featInAlbum->getFeats();
         }
-        $this->render("admin/album/manage_album", ["albumsWithSongs" => $albumsWithSongs, "songs" => $songs, "albums" => $albums]);
+        $this->render("admin/album/manage_album", ["albumsWithSongs" => $albumsWithSongs, "feats" => $feats, "artistsInAlbum" => $artistsInAlbum]);
     }
     
     //Gestion des pages d'erreurs

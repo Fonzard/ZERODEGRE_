@@ -4,7 +4,7 @@ class SongManager extends AbstractManager {
     public function getAllSong() : array
     {
         $class = "Song";
-        $query = ("SELECT * FROM song");
+        $query = ("SELECT id, title, duration, url, album_id FROM song");
         $results = $this->getResult($query, null, $class, false);
         return $results;
     }
@@ -12,7 +12,7 @@ class SongManager extends AbstractManager {
     public function getAllSongInAlbum($albumId)
     {
         $class = "Song";
-        $query = "SELECT * FROM song WHERE song.album_id = :album_id";
+        $query = "SELECT id, title, duration, url, album_id FROM song WHERE song.album_id = :album_id";
         $parameters = array("album_id" => $albumId);
         $results = $this->getResult($query,$parameters, $class, false);
         return $results;
@@ -20,7 +20,7 @@ class SongManager extends AbstractManager {
     
     public function add(Song $song) : ?Song
     {
-        $query = "INSERT INTO song(title, duration, url, album_id) VALUES (:title, :duration, :url, :album_id)";
+        $query = "INSERT INTO song (title, duration, url, album_id) VALUES (:title, :duration, :url, :album_id)";
         $parameters = array("title" => $song->getTitle(), "duration" => $song->getDuration(), "url" => $song->getUrl(), "album_id" => $song->getAlbumId());
         
         $this->getQuery($query, $parameters);

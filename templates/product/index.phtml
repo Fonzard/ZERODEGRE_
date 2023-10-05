@@ -12,14 +12,14 @@
         <?php if (isset($data["productsByCategory"][$category->getName()])) : ?>
             <section class="product-container">
                 <?php foreach ($data["productsByCategory"][$category->getName()] as $product) : ?>
-                    <a href="/ZERODEGRE_/product/show&id=<?= $product->getId() ?>" title="<?= $product->getName() ?>">
+                    <a title="Click to go to product <?= $product->getName() ?>"  href="/ZERODEGRE_/product/show&id=<?= $product->getId() ?>" title="<?= $product->getName() ?>">
                         <article class="product-image">
                             <?php foreach ($product->getMedia() as $media) : ?>
                                 <img src="<?= $media->getUrl() ?>" alt="<?= $media->getAltText() ?>"></img>
                             <?php endforeach; ?>
                         </article>
-                        <article>
-                            <p><?= $product->getPrice() ?></p>
+                        <article class="detail-product">
+                            <p><?= $product->getPrice() ?> €</p>
                             <p><?= $product->getName() ?></p>
                         </article>
                     </a>

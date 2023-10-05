@@ -5,11 +5,20 @@ class MediaManager extends AbstractManager {
     public function getMediaById(int $mediaId)
     {
         $class = "Media";
-        $query = "SELECT * FROM medias WHERE id = :id";
+        $query = "SELECT id, url, alt_text FROM medias WHERE id = :id";
         $parameters = array("id" => $mediaId);
         
         $result = $this->getResult($query, $parameters, $class, true);
         return $result;
+    }
+    // ARTIST \\
+    public function getAllMediaInArtist($artistId)
+    {
+        $class = "Media";
+        $query = "SELECT id, url, alt_text FROM medias WHERE medias.id = :artist_id";
+        $parameters = array("artist_id" => $artistId);
+        $results = $this->getResult($query,$parameters, $class, false);
+        return $results;
     }
     // PRODUCTS \\
     public function getMediaIdByUrl(string $url)
@@ -27,27 +36,28 @@ class MediaManager extends AbstractManager {
         $query = "SELECT medias.alt_text FROM medias WHERE medias.id = :mediaId";
         $parameters = array("mediaId" => $mediaId);
         
-        $result = $this->getQuery($query, $parameters, true);
+        $result = $this->getQuery($query, $parameters, true); 
         return $result;
     }
-    //POST
+    // POST \\
     public function getAllMediaInPost($postId)
     {
         $class = "Media";
-        $query = "SELECT * FROM medias WHERE medias.id = :post_id";
+        $query = "SELECT id, url, alt_text FROM medias WHERE medias.id = :post_id";
         $parameters = array("post_id" => $postId);
         $results = $this->getResult($query,$parameters, $class, false);
         return $results;
     }
-    //Album
+    // ALBUM \\
     public function getAllMediaInAlbum($albumId)
     {
         $class = "Media";
-        $query = "SELECT * FROM medias WHERE medias.id = :album_id";
+        $query = "SELECT id, url, alt_text FROM medias WHERE medias.id = :album_id";
         $parameters = array("album_id" => $albumId);
         $results = $this->getResult($query,$parameters, $class, false);
         return $results;
     }
+    
     //Générale 
     public function insertMedia(Media $media)
     {

@@ -5,7 +5,7 @@ class UserManager extends AbstractManager {
     public function getAllUsers() : array
     {
         $class = "User";
-        $query = "SELECT * FROM users";
+        $query = "SELECT id, first_name, last_name, email, password, role_id FROM users";
         $parameters = null;
         $results = $this->getResult($query, $parameters, $class, false);
         return $results;
@@ -13,7 +13,7 @@ class UserManager extends AbstractManager {
     public function getUserByEmail(string $email) : ?User
     {
         $class = "User";
-        $query = ("SELECT * FROM users WHERE users.email = :email");
+        $query = ("SELECT id, first_name, last_name, email, password, role_id FROM users WHERE users.email = :email");
         $parameters = array(":email" => $email);
         
         $result = $this->getResult($query, $parameters, $class, true);
@@ -22,7 +22,7 @@ class UserManager extends AbstractManager {
     public function getUserById(int $id) : ?User
     {
         $class = "User";
-        $query = ("SELECT * FROM users WHERE users.id = :id");
+        $query = ("SELECT id, first_name, last_name, email, password, role_id FROM users WHERE users.id = :id");
         $parameters = array(":id" => $id);
         
         $result = $this->getResult($query, $parameters, $class, true);
@@ -32,7 +32,7 @@ class UserManager extends AbstractManager {
     public function getUserByFirstName(string $firstName) : ?User 
     {
         $class = "User";
-        $query = ("SELECT * FROM users WHERE users.first_name = :first_name");
+        $query = ("SELECT id, first_name, last_name, email, password, role_id FROM users WHERE users.first_name = :first_name");
         $parameters = array(":first_name" => $firstName);
         
         $result = array();
@@ -45,7 +45,7 @@ class UserManager extends AbstractManager {
     public function getUserByLastName(string $lastName) : ?User 
     {
         $class = "User";
-        $query = ("SELECT * FROM users WHERE users.last_name = :last_name");
+        $query = ("SELECT id, first_name, last_name, email, password, role_id FROM users WHERE users.last_name = :last_name");
         $parameters = array(":last_name" => $lastName);
         
         $result = array();

@@ -5,7 +5,7 @@ class PostManager extends AbstractManager {
     public function getAllPost()
     {
         $class = "Post";
-        $query = "SELECT * FROM post";
+        $query = "SELECT id, title, content, date, author, category_id, media_id FROM post";
         $results = $this->getResult($query, null, $class, false);
         return $results;
     }
@@ -13,7 +13,7 @@ class PostManager extends AbstractManager {
     public function getPostById(int $id)
     {
         $class = "Post";
-        $query = ("SELECT * FROM post WHERE post.id = :id");
+        $query = ("SELECT id, title, content, date, author, category_id, media_id FROM post WHERE post.id = :id");
         $parameters = array(":id" => $id);
         $result = $this->getResult($query, $parameters, $class, true);
         return $result;
@@ -21,7 +21,7 @@ class PostManager extends AbstractManager {
     public function getPostByTitle(string $title)
     {
         $class = "Post";
-        $query = ("SELECT * FROM post WHERE post.title = :title");
+        $query = ("SELECT id, title, content, date, author, category_id, media_id FROM post WHERE post.title = :title");
         $parameters = array(":title" => $title);
         
         $result = array();
@@ -34,7 +34,7 @@ class PostManager extends AbstractManager {
     public function getPostByAuthor(string $author) 
     {
         $class = "Post";
-        $query = ("SELECT * FROM post WHERE post.author = :author");
+        $query = ("SELECT id, title, content, date, author, category_id, media_id FROM post WHERE post.author = :author");
         $parameters = array(":author" => $author);
         
         $result = array();
@@ -50,11 +50,11 @@ class PostManager extends AbstractManager {
     {
         $class = "Post";
         $query = "
-            SELECT p.*
+            SELECT p.id, p.title, p.content, p.date, p.author, p.category_id, p.media_id
             FROM posts AS p
             INNER JOIN categories_post AS cp ON p.category_id = cp.id
-            WHERE cp.name = :category_name
-        ";
+            WHERE cp.name = :category_name;
+            ";
         $parameters = [":category_name" => $category->getName()]; 
     
         return $this->getResult($query, $parameters, $class);

@@ -1,12 +1,12 @@
 <main id="edit-artist" class="admin-form">
-    <h3>Modifier un artiste</h3>
     <form action="/ZERODEGRE_/admin/artist/edit&id=<?= $data['artist']->getId() ?>" method="post">
+        <h2>Modifier un artiste</h2>
         <fieldset>
             <label for="artist-name">Nom de l'artiste:</label>
             <input type="text" name="artist-name" value="<?= $data['artist']->getName() ?>" required>
         </fieldset>
         <fieldset>
-            <label for="artist-description">Description:</label>
+            <label for="artist-description">Description (max 1032 caractères):</label>
             <textarea name="artist-description"><?= $data['artist']->getDescription() ?></textarea>
         </fieldset>
         <fieldset>

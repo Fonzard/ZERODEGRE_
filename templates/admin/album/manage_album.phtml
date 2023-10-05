@@ -1,9 +1,9 @@
 <main class="manage-admin">
     <section class="button-container">
-        <a href="/ZERODEGRE_/admin/user" class="dashboard-button">Utilisateur</a>
-        <a href="/ZERODEGRE_/admin/artist" class="dashboard-button">Artiste</a>
-        <a href="/ZERODEGRE_/admin/product" class="dashboard-button">Produits</a>
-        <a href="/ZERODEGRE_/admin/post" class="dashboard-button">Article</a>
+        <a title="Click to go to admin user page" href="/ZERODEGRE_/admin/user" class="dashboard-button">Utilisateur</a>
+        <a title="Click to go to admin album and song page" href="/ZERODEGRE_/admin/album" class="dashboard-button">Album (song)</a>
+        <a title="Click to go to admin artist page" href="/ZERODEGRE_/admin/artist" class="dashboard-button">Artiste</a>
+        <a title="Click to go to admin post page" href="/ZERODEGRE_/admin/post" class="dashboard-button">Article</a>
     </section>
     <h2>Gestion des Albums et des chansons</h2>
 
@@ -14,22 +14,32 @@
         }
     ?>
 
-
+    <!--Fenetre Modale Delete-->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <p>Êtes-vous sûr de vouloir supprimer ce produit ?</p>
+            <button id="confirm-delete">Confirmer</button>
+            <button id="cancel-delete">Annuler</button>
+        </div>
+    </div>
     <!-- Liste des albums avec chansons -->
     <section class="admin-table-container"> 
-        <table class="admin-table">
+        <table class="admin-table" id="tableBody">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Titre de l'album</th>
                     <th>Année de sortie</th>
                     <th>Info Générale</th>
+                    <th>Créateur.trice du projet</th>
                     <th>Chanson</th>
+                    <th>Feat</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($data['albumsWithSongs'] as $album): ?>
+                
+                <?php foreach ($data['albumsWithSongs'] as $key => $album): ?>
                     <tr>
                         <td>
                             <?= $album->getId() ?>
@@ -44,13 +54,21 @@
                             <?= $album->getInfo() ?>
                         </td>
                         <td>
+                            <?= $data["artistsInAlbum"][$key][0]->getName() ?>
+                        </td>
+                        <td>
                             <a class="album-toggle" href="#"onclick="toggleSongs(<?= $album->getId() ?>)">Voir les chansons</a>
                         </td>
                         <td>
+                            <?php if (isset($data["feats"][$key][0])) : ?>
+                                <?= $data["feats"][$key][0]->getName() ?>
+                            <?php endif; ?>
+                        </td>
+                        <td>
                             <div class="admin-table-btn">
-                                <a href="/ZERODEGRE_/admin/album/edit&id=<?= htmlspecialchars($album->getId()); ?>" class="edi-btn">Modifier</a>
-                                <a class="open-modal" data-entity-id="<?= htmlspecialchars($album->getId()); ?>" data-entity-type="album">Supprimer</a>
-                                <a href="/ZERODEGRE_/admin/album/addSong&id=<?= htmlspecialchars($album->getId()); ?>" class="add-song">Ajouter un son</a>
+                                <a title="Click to go to edit <?= $album->getTitre() ?>" href="/ZERODEGRE_/admin/album/edit&id=<?= htmlspecialchars($album->getId()); ?>" class="edi-btn">Modifier</a>
+                                <a title="Click to go to remove <?= $album->getTitre() ?>" href="/ZERODEGRE_/admin/album/delete&id=<?= htmlspecialchars($album->getId()); ?>">Supprimer</a>
+                                <a title="Click to go to add song for <?= $album->getTitre() ?>" href="/ZERODEGRE_/admin/album/addSong&id=<?= htmlspecialchars($album->getId()); ?>" class="add-song">Ajouter un son</a>
                             </div>
                         </td>
                     </tr>
@@ -58,6 +76,7 @@
                         <td colspan="2">
                             <ul class="album-song-list">
                                 <?php foreach ($album->getSongs() as $song): ?>
+                                
                                     <li><?= $song->getTitle() ?> (<?= $song->getDuration() ?>)</li>
                                 <?php endforeach; ?>
                             </ul>
@@ -68,8 +87,8 @@
         </table>
     </section> 
     <section class="admin-btn">
-        <a href="/ZERODEGRE_/admin/album/create">Ajouter un album</a>
-        <a href="/ZERODEGRE_/admin/dashboard">Retour au Dashboard</a>
+        <a title="Click to got to create an album" href="/ZERODEGRE_/admin/album/create">Ajouter un album</a>
+        <a title="Click to got to admin dashboard" href="/ZERODEGRE_/admin/dashboard">Retour au Dashboard</a>
     </section> 
 </main>
 <script type="text/javascript" src="./../assets/js/admin_toggle.js"></script>

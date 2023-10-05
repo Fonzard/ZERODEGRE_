@@ -1,0 +1,135 @@
+.main-artist {
+    padding: 5em;
+    min-height:calc(100vh - 2rem);
+    .full-group {
+        display: flex;
+        justify-content: center;
+        
+        margin:auto;
+        .main-image {
+            width:300px;
+            height: auto;
+            display: block;
+            border-radius:30px;
+        }
+        .overlay-image {
+            position: absolute;
+            width: 300px;
+            height: auto;
+            opacity: 0; // L'image superposée est initialement transparente
+            transition: opacity 0.3s ease-in-out; // Ajoute une transition pour une animation fluide
+        }
+        &:hover {
+            opacity:0.8;
+            .overlay-image {
+                opacity: 1; // Lorsque vous survolez l'image principale, l'opacité de l'image superposée change
+            }
+        }
+    }
+    h2 {
+        text-align:center;
+        padding:1em;
+    }
+    .artist-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .artist {
+            margin: 2em 0;
+
+            .artist-photo {
+                width: 150px;
+                height: 150px;
+                margin:auto;
+                border-radius: 50%;
+                overflow: hidden;
+                cursor: pointer;
+                position: relative;
+                opacity: 1;
+                transition: opacity 0.3s ease-in-out;
+                
+                // Style pour le texte
+                .image-text {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    padding:20px;
+                    text-align: center;
+                    color: #ffcaca;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    border-radius:100px;
+                    opacity: 0;
+                    transition: opacity 0.3s ease-in-out;
+                }
+                .image-text:hover {
+                    opacity: 1;
+                }
+            }
+            .artist-photo:hover {
+                opacity: .8;
+            }
+
+            .artist-info {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                max-width:75%;
+                text-align: center;
+                margin-top: 20px;
+                margin:auto;
+
+                h3 {
+                    font-size: 24px;
+                    margin: 0;
+                }
+
+                p {
+                    text-align:justify;
+                    margin: 10px 0;
+                }
+                .artist-project {
+                    text-align:justify;
+                    h4 {
+                        margin-bottom:.5em;
+                    }
+                    a {
+                        font-size:20px;
+                    }
+                    a:hover {
+                        color:#ffcaca;
+                        
+                    }
+                }
+            }
+
+            .show-details {
+                display: flex;
+            }
+        }
+}
+    @media (min-width: 860px) {
+        .artist-container {
+            flex-direction: row;
+            flex-wrap:wrap;
+            align-items: flex-start;
+            justify-content:space-between;
+        }
+            .artist {
+                margin-top: 2em;
+                margin-right: 1em;
+            }
+            .full-group {
+                width: 500px;
+                .main-image {
+                    width: 500px;
+                }
+                .overlay-image {
+                    width: 500px;
+                }
+            }
+        }
+    }
+

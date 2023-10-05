@@ -1,6 +1,6 @@
 <main id="edit-post" class="admin-form">  
-    <h3>Modifier un Post</h3>
     <form action="/ZERODEGRE_/admin/post/edit?id=<?= $data['post']->getId() ?>" method="POST">
+        <h2>Modifier un Post</h2>
         <input type="hidden" name="post_id" value="<?= $data['post']->getId() ?>">
     
         <fieldset>

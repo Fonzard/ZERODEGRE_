@@ -1,8 +1,8 @@
 <main class = "main-show-album">
     <?php $album = $data['albumWithMedias'];
-    $media = $album->getMedia();
-    $artists = $data['artistInAlbum'];
-    var_dump($data["albumWithSongs"]);
+        $media = $album->getMedia();
+        $artists = $data['artistInAlbum'];
+        $feats= $data["feats"][0];
     ?>
     <header class = "album-header">
         <img src="<?= $media[0]->getUrl() ?>" alt="<?= $media[0]->getAltText() ?>"></img>
@@ -10,36 +10,40 @@
             <h2><?= $album->getTitre() ?></h2>
             <?php
             $producers = [];
-            $featurings = [];
+            $rapper = [];
             foreach ($artists as $key => $artist) :
                 if ($artist->getRoleId() === 4) {
                     // Artiste de type "Produit par"
                     $producers[] = $artist->getName();
                 } elseif ($artist->getRoleId() === 3) {
                     // Artiste de type "Featurings"
-                    $featurings[] = $artist->getName();
+                    $rappers[] = $artist->getName();
                 }
             endforeach;
             ?>
+            <?php if (!empty($rappers)) : ?>
+            
+                <p><?= $rappers[0]?></p>
+            <?php endif; ?>
             <?php if (!empty($producers)) : ?>
                 <p>Produit par : <?= implode(', ', $producers) ?></p>
             <?php endif; ?>
-            <?php if (!empty($featurings)) : ?>
-                <p>Featurings : <?= implode(', ', $featurings) ?></p>
-            <?php endif; ?>
+                <p>Featuring : <?= $feats->getName() ?></p>
             <p><?= $album->getInfo()?></p> <!--Créer nouvelle colonne en BDD infos générales-->
         </article>
     </header>
-    
     <ul class ="song-container">
+        
         <?php $songs = $data["albumWithSongs"]->getSongs()?>
         <?php foreach($songs as $song): ?>
         <Li class = "song-only">
             <h2><?= $song->getTitle() ?></h2>
             <div class="points"></div>
             <p><?= $song->getDuration() ?></p>
-            <button class="play-button">Lancer la musique</button>
+            <button class="play-button"><i class="fa-solid fa-play"></i></button>
+            <audio src="<?=$song->getUrl() ?>" class="audio-element"></audio>
         </Li>
         <?php endforeach; ?>
     </ul>
 </main>
+<script src="/ZERODEGRE_/assets/js/song_link.js"></script>

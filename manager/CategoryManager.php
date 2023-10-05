@@ -6,7 +6,7 @@ class CategoryManager extends AbstractManager {
     public function getAllCategoriesProducts()
     {
         $class = "Category";
-        $query = "SELECT * FROM categories_products";
+        $query = "SELECT id, name FROM categories_products";
         $results = $this->getResult($query, null, $class, false);
         return $results;
     }
@@ -54,7 +54,7 @@ class CategoryManager extends AbstractManager {
     public function getAllCategoriesPost()
     {
         $class = "Category";
-        $query = "SELECT * FROM categories_post";
+        $query = "SELECT id, name FROM categories_post";
         $results = $this->getResult($query, null, $class, false);
         return $results;
     }

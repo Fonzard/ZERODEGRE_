@@ -1,7 +1,76 @@
-<main id="homepage" class="">
-        <?php
-            if(isset($data['errors'])) {
-                echo "<p class='errors-message'>".$data['errors'][0]."</p>";
-            }
-        ?>
+<main class="main-homepage">
+    <article class="loading">
+        <div class="loading-bg">
+            <div class="loading-img-container">
+                <img class="loading-img" src="assets/media/img/logo/logo_only.png" alt="ZERODEGRE Logo">
+            </div>
+        </div>
+    </article>
+    <h2>Découvrez le Label Zéro Degré</h2>
+    <article class="slide-container">
+        <section class="slide-album">
+            <div class="slider-container">
+                <div class="slider">
+                    <?php foreach($data["albumsWithMedias"] as $albumMedia) : ?>
+                    <?php $aMedia = $albumMedia->getMedia() ?>
+                    
+                        <a title="Click to go to album <?=$albumMedia->getTitre()?>" class="slide" href="/ZERODEGRE_/album/show&id=<?= $albumMedia->getId() ?>">
+                            <img src="<?= $aMedia[0]->getUrl()?>" alt="<?=$aMedia[0]->getAltText()?>">
+                        </a>
+                    <?php endforeach;?>
+                </div>
+                <div class="slide-btn">
+                    <button class="prev-button"></button>
+                    <h3>Album / Mixtape</h3>
+                    <button class="next-button"></button>
+                </div>
+            </div>
+        </section>
+        <section class="slide-post"> 
+            <div class="slider-container">
+                <div class="slider">
+                    <?php foreach($data["postsWithMedias"] as $postMedia) : ?>
+                    <?php $pMedia = $postMedia->getMedia() ?>
+                    <div class="slide">
+                        <a title="Click to go to post <?=$postMedia->getTitle()?>" href="/ZERODEGRE_/post/show&id=<?= $postMedia->getId() ?>">
+                            <img src="<?= $pMedia[0]->getUrl()?>" alt="<?=$pMedia[0]->getAltText()?>">
+                        </a>
+                    </div>
+                    <?php endforeach;?>
+                </div>
+                <div class="slide-btn">
+                    <button class="prev-button"></button>
+                    <h3>Actualités du Label</h3>
+                    <button class="next-button"></button>
+                </div>
+            </div>
+        </section>
+    </article>
+    <h2>Merch Zéro Degré</h2>
+    <article class="homepage-product">
+        <ul class="other-homepage-product">
+            <?php 
+            $productCounter = 0; // Initialise le compteur de produits
+            foreach ($data["productsWithMedias"] as $otherProduct) :
+                $otherMedia = $otherProduct->getMedia();
+                ?>
+                <?php if ($productCounter < 4) : // Vérifie si le nombre de produits affichés est inférieur à 4 ?>
+                    <li class="other-product">
+                        <a title="Click to go to product <?= $otherProduct->getId() ?>"href="/ZERODEGRE_/product/show&id=<?= $otherProduct->getId() ?>">
+                            <img src="<?= $otherMedia[0]->getUrl() ?>" alt="<?= $otherMedia[0]->getAltText() ?>">
+                            <p><?= $otherProduct->getName() ?></p>
+                            <p><?= $otherProduct->getPrice() ?> €</p>
+                        </a>
+                    </li>
+                    <?php
+                    $productCounter++; // Incrémente le compteur de produits
+                endif;
+            endforeach;
+            ?>
+        </ul>
+    </article>
 </main>
+<script src="/ZERODEGRE_/assets/js/homepage_slide.js"></script>
+<script src="/ZERODEGRE_/assets/js/loading_screen.js"></script>
+
+

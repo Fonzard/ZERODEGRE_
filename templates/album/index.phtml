@@ -1,20 +1,11 @@
-<main class="main-post">
-<section class="post-title">
-    <h2>Viens découvrir nos dernières activitées !</h2>
-    <p>ZeroDegrés ne se limite pas à la musique, c'est bien plus. Nous <span>produisont</span> des <span>artistes</span> et leur <span>musique</span>, nous menons des <span>actions culturelles</span> et <span>sociales inspirantes</span>, et offront des <span>concerts inoubliables</span> !! Le label est une véritable force créative dans le domaine musical et culturel.</p>
-</section>
-<section class="section-post">  
-<?= var_dump($data['postsWithMedias']) ?>
-    <?php foreach ($data['postsWithMedias'] as $key => $post) : ?>
-    <article class="article-post">
-        <?php foreach($post->getMedia() as $media) :?>
-        <img src="<?= $media->getUrl() ?>" alt="<?= $media->getAltText() ?>"></img>
-        <?php endforeach;?>
-        <h3><?= $post->getTitle() ?></h3>
-        <p><?= $post->getAuthor() ?></p>
-        <p><?= $data['categoriesNames'][$key]['name'] ?></p>
-        <button class="show-post"><a class="show-post-a" href="/ZERODEGRE_/post/show&id=<?= $post->getId() ?>">Découvrir l'article</a></button>
-    </article>
-    <?php endforeach;?>
-</section>
+<main class="main-album">
+    <?php foreach($data["albumWithMedia"] as $key =>$album) : ?>
+        <a title="Click to go to album <?= $album->getTitre()  ?>"href="/ZERODEGRE_/album/show&id=<?= $album->getId() ?>" title="<?=$album->getTitre()?>">
+            <article class="cover">
+                <?php foreach($album->getMedia() as $media) :?>
+                <img src="<?= $media->getUrl()?>" alt="<?=$media->getAltText()?>">
+                <?php endforeach;?>
+            </article>
+        </a>
+    <?php endforeach ?>
 </main>

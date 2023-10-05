@@ -10,8 +10,49 @@ class ArtistController extends AbstractController {
         $this->am = new ArtistManager();
         $this->alm = new AlbumManager();
         $this->mm = new MediaManager();
+        $this->mc = new MediaController();
     }
-    //A Vérifier 
+
+    public function artistIndex()
+    {
+        $artists = $this->am->getAllArtists();
+        $artistsWithInfo = [];
+    
+        foreach ($artists as $artist) {
+            
+            $artistId = $artist->getId();
+            $mediaId = $artist->getMediaId();
+            
+            if ($artist) 
+            {
+                $medias = $this->mm->getAllMediaInArtist($mediaId); 
+                
+                if ($medias === null) 
+                {
+                    // Aucune chanson associée à l'album, renvoyer null
+                    $artist->setMedia([]);
+                } else {
+                    $artist->setMedia($medias); 
+                }
+                $albums = $this->alm->getAllAlbumOfArtist($artistId);
+                
+                if ($albums === null) 
+                {
+                    // Aucun album associé à l'artiste, renvoie un tableau vide
+                    $artist->setAlbums([]);
+                } else {
+                    // Ajoutez chaque album au tableau des albums de l'artiste
+                    $artist->setAlbums($albums); 
+                }
+                $artistsWithInfo[] = $artist;
+            }
+        }
+    
+        $this->render("artist/index", ["artistsWithInfo" => $artistsWithInfo]);
+    }
+
+
+    
     public function getArtistWithAlbums($artistId) 
     {
         $artist = $this->am->getArtistById($artistId); 
@@ -98,6 +139,7 @@ class ArtistController extends AbstractController {
             $_SESSION['message'] = "L'artiste ". $name ." créé avec succès.";
             header("location: /ZERODEGRE_/admin/artist");
         } else {
+            
             $this->render("admin/artist/create", []);
         }
     }
@@ -108,17 +150,11 @@ class ArtistController extends AbstractController {
         {
             $artistId = $_GET['id'];
             $this->am->deleteArtist($artistId);
-            $newArtistList = $this->am->getAllArtists();
-            
-            // Ne marche pas, Prendre le temps de trouver la soluce !!!!!!!!
-                if (empty($newArtistList)) {
-                    echo json_encode(array("success" => false, "message" => "Aucun produit disponible."));
-                } else {
-                    $responseData = array('success' => true, 'message' => 'Produit supprimé avec succès.', 'artists' => $newArtistList);
-                    echo json_encode($responseData);
-                }
+            $_SESSION["message"] = "Le produit a été supprimé avec succès.";
+            header("location:/ZERODEGRE_/admin/artist");
         } else {
-            echo json_encode(array("success" => false, "message" => "Le produit n'a pas été supprimé."));
+            $_SESSION["message"] = "Le produit n'a pas été supprimé.";
+            header("location:/ZERODEGRE_/admin/artist");
         }
     }
 }

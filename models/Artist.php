@@ -4,8 +4,9 @@ class Artist implements JsonSerializable {
     private string $name;
     private string $description;
     private ?int $media_id;
-    private ?Album $albums;
+    private array $albums;
     private ?int $role_id;
+    private array $media;
 
     public function __construct(string $name, string $description, ?int $media_id, ?int $role_id) {
         $this->id = null;
@@ -30,13 +31,13 @@ class Artist implements JsonSerializable {
     {
         return $this->description;
     }
-   
+
     public function getMediaId(): ?int 
     {
         return $this->media_id;
     }
 
-    public function getAlbums() : ? Album
+    public function getAlbums() : array
     {
         return $this->albums;
     }
@@ -44,6 +45,11 @@ class Artist implements JsonSerializable {
     public function getRoleId(): ?int 
     {
         return $this->role_id;
+    }
+    
+    public function getMedia(): array
+    {
+        return $this->media;
     }
     //////////// Setters ////////////
     public function setId(?int $id) : void
@@ -66,7 +72,7 @@ class Artist implements JsonSerializable {
         $this->media_id = $media_id;
     }
 
-    public function setAlbums(? Album $albums): void 
+    public function setAlbums( array $albums): void 
     {
         $this->albums = $albums;
     }
@@ -74,6 +80,11 @@ class Artist implements JsonSerializable {
     public function setRoleId(?int $role_id) : void
     {
         $this->role_id = $role_id;
+    }
+    
+    public function setMedia(array $media) : void
+    {
+        $this->media = $media;
     }
     
     public function jsonSerialize()

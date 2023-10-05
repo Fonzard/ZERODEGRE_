@@ -78,7 +78,7 @@ abstract class AbstractManager {
         }
         
         // Créer une instance de ReflectionClass pour la classe donnée
-        $reflectionClass = new ReflectionClass($class); // Mieux se renseigner sur ReflectionClass !!!!!!!!!
+        $reflectionClass = new ReflectionClass($class); 
         $constructor = $reflectionClass->getConstructor(); // Obtenir le constructeur de la classe
     
         // Parcourir les résultats de la requête

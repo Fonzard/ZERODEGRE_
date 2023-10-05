@@ -1,9 +1,9 @@
 <main class="manage-admin">
     <section class="button-container">
-        <a href="/ZERODEGRE_/admin/user" class="dashboard-button">Utilisateur</a>
-        <a href="/ZERODEGRE_/admin/album" class="dashboard-button">Album (song)</a>
-        <a href="/ZERODEGRE_/admin/product" class="dashboard-button">Produits</a>
-        <a href="/ZERODEGRE_/admin/post" class="dashboard-button">Article</a>
+        a title="Click to go to admin user page" href="/ZERODEGRE_/admin/user" class="dashboard-button">Utilisateur</a>
+        <a title="Click to go to admin album and song page" href="/ZERODEGRE_/admin/album" class="dashboard-button">Album (song)</a>
+        <a title="Click to go to admin artist page" href="/ZERODEGRE_/admin/artist" class="dashboard-button">Artiste</a>
+        <a title="Click to go to admin post page" href="/ZERODEGRE_/admin/post" class="dashboard-button">Article</a>
     </section>
     <h2>Gestion des Artistes</h2>
 
@@ -13,8 +13,16 @@
             unset($_SESSION['message']); // Effacer le message pour qu'il ne s'affiche pas à chaque rafraîchissement
         }
     ?>
+    <!--Fenetre Modale Delete-->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <p>Êtes-vous sûr de vouloir supprimer ce produit ?</p>
+            <button id="confirm-delete">Confirmer</button>
+            <button id="cancel-delete">Annuler</button>
+        </div>
+    </div>
     <section class="admin-table-container">
-        <table class="admin-table">
+        <table class="admin-table" id="tableBody">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -33,9 +41,9 @@
                         <td><?= htmlspecialchars($artist->getId()) ?></td>
                         <td><?= htmlspecialchars($artist->getName()) ?></td>
                         <?php if($artist->getRoleId() === 3) : ?>
-                        <td>Rappeur</td>
+                        <td>Rappeur.euse</td>
                         <?php else : ?>
-                        <td>Beatmaker</td>
+                        <td>Beatmaker.euse</td>
                         <?php endif; ?>
                         <td><?= htmlspecialchars($artist->getDescription()) ?></td>
                         <td><?= htmlspecialchars($data['mediaDesc'][$key]['alt_text']) ?></td>
@@ -48,8 +56,8 @@
                             </td>
                         <td>
                             <div class="admin-table-btn">
-                                <a href="/ZERODEGRE_/admin/artist/edit&id=<?= $artist->getId() ?>">Modifier</a>
-                                <a href="/ZERODEGRE_/admin/artist/delete&id=<?= $artist->getId() ?>">Supprimer</a>
+                                <a title="Click to got to edit <?= $artist->getName() ?>" href="/ZERODEGRE_/admin/artist/edit&id=<?= $artist->getId() ?>">Modifier</a>
+                                <a title="Click to got to remove <?= $artist->getName() ?>"href="/ZERODEGRE_/admin/artist/delete&id=<?= $artist->getId() ?>">Supprimer</a>
                             </div>
                         </td>
                     </tr>
@@ -57,8 +65,9 @@
             </tbody>
         </table>
         <div class="admin-btn">
-            <a href="/ZERODEGRE_/admin/artist/create">Créer un nouvel artiste</a>
-            <a href="/ZERODEGRE_/admin/dashboard">Retour au Dashboard</a>
+            <a title="Click to got to create an artist" href="/ZERODEGRE_/admin/artist/create">Créer un nouvel artiste</a>
+            <a title="Click to got to admin dashboard" href="/ZERODEGRE_/admin/dashboard">Retour au Dashboard</a>
         </div>
     </section>
 </main>
+

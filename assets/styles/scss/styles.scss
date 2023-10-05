@@ -1,25 +1,84 @@
+// BASE //
+@use 'base/_reset.scss';
+@use 'base/typography.scss';
+@use 'base/variable.scss' as vars;
+@use 'base/accessibility.scss';
+
 // PUBLIC //
-@use 'public/_footer.scss';
-@use 'public/_header_public.scss';
+@use 'public/partials/_footer.scss';
+@use 'public/partials/_header_public.scss';
+@use 'public/partials/_homepage.scss';
 
-// POST
-@use 'public/post/main-post.scss';
-@use 'public/post/main-show-post.scss';
+// AUTH //
+@use 'public/auth/main-register.scss';
+@use 'public/auth/main-login.scss';
 
-// ALBUM
+// ALBUM //
 @use 'public/album/main-album.scss';
 @use 'public/album/main-show-album.scss';
 
-// PRODUCT
+// ARTIST //
+@use 'public/artist/main-artist.scss';
+
+// POST //
+@use 'public/post/main-post.scss';
+@use 'public/post/main-show-post.scss';
+
+// PRODUCT //
 @use 'public/product/main-product.scss';
 @use 'public/product/main-show-product.scss';
+
 // ADMIN //
 @use 'admin/_form.scss';
 @use 'admin/_header.scss';
 @use 'admin/_main.scss';
 @use 'admin/_modal.scss';
 
-// BASE //
-@use 'base/typography.scss';
-@use 'base/variable.scss';
-@use 'base/_reset.scss';
+
+// STYLES //
+
+body {
+    background-image: url('/ZERODEGRE_/assets/media/img/bg/bg_img.webp'), url('/ZERODEGRE_/assets/media/img/bg/bg_img.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+h1, h2, h3, h4 {
+    font-family: vars.$font-title-primary;
+}
+h1 {
+    font-size:3em;
+    color:#fff;
+}
+h2 {
+    font-size:2em;
+    color:#fff;
+}
+h3 {
+    font-size:1.5em;
+    color:#fff;
+}
+h4 {
+    font-size:1.4em;
+    color:#fff;
+}
+h5 {
+    font-size:1.2em;
+}
+label {
+    font-family: vars.$font-text-bold;
+}
+textarea, input {
+    background-color: vars.$input-color;
+    border-radius: 6px;
+}
+a { 
+    text-decoration: none;
+    color:#fff;
+}
+p {
+    font-family:vars.$font-text-primary;
+    font-size:vars.$base-font-size;
+    line-height: 1.5;
+    color:vars.$color-text;
+}

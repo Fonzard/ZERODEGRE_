@@ -60,10 +60,25 @@ class ProductController extends AbstractController{
     
     public function show($productId)
     {
+        $otherProducts = $this->pm->getAllProducts();
+        
+        foreach($otherProducts as $otherProduct)
+        {
+            $productWithMedias = $this->mc->getProductWithMedia($otherProduct->getId());
+            
+            if ($productWithMedias === null) {
+                // Aucune média associée à cet article, gérer l'erreur ici
+                $_SESSION['message'] = "Aucun média n'est associé à ce produit en base de données.";
+                header("location: /ZERODEGRE_/product");
+                return;
+            } else {
+                $productsWithMedias[] = $productWithMedias;
+            }
+        }
         $product = $this->mc->getProductWithMedia($productId);
         $categoryId = $product->getCategoryId();
         $categoryName = $this->cm->getCategoriesProductsName($categoryId);
-        $this->render("product/show", ["product" => $product, "categoryName" => $categoryName]);
+        $this->render("product/show", ["product" => $product, "categoryName" => $categoryName, "productsWithMedias" => $productsWithMedias]);
     }
 
     public function createProduct() : void 
@@ -154,16 +169,11 @@ class ProductController extends AbstractController{
         {
             $productId = $_GET['id'];
             $this->pm->delete($productId);
-            $newProductList = $this->pm->getAllProducts();
-            // Ne marche pas, Prendre le temps de trouver la soluce !!!!!!!!
-                if (empty($newProductList)) {
-                    echo json_encode(array("success" => false, "message" => "Aucun produit disponible."));
-                } else {
-                    $responseData = array('success' => true, 'message' => 'Produit supprimé avec succès.', 'products' => $newProductList);
-                    echo json_encode($responseData);
-                }
+            $_SESSION["message"] = 'Produit supprimé avec succès.';
+            header("location:/ZERODEGRE_/admin/product");
         } else {
-            echo json_encode(array("success" => false, "message" => "Le produit n'a pas été supprimé."));
+            $_SESSION["message"] = "Le produit n'a pas été supprimé.";
+            header("location:/ZERODEGRE_/admin/product");
         }
     }
 }

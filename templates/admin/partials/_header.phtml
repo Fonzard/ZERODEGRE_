@@ -1,21 +1,20 @@
 <header class="header-admin">
-    <h1 class="header-admin-title"><a href="/ZERODEGRE_/admin/dashboard">ZERODEGRE_ // ADMIN</a></h1>
+    <h1 class="header-admin-title"><a href="/ZERODEGRE_/homepage">ZERODEGRE_ /</a><a href="/ZERODEGRE_/admin/dashboard">/ ADMIN</a></h1>
     <div id="header-admin-menu-button" class="close"></div>
 </header>
 <nav id="header-admin-menu">
-    <ul>
-        <li><a href="/ZERODEGRE_/register">Register</a></li>
-            <li><a href="">Label</a></li>
-            <li><a href="">Mixtape</a></li>
-            <li><a href="">Blog</a></li>
-            <li><a href="">Merch</a></li>
-            <li><a href="/ZERODEGRE_/admin/dashboard">Admin</a></li>
+    <ul class="header-homepage">
+        <li><a title="Click to go to artist page" href="/ZERODEGRE_/artist">Label</a></li>
+        <li><a title="Click to go to album page" href="/ZERODEGRE_/album">Mixtape</a></li>
+        <li><a title="Click to go to post page" href="/ZERODEGRE_/post">Blog</a></li>
+        <li><a title="Click to go to product page" href="/ZERODEGRE_/product">Merch</a></li>
+        <li><a title="Click to go to admin dashboard page" href="/ZERODEGRE_/admin/dashboard">Admin</a></li>
         <?php 
         if(isset($_SESSION['user'])){
         ?>
-        <li><a href="/ZERODEGRE_/logout">Deconnexion</a></li> 
+            <li><a title="Click to logout" href="/ZERODEGRE_/logout">Deconnexion</a></li> 
         <?php } else { ?>
-        <li><a href="/ZERODEGRE_/login">Connexion</a></li>
+            <li><a title="Click to go to login page" href="/ZERODEGRE_/login">Connexion</a></li>
         <?php } ?>
     </ul>
 </nav>

@@ -18,6 +18,26 @@ class MediaController extends AbstractController{
         $this->mm = new MediaManager();
     }
     
+    public function getArtistWithMedia($artistId) 
+    {
+        
+        $artist = $this->artistM->getArtistById($artistId); 
+        $mediaId = $artist->getMediaId();
+        if ($artist) 
+        {
+            $medias = $this->mm->getAllMediaInArtist($mediaId); 
+            if ($medias === null) 
+            {
+                // Aucune chanson associée à l'album, renvoyer null
+                $artist->setMedia([]);
+            } else {
+                $artist->setMedia($medias); 
+            }
+            return $artist; 
+        }
+        return $artist; 
+    }
+    
     public function getAlbumWithMedia($albumId) 
     {
         

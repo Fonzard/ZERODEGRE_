@@ -48,5 +48,13 @@
     src: url('/ZERODEGRE_/assets/fonts/libreCaslonText-Bold.ttf') format('truetype');
          font-weight: 700;
          font-display: swap;
-         font-style: bold;
+         font-style: normal;
+  }
+  // Nortune //
+  @font-face {
+    font-family: 'Evogria';
+    src: url('/ZERODEGRE_/assets/fonts/Evogria.otf') format('Opentype');
+         font-weight: 400;
+         font-display: swap;
+         font-style: normal;
   }

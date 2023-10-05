@@ -5,7 +5,7 @@ class AlbumManager extends AbstractManager {
     public function getAllAlbum() : array
     {
         $class = "Album";
-        $query = "SELECT * FROM album";
+        $query = "SELECT id, titre, year, info, media_id FROM album";
         $results = $this->getResult($query, null, $class, false);
         return $results;
     }
@@ -13,7 +13,7 @@ class AlbumManager extends AbstractManager {
     public function getAlbumById($albumId) : ? ALbum
     {
         $class = "Album";
-        $query = "SELECT * FROM album WHERE id = :id";
+        $query = "SELECT id, titre, year, info, media_id FROM album WHERE id = :id";
         $parameters = array("id" => $albumId);
         $result = $this->getResult($query, $parameters, $class, true);
         return $result;
@@ -22,7 +22,7 @@ class AlbumManager extends AbstractManager {
     public function getAllAlbumOfArtist($artistId) 
     {
         $class = "Album";
-        $query = "SELECT al.id, al.titre, al.year, al.media_id, al.info
+        $query = "SELECT al.id, al.titre, al.year, al.info, al.media_id
         FROM album al
         JOIN artist_album aa ON al.id = aa.album_id
         WHERE aa.artists_id = :artistId";
@@ -33,11 +33,11 @@ class AlbumManager extends AbstractManager {
     }
     
     public function add(Album $album) : ?Album
-    {
-        $query = "INSERT INTO album(titre, year, media_id) VALUES (:titre, :year, :info, :media_id)";
+    {  
+        $query = "INSERT INTO album (titre, year, info, media_id) VALUES (:titre, :year, :info, :media_id)";
         $parameters = array("titre" => $album->getTitre(), "year" => $album->getYear(), "info" => $album->getInfo(), "media_id" => $album->getMediaId());
         
-        $this->getQuery($query, $parameters);
+        $this->getQuery($query, $parameters, true);
         
         $lastInsertId = $this->connex->lastInsertId();
         
@@ -45,11 +45,18 @@ class AlbumManager extends AbstractManager {
         return $album;
     }
     
-    //Voir si il est possible de suprimer directement un album avec tous les sons qui le compose
     public function delete(int $albumId): void
     {
         $query = "DELETE FROM album WHERE id = :id";
         $parameters = array("id" => $albumId);
+        
+        $this->getQuery($query, $parameters, true);
+    }
+    
+    public function deleteArtistAssociate($albumId): void
+    {
+        $query = "DELETE FROM artist_album WHERE album_id = :albumId";
+        $parameters = array("albumId" => $albumId);
         
         $this->getQuery($query, $parameters, true);
     }

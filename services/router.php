@@ -36,7 +36,10 @@ class Router {
         {  
             $tab = explode("/", $route);  
       
-            if($tab[0] === "register") 
+            if($tab[0] === "homepage")
+            {
+                $routeAndParams["route"] = "homepage";
+            } else if($tab[0] === "register") 
             {  
                 $routeAndParams["route"] = "register";
                  
@@ -75,6 +78,10 @@ class Router {
             {
                 $routeAndParams["route"] = "product/show";
                 $routeAndParams["productId"] = $_GET["id"];
+            }
+            else if($tab[0] === "artist" && !isset($tab[1]))
+            {
+                $routeAndParams["route"] = "artist";
             }
             else if (isset($_SESSION["role"]) && $_SESSION["role"] === "Admin")  //////////ADMIN USER
             {
@@ -183,9 +190,7 @@ class Router {
         if (isset($_GET["path"])) 
         {
             $routeAndParams = $this->splitRouteAndParameters($_GET["path"]);
-            // var_dump($routeAndParams);
-            // die();
-               if(empty($routeAndParams["route"]))
+            if(empty($routeAndParams["route"]))
             {
                 $this->homeController->index();
             }
@@ -218,6 +223,9 @@ class Router {
             } else if($routeAndParams["route"] === "product/show" && isset($_GET["id"]))
             {
                 $this->productController->show($_GET["id"]);
+            } else if($routeAndParams["route"] === "artist" )
+            {
+                $this->artistController->artistIndex();
             } else if (isset($_SESSION["role"]) && $_SESSION["role"] === "Admin") 
             {
                 if($routeAndParams["route"] === "admin/dashboard")
@@ -300,11 +308,12 @@ class Router {
                     $this->postController->deletePost($_GET['id']);
                 }
                 
+            } else {
+                $this->homeController->index();
             }
+        } else {
+                $this->homeController->index();
         }
     }
-    
-    
-    
 }
 ?>

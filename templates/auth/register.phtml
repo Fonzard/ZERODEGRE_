@@ -1,6 +1,7 @@
-<main id="register">  
-    <h2>Inscription</h2>
+<main class="main-register" id="register-form">  
+    
     <form action="/ZERODEGRE_/register" method="post">
+        <h2>Inscription</h2>
             <?php
                 if(isset($data['errors']))
                     echo "<p class='errors-message'>". $data["errors"][0]. "</p>";

@@ -1,0 +1,32 @@
+<main class="main-artist">
+    <header class="full-group">
+        <img class="main-image" src="assets/media/img/artist/full-group.webp" alt="Photo de groupe du collectif Zéro Degré">
+        <img class="overlay-image" src="assets/media/img/logo/logo_only.png" alt="Logo du label Zéro Degré">
+    </header>
+    <h2>Découvrez les membres du collectif</h2>
+    <h3>Cliquer, cliquer pour découvrir leur projet !!</h3>
+    <div class="artist-container">
+    <?php foreach ($data["artistsWithInfo"] as $key => $artist) : ?>
+    <?php $media = $artist->getMedia(); 
+    $albums = $artist->getAlbums();?>
+        <section class="artist">
+            <article class="artist-photo">
+                <img class="" src="<?= $media[0]->getUrl() ?>" alt="<?= $media[0]->getAltText() ?>">
+                <p class="image-text"><?= $artist->getName() ?></p>
+            </article>
+            <article class="artist-info">
+                <h3><?= $artist->getName() ?></h3>
+                <p><?= $artist->getDescription() ?></p>
+                <div class="artist-project">
+                    <h4>Projets :</h4>
+                    <ul>
+                        <?php foreach($albums as $key => $album) :?>
+                        <li class="artist-zoom-project"><a title="CLick to go to album <?= $album->getTitre()  ?>" href="/ZERODEGRE_/album/show&id=<?= $album->getId() ?>"><?= $album->getTitre()  ?></a></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </article>
+        </section>
+    <?php endforeach; ?>
+    </div>
+</main>

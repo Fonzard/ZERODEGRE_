@@ -7,6 +7,7 @@ class Album implements JsonSerializable {
     private int $media_id;
     private array $songs = [];
     private array $media = [];
+    private array $feats = [];
 
     public function __construct(string $titre, int $year, string $info, int $media_id) {
         $this->id = null;
@@ -47,6 +48,11 @@ class Album implements JsonSerializable {
     {
         return $this->media;
     }
+    
+    public function getFeats(): array
+    {
+        return $this->feats;
+    }
     //////////// Setters ////////////
     public function setId(?int $id) : void
     {
@@ -79,6 +85,11 @@ class Album implements JsonSerializable {
         $this->media = $media;
     }
     
+    public function setFeats(array $feats) : void
+    {
+        $this->feats = $feats;
+    }
+    
     public function jsonSerialize()
     {
         $array = [];
@@ -87,8 +98,12 @@ class Album implements JsonSerializable {
         $array["year"] = $this->year;
         $array["info"] = $this->info;
         $array["media_id"] = $this->media_id;
+        $array["songs"] = $this->songs;
+        $array["media"] = $this->media;
+        $array ["feats"] =$this->feats;
 
         return $array;
     }
+    
 }
 ?>

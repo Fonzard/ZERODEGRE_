@@ -39,20 +39,57 @@ window.addEventListener('click', event => {
     }
 });
 
-// Ajouter un gestionnaire d'événement pour la suppression
+// Fonction pour confirmer la suppression
+function confirmDelete() {
+    if (entityIdToDelete && entityType) {
+        // Envoyez une requête JSON pour supprimer l'utilisateur ou l'entité en fonction de entityType et entityIdToDelete.
+        fetch(entityType + '/delete&id=' + entityIdToDelete, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Suppression réussie
+                // Mettez à jour la table en supprimant la ligne correspondante sans recharger la page
+                const rowToDelete = document.querySelector(`#tableBody tr[data-entity-id="${entityIdToDelete}"]`);
+                if (rowToDelete) {
+                    rowToDelete.remove();
+                }
+        
+                // Mettez à jour la table avec les nouvelles données renvoyées par le serveur
+                const tableBody = document.getElementById('tableBody');
+                tableBody.innerHTML = ''; // Effacez le contenu actuel de la table
+        
+                // Boucle à travers les nouvelles données et ajoutez-les à la table
+                data.users.forEach(user => {
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.firstName}</td>
+                        <td>${user.lastName}</td>
+                        <td>${user.email}</td>
+                        <td>${user.role === 2 ? 'Admin' : 'User'}</td>
+                        <td>
+                            <div class="admin-table-btn">
+                                <a href="/ZERODEGRE_/admin/user/edit&id=${user.id}" class="edit-user-btn">Modifier</a>
+                                <a class="open-modal" data-entity-id="${user.id}" data-entity-type="user">Supprimer</a>
+                            </div>
+                        </td>
+                    `;
+                    tableBody.appendChild(newRow);
+                });
+        
+                closeModal();
+            } else {
+                // Gérer les erreurs
+                console.error('Erreur lors de la suppression de l\'utilisateur : ' + data.message);
+            }
+        })
 
-    //Change la valeur de l'id que recoit le btn 
-    // const songIdList = document.getElementById("songIdList");
-    // const songDeleteBtn = document.getElementById("song-delete-btn");
-    // const baseAction = songDeleteBtn.getAttribute("data-action");
-    
-    
-    
-    // songIdList.addEventListener("change", function() {
-    //     console.log('yoooo');
-    //     // const selectIndex = songIdList.selectedIndex;
-    //     // console.log(selectIndex);
-    //     // const selectedSongId = selectIndex.value;
-    //     // const newAction = baseAction + selectedSongId;
-    //     // songDeleteBtn.setAttribute("data-action", newAction);
-    // });
+
+    }
+}
+confirmBtn.addEventListener('click', confirmDelete);

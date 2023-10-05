@@ -98,18 +98,17 @@ class PostController extends AbstractController
             $this->render('admin/post/create', ['categories' => $categories]);
         }
     }
-    // A revoir
-    public function deletePost() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $postId = $_POST['post_id'];
-
-            // Supprimer le post de la base de données
+    public function deletePost() 
+    {
+        if (isset($_GET['id'])) 
+        {
+            $postId = $_GET['id'];
             $this->pm->deletePost($postId);
-
-            // Rediriger vers la liste des posts ou une autre page
-            header('Location: /ZERODEGRE_/admin/posts');
+            $_SESSION["message"] = "L'article a été supprimé avec succès.";
+            header('Location: /ZERODEGRE_/admin/post');
         } else {
-            // Gérer l'accès non autorisé ou d'autres erreurs
+            $_SESSION["message"] = "L'article n'a  pas été supprimé.";
+            header('Location: /ZERODEGRE_/admin/post');
         }
     }
 

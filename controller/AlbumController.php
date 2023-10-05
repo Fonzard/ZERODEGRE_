@@ -3,17 +3,19 @@ class AlbumController extends AbstractController{
     
     private AlbumManager $am;
     private ArtistManager $artistManager;
-    private SongManager $sm;
-    private MediaManager $mm;
+    private FeaturingManager $fm;
     private MediaController $mc;
+    private MediaManager $mm;
+    private SongManager $sm;
     
     public function __construct()
     {
         $this->am = new AlbumManager();
         $this->artistManager = new ArtistManager();
-        $this->sm = new SongManager();
-        $this->mm = new MediaManager();
+        $this->fm = new FeaturingManager();
         $this->mc = new MediaController();
+        $this->mm = new MediaManager();
+        $this->sm = new SongManager();
     }
     
     public function createAlbumWithSongs($albumData, $songsData) {
@@ -47,6 +49,64 @@ class AlbumController extends AbstractController{
             
             return $album; 
         }
+        return $album; 
+    }
+
+    public function getAlbumWithFeat($albumId)
+    {
+        $album = $this->am->getAlbumById($albumId);
+        if ($album) 
+        {
+            $feats = $this->fm->getAllFeatInAlbum($albumId);
+            foreach($feats as $feat)
+            {
+                $artistId = $feat->getArtistId();
+                $featName[] = $this->artistManager->getArtistById($artistId);
+                
+                if ($feats === null) 
+                {
+                    $album->setFeats([]);
+                } else {
+                    $album->setFeats($featName); 
+                }
+            }
+            return $album;
+        }
+    }
+    public function getAlbumWithSongsAndFeats($albumId) 
+    {
+        $album = $this->am->getAlbumById($albumId);
+    
+        if ($album) 
+        {
+            $songs = $this->sm->getAllSongInAlbum($albumId);
+            $feats = $this->fm->getAllFeatInAlbum($albumId);
+    
+            if ($songs === null) 
+            {
+                $album->setSongs([]);
+            } else {
+                $album->setSongs($songs); 
+            }
+    
+            $featName = [];
+    
+            foreach ($feats as $feat) 
+            {
+                $artistId = $feat->getArtistId();
+                $featName[] = $this->artistManager->getArtistById($artistId);
+            }
+    
+            if ($feats === null) 
+            {
+                $album->setFeats([]);
+            } else {
+                $album->setFeats($featName); 
+            }
+    
+            return $album; 
+        }
+    
         return $album; 
     }
 
@@ -94,13 +154,17 @@ class AlbumController extends AbstractController{
         } 
         
         $artistInAlbum = $this->artistManager->getArtistsByAlbumId($albumId);
-        if ($albumWithMedias === null) 
+        if ($artistInAlbum === null) 
         {
             $_SESSION['message'] = "Aucun artiste n'est associé à cet album en base de données.";
             header("location: /ZERODEGRE_/album");
             return;
         } 
-        $this->render("album/show", ["albumWithSongs" => $albumWithSongs, "albumWithMedias" => $albumWithMedias, "artistInAlbum" => $artistInAlbum]);
+        
+        $featInAlbum = $this->getAlbumWithFeat($albumId);
+        $feats = $featInAlbum->getFeats();
+        
+        $this->render("album/show", ["albumWithSongs" => $albumWithSongs, "albumWithMedias" => $albumWithMedias, "artistInAlbum" => $artistInAlbum, "feats" => $feats]);
     }
 
     public function AddAlbum()
@@ -116,23 +180,12 @@ class AlbumController extends AbstractController{
             $mediaUrl = $this->clean($_POST['album-url']);
             $mediaAltText = $this->clean($_POST['album-altText']);
         
-            // Vérifier si le média existe déjà dans la base de données
-            $mediaId = $this->mm->getMediaIdByUrl($mediaUrl);
-            if ($mediaId === false) {
-                // Créer un nouvel objet Media
-                $media = new Media($mediaUrl, $mediaAltText);
-                $this->mm->insertMedia($media);
-                $mediaId = $media->getid();
-                $editedMedia = $this->mm->getMediaById($mediaId);
-            } else {
-                $media = $this->mm->getMediaById($mediaId);
-                $media->setUrl($mediaUrl);
-                $media->setAltText($mediaAltText);
-                $this->mm->editMedia($media);
-                $editedMedia = $this->mm->getMediaById($media->getId());
-            }
+            $media = new Media($mediaUrl, $mediaAltText);
+            $this->mm->insertMedia($media);
+            $mediaId = $media->getid();
             
-            $newAlbum = new Album($titre, $year, $info, $editedMedia->getId()); 
+                
+            $newAlbum = new Album($titre, $year, $info, $mediaId); 
             // Ajouter l'album à la base de données
             $addedAlbum = $this->am->add($newAlbum);
 
@@ -141,7 +194,7 @@ class AlbumController extends AbstractController{
             if ($addedAlbum) 
             {
                 header("location: /ZERODEGRE_/admin/album");
-                $_SESSION['message'] = "L'album". $titre ." a bien été créé";
+                $_SESSION['message'] = "L'album ". $titre ." a bien été créé";
             } else {
                 header("location: /ZERODEGRE_/admin/album/create");
                 $_SESSION['message'] = "Erreur pour la création d'album, veuillez recommencer.";
@@ -158,12 +211,12 @@ class AlbumController extends AbstractController{
         {
             // Récupérer les données du formulaire
             $title = $this->clean($_POST['songTitle']);
-            $duration = $_POST['songDuration'];
-            $url = $_POST['songUrl'];
-            $albumId = $_POST['albumSelect'];
+            $duration = $this->clean($_POST['songDuration']);
+            $url = $this->clean($_POST['songUrl']);
+            $albumId = $this->clean($_POST['albumId']);
         
             // Créer un nouvel objet Song
-            $newSong = new Song($title, $duration, $url, $albumId);
+            $newSong = new Song ($title, $duration, $url, $albumId);
         
             // Ajouter la chanson à la base de données
             $addedSong = $this->sm->add($newSong);
@@ -176,7 +229,7 @@ class AlbumController extends AbstractController{
             }
         } else {
             $album = $this->am->getAlbumById($albumId);
-            $albums = $this->am->getAllAlbum();;
+            $albums = $this->am->getAllAlbum();
             $this->render("admin/album/create_song", ["album" => $album, "albums" => $albums]);
         }
     }
@@ -188,7 +241,7 @@ class AlbumController extends AbstractController{
         {
             $titre = $this->clean($_POST['album-title']);
             $year = $this->clean($_POST['album-year']);
-            $info = $this->clean($_POST['info']);
+            $info = $this->clean($_POST['album-info']);
             $mediaUrl = $this->clean($_POST['album-url']);
             $mediaAltText = $this->clean($_POST['album-altText']);
             $errors = [];
@@ -253,20 +306,17 @@ class AlbumController extends AbstractController{
         if(isset($_GET['id']))
         {
             $albumId = $_GET['id'];
+            // Permet de supprimer le lien entre l'artist et l'album en BDD
+            $this->am->deleteArtistAssociate($albumId);
             $this->am->delete($albumId);
-            $newAlbumList = $this->am->getAllAlbum();
-            // Ne marche pas, Prendre le temps de trouver la soluce !!!!!!!!
-                if (empty($newAlbumList)) {
-                    echo json_encode(array("success" => false, "message" => "Aucun album disponible."));
-                } else {
-                    $responseData = array('success' => true, 'message' => 'Album supprimé avec succès.', 'album' => $newAlbumList);
-                    echo json_encode($responseData);
-                }
+            $_SESSION["message"] = "L'album a été supprimé avec succès.";
+            header('location: /ZERODEGRE_/admin/album');
         } else {
-            echo json_encode(array("success" => false, "message" => "L'album n'a pas été supprimé."));
+            $_SESSION["message"] = "L'album n'a pas été supprimé.";
+            header('location: /ZERODEGRE_/admin/album');
         }
     }
-    // A vérifier ET réfléchir à l'utilité du fetch pour un musique
+    
     public function deleteSong()
     {
 
@@ -274,17 +324,11 @@ class AlbumController extends AbstractController{
         {
             $songId = $_GET['id'];
             $this->sm->delete($songId);
-            $newSongList = $this->sm->getAllSong();
-            
-            // Ne marche pas, Prendre le temps de trouver la soluce !!!!!!!!
-                if (empty($newSongList)) {
-                    echo json_encode(array("success" => false, "message" => "Aucun produit disponible."));
-                } else {
-                    $responseData = array('success' => true, 'message' => 'Produit supprimé avec succès.', 'song' => $newSongList);
-                    echo json_encode($responseData);
-                }
+            $_SESSION["message"] = "La musique a été supprimé avec succès.";
+            header('location: /ZERODEGRE_/admin/album');
         } else {
-            echo json_encode(array("success" => false, "message" => "Le produit n'a pas été supprimé."));
+            $_SESSION["message"] = "Le son n'a pas été supprimé.";
+            header('location: /ZERODEGRE_/admin/album');
         }
     }
     

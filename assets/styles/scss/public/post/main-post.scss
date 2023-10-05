@@ -3,86 +3,81 @@
     flex-direction: column; 
     align-items: center; 
     padding: 2em;
+    min-height:calc(100vh - 2rem);
     .post-title{
         max-width: 800px;
         margin: 0 auto 20px;
         h2 {
-            font-size: 24px; 
-            color: #333; 
-            margin-bottom: 20px; 
+            margin-bottom: 2em; 
         }
         p {
-            color: #777;
-            margin-bottom: 20px; 
+            margin-bottom: 2em; 
             span {
                 font-weight: bold; 
             }
         }
     }
-.section-post {
-  display: flex;
-  flex-direction: column;
-  align-items: center; 
-  justify-content: center;
-  .article-post {
-      max-width:300px;
-      margin: 20px; 
-      padding: 10px; 
-      background-color: #f0d0d0; // A changer mais garder cette couleur en tête
-      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); 
-
-      img {
-          max-width: 100%; 
-      }
-
-      h3 {
-          font-size: 1.5rem; 
-      } 
-
-      p {
-          font-size: 1rem; 
-          margin-top: 5px; 
-      }
-
-      .show-post {
-          background-color: #f9d8d8; //Couleur à changer !!!!
-          color: #333; 
-          border: none; 
-          padding: 5px 10px; 
-          cursor: pointer; 
-          text-decoration: none; 
-          display: block; 
-          margin-top: 10px; 
-          text-align: center; 
-          border-radius: 10px;
-          .show-post-a {
-            color:#333;
+    .section-post {
+      display: flex;
+      flex-direction: column;
+      align-items: center; 
+      justify-content: center;
+      .article-post {
+          width:300px;
+          height:465px;
+          margin: 2em; 
+          padding: 10px; 
+          background-color: #f0d0d0; // A changer mais garder cette couleur en tête
+          box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); 
+    
+          img {
+              max-width: 100%; 
+              border: .5em solid #fff;
           }
-          &:hover {
-              background-color: #007bff;
-              a {
-                color:white;
+    
+          p {
+              font-size: 1rem; 
+              margin-top: 5px; 
+              color:#000;
+          }
+    
+          .show-post {
+              background-color: #f9d8d8; //Couleur à changer !!!!
+              color: #333; 
+              border: none; 
+              padding: 5px 10px; 
+              cursor: pointer; 
+              text-decoration: none; 
+              display: block; 
+              margin-top: 10px; 
+              text-align: center; 
+              border-radius: 10px;
+              .show-post-a {
+                color:#333;
+              }
+              &:hover {
+                  background-color: #007bff;
+                  a {
+                    color:white;
+                  }
               }
           }
       }
-  }
-    @media (min-width: 768px) {
-        flex-direction: row; // Pour tablettes, affiche les articles en ligne horizontale
-        flex-wrap: wrap; // Permet aux articles de se superposer en dessous
-
-        .article-post {
-            width: calc(50% - 40px); // Pour tablettes, occupe 50% de la largeur
-            margin: 20px; // Espacement entre les articles
+        @media (min-width: 768px) {
+            flex-direction: row; // Pour tablettes, affiche les articles en ligne horizontale
+            flex-wrap: wrap; // Permet aux articles de se superposer en dessous
+    
+            .article-post {
+                margin: 20px; // Espacement entre les articles
+            }
+        }
+    
+        @media (min-width: 1024px) {
+            flex-direction: row; // Pour ordinateurs, affiche les articles en ligne horizontale
+    
+            .article-post {
+                margin: 20px; // Espacement entre les articles
+            }
         }
     }
-
-    @media (min-width: 1024px) {
-        flex-direction: row; // Pour ordinateurs, affiche les articles en ligne horizontale
-
-        .article-post {
-            width: calc(25% - 40px); // Pour ordinateurs, occupe environ 25% de la largeur
-            margin: 20px; // Espacement entre les articles
-        }
-    }
-}
 }

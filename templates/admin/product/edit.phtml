@@ -1,17 +1,18 @@
 <main id="edit-product" class="admin-form"> 
-    <h3>Modifier un produit</h3>
+    
     <?php $product = $data['product']; 
         $media = $data['media'];
     ?>
-    <p class="message">
-        <?php
-            if(isset($_SESSION['message'])) {
-                echo $_SESSION['message'];
-                unset($_SESSION['message']); 
-            }
-        ?>
-    </p>
     <form action="/ZERODEGRE_/admin/product/edit&id=<?= $_GET['id'] ?>" method="post">
+        <h2>Modifier un produit</h2>
+        <p class="message">
+            <?php
+                if(isset($_SESSION['message'])) {
+                    echo $_SESSION['message'];
+                    unset($_SESSION['message']); 
+                }
+            ?>
+        </p>
         <fieldset>
             <label for="product-name"> Nom du produit</label>
             <input type="text" name="product-name" id="product-name" value="<?= $product->getName() ?>"/>
