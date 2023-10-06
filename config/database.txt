@@ -1,4 +1,4 @@
-username=francisrouxel
-password=acadbb28886b6985666cd7eff4651f1d
-host=db.3wa.io
-db_name=francisrouxel_zero_degre
+username=
+password=
+host=
+db_name=
