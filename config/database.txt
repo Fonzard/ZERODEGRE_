@@ -1,4 +1,4 @@
-francisrouxel
-acadbb28886b6985666cd7eff4651f1d
-db.3wa.io
-francisrouxel_zero_degre
+Username
+Password
+Host
+Dbname
