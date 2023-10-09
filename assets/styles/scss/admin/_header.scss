@@ -45,8 +45,9 @@
     width:100%;
     text-align:center;
     transform:translateY(-500px);
-    top:1.6em;
+    top:2.6em;
     z-index:3;
+
     ul {
         display:block;
         list-style:none;
@@ -74,11 +75,18 @@
 #header-admin-menu.show-menu {
     transform:translateY(51px);
 }
+@media (max-width:600px) {
+    .header-admin-title {
+        display:flex;
+        flex-direction:column;
+    }
+}
 @media (min-width: 1126px){
     .header-admin {
         width: 100%;
         height: 5em;
         margin-right:2em;
+
         #header-admin-menu-button {
             display:none;   
         }

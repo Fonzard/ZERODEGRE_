@@ -3,8 +3,12 @@
         <h2>Connexion</h2>
         <p class="register-done">
             <?php
-                if(isset($data['errors']))
+                if(!empty($data['errors']))
                     echo "<p class='errors-message'>". $data["errors"][0]. "</p>";
+            ?>
+            <?php 
+                if(!empty($data['message']))
+                    echo"<p class='login-message'>". $data["message"][0] ."</p>";
             ?>
         </p>
         <fieldset>

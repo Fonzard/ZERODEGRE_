@@ -22,7 +22,10 @@
         fieldset {
             margin: 10px 0;
             width: 80%;
-
+            .password-condition {
+                text-align:left;
+                color:#333;
+            }
             label {
                 display: block;
                 font-weight: bold;

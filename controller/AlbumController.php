@@ -321,9 +321,7 @@ class AlbumController extends AbstractController{
                 $songAlbum = $this->sm->getAllSongInAlbum($albumId);
                 $mediaId = $album->getMediaId();
                 $media = $this->mm->getMediaById($mediaId);
-                $this->render("admin/album/edit", [
-                     "errors" => $errors, "album" => $album, "media" => $media, "song" =>$songAlbum
-                     ]);
+                $this->render("admin/album/edit", ["album" => $album, "media" => $media, "song" =>$songAlbum]);
             }
             
         } else {

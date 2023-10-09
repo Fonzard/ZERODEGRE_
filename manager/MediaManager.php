@@ -7,7 +7,6 @@ class MediaManager extends AbstractManager {
         $class = "Media";
         $query = "SELECT id, url, alt_text FROM medias WHERE id = :id";
         $parameters = array("id" => $mediaId);
-        
         $result = $this->getResult($query, $parameters, $class, true);
         return $result;
     }

@@ -44,5 +44,9 @@ class HomeController extends AbstractController
         
         $this->render("partials/homepage", ["albumsWithMedias" => $albumsWithMedias, "postsWithMedias" => $postsWithMedias, "productsWithMedias" => $productsWithMedias]);
     }
+    public function legalNotice()
+    {
+        $this->render("partials/legal_notice", []);
+    }
 }
 ?>

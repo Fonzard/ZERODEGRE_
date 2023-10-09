@@ -8,6 +8,7 @@
 @use 'public/partials/_footer.scss';
 @use 'public/partials/_header_public.scss';
 @use 'public/partials/_homepage.scss';
+@use 'public/partials/legal-notice.scss';
 
 // AUTH //
 @use 'public/auth/main-register.scss';
@@ -36,10 +37,9 @@
 
 
 // STYLES //
-
 body {
+    background:vars.$background-gradient;
     background-image: url('/ZERODEGRE_/assets/media/img/bg/bg_img.webp'), url('/ZERODEGRE_/assets/media/img/bg/bg_img.png');
-    background: vars.$background-gradient;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -72,6 +72,10 @@ label {
 textarea, input {
     background-color: vars.$input-color;
     border-radius: 6px;
+}
+li {
+    font-family:vars.$font-text-primary;
+    font-size:vars.$base-font-size;    
 }
 a { 
     text-decoration: none;

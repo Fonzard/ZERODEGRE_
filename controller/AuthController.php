@@ -90,55 +90,68 @@ class AuthController extends AbstractController{
     public function login(): void 
     {
         $errors = []; // Créer un tableau pour stocker les erreurs
-    
+        
         if (isset($_POST["login-form"]) && $_POST["login-form"] === "login") 
         {
             $email = $this->clean($_POST["login-email"]);
-            $password = $_POST["login-password"];
-    
-            //Check if the user exists
-            $user = $this->um->getUserByEmail($email);
-    
-            if ($user !== null) 
+            $password = $this->clean($_POST["login-password"]);
+        
+            // Vérifier si l'email et le mot de passe sont saisis
+            if (empty($email)) {
+                $errors[] = "Veuillez saisir votre Email";
+            }
+            
+            if (empty($password)) {
+                $errors[] = "Veuillez saisir votre mot de passe";
+            }
+            
+            if (empty($errors))
             {
-                //Check if the password is correct 
-                if (password_verify($password, $user->getPassword())) 
+                // Rechercher l'utilisateur par son email
+                $user = $this->um->getUserByEmail($email);
+    
+                // Vérifier si l'utilisateur existe
+                if ($user == null) 
                 {
-                    //Log the user    
-                    $_SESSION["user"] = $user->getId();
-                    $roleName = $this->um->getUserRoleName($user->getRoleId());
-                    $_SESSION["role"] = $roleName['name'];
-                    
-                    if(isset($_SESSION) && $_SESSION["role"] === "Admin")
-                    {
-                        //Rajouter un élément pour qu'admin sois montré actif
-                        header("location: /ZERODEGRE_/admin/dashboard");
-                    } else {
-                        $this->render("partials/homepage", [
-                        "message" => ["Vous êtes bien connecté"]
-                    ]);
-                    }
+                    $errors[] = "Aucun compte n'est lié à cette adresse email";
                 } 
                 else 
                 {
-                    $errors[] = "Mot de passe incorrect";
+                    // Vérifier si le mot de passe est correct
+                    if (!password_verify($password, $user->getPassword())) 
+                    {
+                        $errors[] = "Mot de passe incorrect";
+                    } 
+                    else 
+                    {
+                        // Connecter l'utilisateur    
+                        $_SESSION["user"] = $user->getId();
+                        $roleName = $this->um->getUserRoleName($user->getRoleId());
+                        $_SESSION["role"] = $roleName['name'];
+                        
+                        if(isset($_SESSION) && $_SESSION["role"] === "Admin")
+                        {
+                            // Rediriger l'administrateur vers le tableau de bord admin
+                            header("location: /ZERODEGRE_/admin/dashboard");
+                            exit(); // Terminer le script pour éviter toute exécution ultérieure
+                        } 
+                        else 
+                        {
+                            // Rediriger les utilisateurs non-administrateurs vers la page d'accueil
+                            header("location: /ZERODEGRE_/homepage");
+                            exit(); // Terminer le script pour éviter toute exécution ultérieure
+                        }
+                    }
                 }
-            } 
-            else 
-            {
-                $errors[] = "Aucun compte avec cet email";
             }
         } 
-        else 
-        {
-            $errors[] = "";
-        }
-    
-        // Render the view with errors array
+        
+        // Rendre la vue avec le tableau d'erreurs
         $this->render("auth/login", [
             "errors" => $errors
         ]);
     }
+
 
     
     public function logout()

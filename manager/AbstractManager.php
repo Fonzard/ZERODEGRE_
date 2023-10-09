@@ -40,7 +40,6 @@ abstract class AbstractManager {
     
     public function getQuery($query, $parameters = array(), $singleResult = false) {
         
-        
         try {
             
             // Préparation de la requête 

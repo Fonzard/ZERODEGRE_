@@ -39,11 +39,14 @@ class Router {
             if($tab[0] === "homepage")
             {
                 $routeAndParams["route"] = "homepage";
+            } else if($tab[0] === "legal-notice")
+            {
+                $routeAndParams["route"] = "legal-notice";
             } else if($tab[0] === "register") 
             {  
                 $routeAndParams["route"] = "register";
                  
-            }  else if($tab[0] === "login")
+            } else if($tab[0] === "login")
             {
                 $routeAndParams["route"] = "login";  
                 
@@ -197,6 +200,9 @@ class Router {
             if ($routeAndParams["route"] === "homepage") 
             {
                 $this->homeController->index();
+            } else if ($routeAndParams["route"] === "legal-notice") 
+            {
+                $this->homeController->legalNotice();
             } else if ($routeAndParams["route"] === "register") 
             {
                 $this->authController->register();

@@ -665,12 +665,23 @@ body .invisible-menu {
     margin: 0;
   }
 }
+.footer .footer-container .footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+@media screen and (min-width: 1126px) {
+  .footer .footer-container .footer-nav {
+    display: block;
+  }
+}
 .footer .footer-container .footer-nav a {
   font-size: 0.6em;
 }
 @media screen and (min-width: 1126px) {
   .footer .footer-container .footer-nav a {
     font-size: 1em;
+    margin: 0 1em;
   }
 }
 .footer .footer-container .footer-nav a:hover {
@@ -921,6 +932,33 @@ body .invisible-menu {
     margin: 2em;
   }
 }
+.main-legal-notice {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  margin: 2em auto;
+  background: #333;
+  padding: 2em;
+  border-radius: 20px;
+}
+.main-legal-notice section h3 {
+  color: #fff;
+  margin-top: 20px;
+}
+.main-legal-notice section p {
+  padding: 1em;
+  color: #fff;
+}
+.main-legal-notice section ul {
+  list-style: disc;
+  margin-left: 20px;
+  padding: 1em;
+}
+.main-legal-notice section ul li {
+  color: #fff;
+  line-height: 1.5;
+}
+
 .main-register {
   text-align: center;
   min-height: calc(100vh - 2rem);
@@ -946,6 +984,10 @@ body .invisible-menu {
 .main-register form fieldset {
   margin: 10px 0;
   width: 80%;
+}
+.main-register form fieldset .password-condition {
+  text-align: left;
+  color: #333;
 }
 .main-register form fieldset label {
   display: block;
@@ -993,7 +1035,11 @@ body .invisible-menu {
   color: #000;
 }
 .main-login form .errors-message {
-  color: red;
+  color: #f00;
+  margin-bottom: 10px;
+}
+.main-login form .login-message {
+  color: #008000;
   margin-bottom: 10px;
 }
 .main-login form fieldset {
@@ -1741,7 +1787,7 @@ body .invisible-menu {
   width: 100%;
   text-align: center;
   transform: translateY(-500px);
-  top: 1.6em;
+  top: 2.6em;
   z-index: 3;
 }
 #header-admin-menu ul {
@@ -1770,6 +1816,12 @@ body .invisible-menu {
   transform: translateY(51px);
 }
 
+@media (max-width: 600px) {
+  .header-admin-title {
+    display: flex;
+    flex-direction: column;
+  }
+}
 @media (min-width: 1126px) {
   .header-admin {
     width: 100%;
@@ -1969,6 +2021,7 @@ body .invisible-menu {
 }
 
 body {
+  background: linear-gradient(0deg, rgb(21, 19, 42) 0%, rgb(60, 76, 173) 58%);
   background-image: url("/ZERODEGRE_/assets/media/img/bg/bg_img.webp"), url("/ZERODEGRE_/assets/media/img/bg/bg_img.png");
   background-repeat: no-repeat;
   background-size: cover;
@@ -2004,12 +2057,17 @@ h5 {
 }
 
 label {
-  font-family: "Satoshi-Bold";
+  font-family: "Satoshi-Bold", sans-serif;
 }
 
 textarea, input {
   background-color: #EFECE5;
   border-radius: 6px;
+}
+
+li {
+  font-family: "Satoshi-Regular", sans-serif;
+  font-size: 1em;
 }
 
 a {

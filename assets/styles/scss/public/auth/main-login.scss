@@ -15,7 +15,11 @@
             color:#000;
         }
         .errors-message {
-            color: red;
+            color: #f00;
+            margin-bottom: 10px;
+        }
+        .login-message {
+            color: #008000;
             margin-bottom: 10px;
         }
         fieldset {
