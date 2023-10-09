@@ -1,0 +1,53 @@
+<main id="edit-artist" class="admin-form">
+    <form action="/ZERODEGRE_/admin/artist/edit&id=<?= $data['artist']->getId() ?>" method="post">
+        <h2>Modifier un artiste</h2>
+        <fieldset>
+            <label for="artist-name">Nom de l'artiste:</label>
+            <input type="text" name="artist-name" value="<?= $data['artist']->getName() ?>" required>
+        </fieldset>
+        <fieldset>
+            <label for="artist-description">Description (max 1032 caractères):</label>
+            <textarea name="artist-description"><?= $data['artist']->getDescription() ?></textarea>
+        </fieldset>
+        <fieldset>
+            <label for="artist-roleId"> Modifier le rôle </label>
+            <?php if($data['artist']->getRoleId() == "3") : ?>
+                <select name="artist-roleId">
+                    <option value="3">Rappeur</option>
+                    <option value="4">Beatmaker</option>
+                </select>
+            <?php else: ?>
+                <select name="artist-roleId">
+                    <option value="4">Beatmaker</option>
+                    <option value="3">Rappeur</option>
+                </select>
+            <?php endif; ?>
+        </fieldset>
+        <h3>Modifier un media</h3>
+        <?php if (!empty($data['media'])) : ?>
+            <fieldset>
+                <label for="artist-url"> Url</label>
+                <input type="text" name="artist-url" id="artist-url" value="<?= $data['media']->getUrl() ?>">
+            </fieldset>
+            <fieldset>
+                <label for="artist-altText">Texte descriptif</label>
+                <input type="text" name="artist-altText" id="artist-altText" placeholder="Texte alternatif" value="<?= $data['media']->getAltText() ?>"/>
+                <input type="hidden" name="artistMediaId" value="<?= $data['media']->getId() ?>">
+            </fieldset>
+        <?php else : ?>
+            <fieldset>
+                <label for="artist-url"> Url</label>
+                <input type="text" name="artist-url" id="artist-url">
+            </fieldset>
+            <fieldset>
+                <label for="artist-altText">Texte descriptif</label>
+                <input type="text" name="artist-altText" id="artist-altText" placeholder="Texte alternatif"/>
+                <input type="hidden" name="artistMediaId" value="">
+            </fieldset>
+        <?php endif ; ?>
+            <fieldset>
+                <button type="submit"> Modifier le l'artiste </button>
+            </fieldset>
+        <input type="hidden" name="artist-edit-form" value="submit"/>
+    </form>
+</main>

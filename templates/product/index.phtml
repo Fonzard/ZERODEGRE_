@@ -1,0 +1,32 @@
+<main class="main-product">
+    <?php
+    if (isset($_SESSION['message'])) {
+        echo "<p class='admin-message'>" . $_SESSION['message'] . "</p>";
+        unset($_SESSION['message']); // Effacer le message pour qu'il ne s'affiche pas à chaque rafraîchissement
+    }
+    ?>
+    <h2>Découvrez les collections ZERODEGRE_</h2>
+    <?php foreach ($data["categories"] as $category) : ?>
+        <h3><?= $category->getName() ?></h2>
+
+        <?php if (isset($data["productsByCategory"][$category->getName()])) : ?>
+            <section class="product-container">
+                <?php foreach ($data["productsByCategory"][$category->getName()] as $product) : ?>
+                    <a title="Click to go to product <?= $product->getName() ?>" aria-label="Click to go to product <?= $product->getName() ?>" href="/ZERODEGRE_/product/show&id=<?= $product->getId() ?>" title="<?= $product->getName() ?>">
+                        <article class="product-image">
+                            <?php foreach ($product->getMedia() as $media) : ?>
+                                <img src="<?= $media->getUrl() ?>" alt="<?= $media->getAltText() ?>"></img>
+                            <?php endforeach; ?>
+                        </article>
+                        <article class="detail-product">
+                            <p><?= $product->getPrice() ?> €</p>
+                            <p><?= $product->getName() ?></p>
+                        </article>
+                    </a>
+                <?php endforeach; ?>
+            </section>
+        <?php else : ?>
+            <p>Aucun produit dans cette catégorie.</p>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</main>

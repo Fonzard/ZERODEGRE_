@@ -1,0 +1,49 @@
+<main id="create-product" class="admin-form">  
+    <form action="/ZERODEGRE_/admin/product/create" method="post">
+        <h2>Créer un produit</h2>
+        <p class="form-errors">
+            <?php
+                if(isset($data["message"]))
+                    echo $data["message"][0];
+            ?>
+        </p>
+        <fieldset>
+            <label for="product-name"> Nom du produit </label>
+            <input type="text" name="product-name" id="product-name"/>
+        </fieldset>
+        <fieldset>
+            <label for="product-price"> Prix </label>
+            <input type="number" name="product-price" id="product-price"/>
+        </fieldset>
+        <fieldset>
+            <label for="product-description"> Description </label>
+            <input type="textarea" name="product-description" id="product-description"/>
+        </fieldset>
+        <fieldset>
+            <label for="product-quantity"> Quantité </label>
+            <input type="number" name="product-quantity" id="product-quantity"/>
+        </fieldset>
+        <fieldset>
+            <label for="product-categoryId"> Choisir la catégorie </label>
+            <!--Offrir la possibilité de créer un categorie sous forme de fenetre modale ??-->
+            <select name="product-categoryId" id="product-categoryId">
+                <?php foreach($data['categories'] as $category) : ?>
+                <option value="<?=$category->getId()?>"> <?= $category->getName(); ?> </option>
+                <?php endforeach; ?>
+            </select>
+        </fieldset>
+        <h3>Modifier Media</h3>
+        <fieldset>
+                <label for="product-url"> Url</label>
+                <input type="text" name="product-url" id="product-url" placeholder="Chemin/de/l'image">
+        </fieldset>
+        <fieldset>
+            <label for="product-altText">Texte descriptif</label>
+            <input type="text" name="product-altText" id="product-altText" placeholder="Texte alternatif"/>
+        </fieldset>
+        <fieldset>
+            <button type="submit"> Créer le produit </button>
+        </fieldset>
+        <input type="hidden" name="product-form" value="submit"/>
+    </form>
+</main> 

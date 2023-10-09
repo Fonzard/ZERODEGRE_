@@ -1,0 +1,56 @@
+<main class="manage-admin">
+    <section class="button-container">
+        <a title="Click to go to admin user page" aria-label="Click to go to admin user page" href="/ZERODEGRE_/admin/user" class="dashboard-button">Utilisateur</a>
+        <a title="Click to go to admin album and song page" aria-label="Click to go to admin album and song page" href="/ZERODEGRE_/admin/album" class="dashboard-button">Album (song)</a>
+        <a title="Click to go to admin artist page" aria-label="Click to go to admin artist page" href="/ZERODEGRE_/admin/artist" class="dashboard-button">Artiste</a>
+        <a title="Click to go to admin post page" aria-label="Click to go to admin post page" href="/ZERODEGRE_/admin/post" class="dashboard-button">Article</a>
+    </section>
+    <h2>Gestion des produits</h2>
+
+    <?php
+        if(isset($_SESSION['message'])) {
+            echo "<p class='admin-message'>" .$_SESSION['message'] ."</p>";
+            unset($_SESSION['message']); // Effacer le message pour qu'il ne s'affiche pas à chaque rafraîchissement
+        }
+    ?>
+    <section class="admin-table-container">
+        <table class="admin-table" id="tableBody">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Quantité</th>
+                    <th>Catégorie</th>
+                    <th>Nom du média</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+        <?php foreach ($data['products'] as $key => $product) : ?>
+                <tr>
+                    <td><?= htmlspecialchars($product->getId()); ?></td>
+                    <td><?= htmlspecialchars($product->getName()); ?></td>
+                    <td><?= htmlspecialchars($product->getPrice()); ?></td>
+                    <td><?= htmlspecialchars($product->getDescription()); ?></td>
+                    <td><?= htmlspecialchars($product->getQuantity()); ?></td>
+                    <td><?= $data['categoriesNames'][$key]['name']  ?></td> 
+                    <td><?= $data['mediasDesc'][$key]['alt_text'] ?></td>   
+                    <td>
+                        <div class="admin-table-btn">
+                            <a title="Click to go to edit <?= $product->getName() ?>" aria-label="Click to go to edit <?= $product->getName() ?>" href="/ZERODEGRE_/admin/product/edit&id=<?= htmlspecialchars($product->getId()); ?>" class="edit-btn">Modifier</a>
+                            <a title="Click to go to remove <?= $product->getName() ?>" aria-label="Click to go to remove <?= $product->getName() ?>" href="/ZERODEGRE_/admin/product/delete&id=<?= htmlspecialchars($product->getId()); ?>">Supprimer</a>
+                        </div>
+                    </td>
+                </tr>
+        <?php endforeach; ?>
+            </tbody>
+        </table>
+        <section class="admin-btn">
+            <a title="Click to got to create a product" aria-label="Click to got to create a product" href="/ZERODEGRE_/admin/product/create">Ajouter un produit</a>
+            <a title="Click to got to admin dashboard" aria-label="Click to got to admin dashboard" href="/ZERODEGRE_/admin/dashboard">Retour au Dashboard</a>
+        </section>
+    </section>
+</main>
+<script type="text/javascript" src="./../assets/js/admin_modal.js"></script>

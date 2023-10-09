@@ -1,0 +1,132 @@
+.manage-admin { 
+    max-width:100%;
+    margin:0 auto;
+    background-color:#fff;
+    min-height:calc(100vh - 2rem);
+    h2 {
+        text-align:center;
+        padding:1em;
+        color:#fff;
+    }
+    .button-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding:1em;
+        .dashboard-button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .dashboard-button:hover {
+            background-color: #333;
+            color: #fff;
+        }
+    }
+
+
+    .admin-message {
+        background-color: #ff5555;
+        color: #fff;
+        width: 50%;
+        padding: 10px;
+        text-align: center;
+        margin: 1em;
+        border-radius: 40px;
+    } 
+    .admin-table-container {
+        width: 80%; 
+        overflow-x: auto; /* Activer le défilement horizontal */
+        padding-left: 1em;
+        margin:auto;
+        .admin-table {
+            width:100%;
+            border-collapse: collapse;
+            th {
+                background-color: #333;
+                color:#ddd;
+            }
+            th, td {
+                padding: 10px;
+                border: 1px solid #333;
+                white-space:pre-line;
+            }
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+            .admin-table-btn {
+                display: flex;
+                gap: 10px; 
+                a {
+                    text-decoration: none;
+                    padding: 8px 16px; 
+                    border: 1px solid #007bff; 
+                    color: #007bff; 
+                    background-color: transparent; 
+                    border-radius: 10px; 
+                    &:hover {
+                        background-color: #007bff; 
+                        color: #fff; 
+                    }
+                }
+            }
+            .album-dropdown {
+                display: none;
+                .album-song-list {
+                    list-style-type: none; 
+                    margin: 0; 
+                    padding: 0;
+                    li {
+                        display: inline-block; 
+                        margin: 10px; 
+                    }
+                }
+            }
+        }
+        .album-toggle {
+            cursor: pointer;
+            color: #007bff; 
+        }
+    }
+    
+    .admin-btn {
+        display: flex;
+        gap:20px;
+        padding: 1em;
+        a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff; 
+            padding: 10px; 
+            border-radius: 10px; 
+            transition: background-color 0.3s ease-in-out; 
+            &:hover {
+                background-color: #0056b3; 
+            }
+        }
+        a:last-child {
+            background-color: #dc3545;
+        } 
+        a:last-child:hover {
+            background-color: #c82333; 
+        }
+    }
+
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+    .manage-admin {
+      max-width:1024px;
+    }
+  }
+@media (min-width: 1024px) {
+    .manage-admin {
+        min-width:1024px;
+    }
+  }
+

@@ -1,0 +1,154 @@
+.main-homepage {
+    min-height:calc(100vh - 2rem);
+    .loading {
+        position:relative;
+        z-index:10;
+        
+        .loading-bg {
+            position:fixed;
+            top:0;
+            bottom:0;
+            right:0;
+            left:0;
+            background-image: url('/ZERODEGRE_/assets/media/img/bg/bg_img_reverse.webp'), url('/ZERODEGRE_/assets/media/img/bg/bg_img_reverse.png');
+            background: linear-gradient(0deg, rgba(21,19,42,1) 0%, rgba(60,76,173,1) 58%);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            opacity:1;
+            transition:all 2000ms ease-out;
+            .loading-img-container {
+                display:flex;
+                width:100vw;
+                height:100vh;
+                justify-content:center;
+                align-items:center;
+                .loading-img {
+                    width:25rem;
+                    opacity:1;
+                    transition: all 1000ms ease-out;
+                }
+            }
+        }
+    }
+    h2 {
+        font-size:42px;
+        text-align: center;
+        margin: 2em 0;
+    }
+    .slide-container {
+        .slide-album, .slide-post {
+             h3 {
+                 text-align:center;
+             }
+             .slider-container {
+                 overflow: hidden;
+                 position: relative;
+                 .slider {
+                     display: flex;
+                     transition: transform 0.3s ease;
+           
+                     .slide {
+                         display: none; // Masquer toutes les diapositives
+                         flex: 0 0 auto;
+                         width: 300px; // Largeur de chaque diapositive
+                         text-align: center;
+                         margin:auto;
+                          
+                         img {
+                             max-width: 100%;
+                             height: auto;
+                         }
+           
+                     }
+    
+                     .slide.center {
+                         display: block; // Afficher la diapositive au centre
+                     }
+                 }
+                 .slide-btn {
+                     display:flex;
+                     justify-content:center;
+                     align-items:center;
+                     padding: 10px 20px;
+                     margin-top: 10px;
+                     h3 {
+                         margin:0 1em;
+                     }
+                     button {
+                         color: #fff;
+                         border: none;
+                         cursor: pointer;
+                         transition: background-color 0.3s ease;
+                         border-radius:30px;
+         
+                         &:hover {
+                             background-color: #0056b3;
+                         }
+         
+                         &.prev-button::before {
+                             content: "\f104"; // Code Unicode pour une flèche gauche d'FontAwesome
+                             font-family: FontAwesome;
+                             font-size: 20px;
+                         }
+         
+                         &.next-button::after {
+                             content: "\f105"; // Code Unicode pour une flèche droite d'FontAwesome
+                             font-family: FontAwesome;
+                             font-size: 20px;
+                         }
+                     }
+         
+                 }
+             }
+        }
+    }
+    .homepage-product {
+        .other-homepage-product {
+            text-align:center;
+            margin-bottom:2em;
+            img {
+                max-width:12em;
+                height:192px;
+                margin-bottom:.8em;
+                transition: transform 0.3s;
+            }
+            img:hover {
+                transform: scale(1.05); 
+            }
+            p {
+                color:#fff;
+            }
+        }
+    }
+}
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@media (min-width: 860px) { 
+    
+    .slide-container {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        .slide-album {
+             grid-area: 2 / 2 / 4 / 4;
+        }
+        .slide-post {
+             grid-area: 1 / 5 / 4 / 7;
+        }
+    }
+    .homepage-product {
+        .other-homepage-product {
+            display: flex;
+            justify-content: space-around;
+            margin: 2em;
+        }
+    }
+}

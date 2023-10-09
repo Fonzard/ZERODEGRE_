@@ -1,0 +1,60 @@
+<main class="manage-admin">
+    <section class="button-container">
+        <a title="Click to go to admin user page" aria-label="Click to go to admin user page" href="/ZERODEGRE_/admin/user" class="dashboard-button">Utilisateur</a>
+        <a title="Click to go to admin album and song page" aria-label="Click to go to admin album and song page" href="/ZERODEGRE_/admin/album" class="dashboard-button">Album (song)</a>
+        <a title="Click to go to admin artist page" aria-label="Click to go to admin artist page" href="/ZERODEGRE_/admin/artist" class="dashboard-button">Artiste</a>
+        <a title="Click to go to admin product page" aria-label="Click to go to admin product page" href="/ZERODEGRE_/admin/product" class="dashboard-button">Produits</a>
+    </section>
+    <h2>Gestion des Articles</h2> 
+    <?php
+        if(isset($_SESSION['message'])) {
+            echo "<p class='admin-message'>" .$_SESSION['message'] ."</p>";
+            unset($_SESSION['message']); // Effacer le message pour qu'il ne s'affiche pas à chaque rafraîchissement
+        }
+    ?>
+    <!--Fenetre Modale Delete-->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <p>Êtes-vous sûr de vouloir supprimer ce produit ?</p>
+            <button id="confirm-delete">Confirmer</button>
+            <button id="cancel-delete">Annuler</button>
+        </div>
+    </div>
+    <!-- Liste des articles existants -->
+    <section class="admin-table-container">
+        <table class="admin-table" id="tableBody">
+            <tr>
+                <th>ID</th>
+                <th>Titre</th>
+                <th>Contenu</th>
+                <th>Date</th>
+                <th>Auteur</th>
+                <th>Catégorie</th>
+                <th>Média</th>
+                <th>Actions</th>
+            </tr>
+            <?php foreach ($data['posts'] as $key => $post) : ?>
+                <tr>
+                    <td><?= htmlspecialchars($post->getId()) ?></td>
+                    <td><?= htmlspecialchars($post->getTitle()) ?></td>
+                    <td><?= htmlspecialchars($post->getContent()) ?></td>
+                    <td><?= htmlspecialchars($post->getDate()) ?></td>
+                    <td><?= htmlspecialchars($post->getAuthor()) ?></td>
+                    <td><?= $data['categoriesNames'][$key]['name']  ?></td>
+                    <td><?= $data['mediasDesc'][$key]['alt_text'] ?></td>
+                    <td>
+                        <div class="admin-table-btn">
+                            <a title="Click to got to edit <?= $post->getTitle() ?>" aria-label="Click to got to edit <?= $post->getTitle() ?>" href="/ZERODEGRE_/admin/post/edit&id=<?= $post->getId() ?>">Modifier</a>
+                            <a title="Click to got to remove <?= $post->getTitle() ?>" aria-label="Click to got to remove <?= $post->getTitle() ?>" href="/ZERODEGRE_/admin/post/delete&id=<?= $post->getId() ?>">Supprimer</a>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+        <div class="admin-btn">
+            <a title="Click to got to create a post" aria-label="Click to got to create a post" href="/ZERODEGRE_/admin/post/create">Ajouter un article</a>
+            <a title="Click to got to admin dashboard" aria-label="Click to got to admin dashboard" href="/ZERODEGRE_/admin/dashboard">Retour au Dashboard</a>
+        </div>
+    
+    </section>
+</main>

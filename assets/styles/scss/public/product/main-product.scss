@@ -1,0 +1,108 @@
+.main-product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    min-height:calc(100vh - 2rem);
+    h2 {
+        margin-bottom:20px;
+    }
+    .admin-message {
+        font-size: 16px;
+        background-color: #ffcc00;
+        padding: 10px;
+        text-align: center;
+    }
+    h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: #fff;
+    }
+    .product-container {
+        margin: 20px 0;
+        padding: 10px; // Ajout de marge intérieure pour l'espace entre les catégories
+
+        &:hover {
+            // Styles pour l'effet de survol
+            border: 1px solid #ffcaca; // Bordure de 1 pixel solide
+            cursor: pointer;
+        }
+        a {
+            text-decoration: none;
+            color: #fff;
+            margin:10px;
+
+            &:hover {
+                text-decoration: underline;
+            }
+
+            .product-image {
+                img {
+                    max-width: 300px;
+                    max-height: 300px;
+                    transition: transform 0.3s;
+                }
+                img:hover {
+                    transform: scale(1.05); 
+                }
+            }
+            .detail-product{
+                margin-top:1em;
+                p {
+                    color:#fff;
+                    margin: 0;
+                } 
+            }
+        }
+            
+        
+    }
+}
+@media screen and (min-width: 760px) {
+    .main-product {
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+    }
+}
+@media screen and (min-width: 900px) {
+    // Styles spécifiques pour les écrans plus larges (tablettes et ordinateurs)
+    .main-product {
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr; // Deux colonnes
+            gap: 20px;
+
+            h2 {
+                font-size: 24px;
+                margin-bottom: 10px;
+                color: #333;
+                grid-column: span 2; // Étendre le titre sur deux colonnes
+            }
+
+            .product-list {
+                list-style: none;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+
+                li {
+                    width: 100%; // Largeur à 100% pour une colonne
+                }
+            }
+        }
+    }
+}
+@media (min-width: 1350px) {
+    .main-product {
+        .product-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr; // Quatres colonnes
+            gap: 20px;
+        }
+    }
+}
+

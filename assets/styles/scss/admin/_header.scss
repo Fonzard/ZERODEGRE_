@@ -1,0 +1,111 @@
+.header-admin {
+    display:flex;
+    align-items: center;
+    padding:0 12px;
+    //position:fixed;
+    max-width:100%;
+    height:6em;
+    background:#333;
+    box-sizing:border-box;
+    border-bottom:1px solid #333;
+    
+    .header-admin-title {
+        line-height:1em;
+        font-size:2em;
+    }
+    #header-admin-menu-button {
+        position:absolute;
+        top:0;
+        right:0;
+        width:2em;
+        overflow:hidden;
+        background:#fff;
+        color:#000;
+        line-height:1em;
+        text-align:center;
+        font-size:3.5em;
+        margin-top:.7em;
+        cursor:pointer;
+        transition:all .5s;
+    }
+    #header-admin-menu-button::after {
+        content:'x';
+    }
+    #header-admin-menu-button.close {
+        color:#fff;
+        background:#333;
+    }
+    #header-admin-menu-button.close::after {
+        content:'≡';
+    }
+}
+#header-admin-menu {
+    transition:transfrom .5s;
+    position:absolute;
+    width:100%;
+    text-align:center;
+    transform:translateY(-500px);
+    top:2.6em;
+    z-index:3;
+
+    ul {
+        display:block;
+        list-style:none;
+        padding-left:0; 
+        li {
+            line-height:4em;
+            padding:0 12px;
+            border-bottom:1px solid #777;
+            background:#333;
+
+            a {
+                text-decoration: none;
+                color: #fff;
+                font-size: 1.5em;
+                font-family:'Evogria', sans-serif;;
+                transition: 0.2s;
+            }
+            a:hover {
+                color: #ffcaca; 
+            }
+        }
+    }
+
+}
+#header-admin-menu.show-menu {
+    transform:translateY(51px);
+}
+@media (max-width:600px) {
+    .header-admin-title {
+        display:flex;
+        flex-direction:column;
+    }
+}
+@media (min-width: 1126px){
+    .header-admin {
+        width: 100%;
+        height: 5em;
+        margin-right:2em;
+
+        #header-admin-menu-button {
+            display:none;   
+        }
+    }
+    #header-admin-menu {
+        right:0;
+        top:.5em;
+        width:60%;
+        transform: none;
+        ul {
+            display: flex;
+            justify-content:flex-end;
+            
+            li {
+                border:none;
+                a {
+                    font-size:1.5em;
+                }
+            }
+        }
+    }
+}

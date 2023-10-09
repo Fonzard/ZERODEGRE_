@@ -1,0 +1,94 @@
+<main class="manage-admin">
+    <section class="button-container">
+        <a title="Click to go to admin user page" aria-label="Click to go to admin user page" href="/ZERODEGRE_/admin/user" class="dashboard-button">Utilisateur</a>
+        <a title="Click to go to admin artist page" aria-label="Click to go to admin artist page" href="/ZERODEGRE_/admin/artist" class="dashboard-button">Artiste</a>
+        <a title="Click to go to admin post page" aria-label="Click to go to admin post page" href="/ZERODEGRE_/admin/post" class="dashboard-button">Article</a>
+        <a title="Click to go to admin product page" aria-label="Click to go to admin product page" href="/ZERODEGRE_/admin/product" class="dashboard-button">Produits</a>
+    </section>
+    <h2>Gestion des Albums et des chansons</h2>
+
+    <?php
+        if(isset($_SESSION['message'])) {
+            echo "<p class='admin-message'>" .$_SESSION['message'] ."</p>";
+            unset($_SESSION['message']); // Effacer le message pour qu'il ne s'affiche pas à chaque rafraîchissement
+        }
+    ?>
+
+    <!--Fenetre Modale Delete-->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <p>Êtes-vous sûr de vouloir supprimer ce produit ?</p>
+            <button id="confirm-delete">Confirmer</button>
+            <button id="cancel-delete">Annuler</button>
+        </div>
+    </div>
+    <!-- Liste des albums avec chansons -->
+    <section class="admin-table-container"> 
+        <table class="admin-table" id="tableBody">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Titre de l'album</th>
+                    <th>Année de sortie</th>
+                    <th>Info Générale</th>
+                    <th>Créateur.trice du projet</th>
+                    <th>Chanson</th>
+                    <th>Feat</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                <?php foreach ($data['albumsWithSongs'] as $key => $album): ?>
+                    <tr>
+                        <td>
+                            <?= $album->getId() ?>
+                        </td>
+                        <td>
+                            <?= $album->getTitre() ?>
+                        </td>
+                        <td>
+                            <?= $album->getYear() ?>
+                        </td>
+                        <td>
+                            <?= $album->getInfo() ?>
+                        </td>
+                        <td>
+                            <?= $data["artistsInAlbum"][$key][0]->getName() ?>
+                        </td>
+                        <td>
+                            <a class="album-toggle" href="#"onclick="toggleSongs(<?= $album->getId() ?>)">Voir les chansons</a>
+                        </td>
+                        <td>
+                            <?php if (isset($data["feats"][$key][0])) : ?>
+                                <?= $data["feats"][$key][0]->getName() ?>
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            <div class="admin-table-btn">
+                                <a title="Click to go to edit <?= $album->getTitre() ?>" aria-label="Click to go to edit <?= $album->getTitre() ?>" href="/ZERODEGRE_/admin/album/edit&id=<?= htmlspecialchars($album->getId()); ?>" class="edi-btn">Modifier</a>
+                                <a title="Click to go to remove <?= $album->getTitre() ?>" aria-label="Click to go to remove <?= $album->getTitre() ?>" href="/ZERODEGRE_/admin/album/delete&id=<?= htmlspecialchars($album->getId()); ?>">Supprimer</a>
+                                <a title="Click to go to add song for <?= $album->getTitre() ?>" aria-label="Click to go to add song for <?= $album->getTitre() ?>" href="/ZERODEGRE_/admin/album/addSong&id=<?= htmlspecialchars($album->getId()); ?>" class="add-song">Ajouter un son</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="album-dropdown" data-album="<?= $album->getId() ?>">
+                        <td colspan="2">
+                            <ul class="album-song-list">
+                                <?php foreach ($album->getSongs() as $song): ?>
+                                
+                                    <li><?= $song->getTitle() ?> (<?= $song->getDuration() ?>)</li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </section> 
+    <section class="admin-btn">
+        <a title="Click to got to create an album" aria-label="Click to got to create an album" href="/ZERODEGRE_/admin/album/create">Ajouter un album</a>
+        <a title="Click to got to admin dashboard" aria-label="Click to got to admin dashboard" href="/ZERODEGRE_/admin/dashboard">Retour au Dashboard</a>
+    </section> 
+</main>
+<script type="text/javascript" src="./../assets/js/admin_toggle.js"></script>

@@ -1,0 +1,91 @@
+.main-show-album {
+    display: grid;
+    grid-template-columns: 1fr; // Une seule colonne
+    grid-gap: 20px;
+    align-items: center;
+    padding:5em 0;
+    min-height:calc(100vh - 2rem);
+    .album-header {
+        max-width:70vw;
+        display:flex;
+        flex-direction:column;
+        justify-content: center;
+        margin:0 auto;
+        img {
+            max-width:80%;
+            margin: 0 auto; // Centrer l'image horizontalement
+            display: block; // Supprime les marges blanches sous l'image
+        }
+
+        .article-info {
+            margin:auto;
+            padding-top:1em;
+        }
+        p {
+            font-size:1em;
+        }
+    }
+
+    .song-container {
+        list-style: none;
+        padding: 0;
+        max-width:800px;
+        margin:0 auto;
+
+        .song-only {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1em;
+
+            h2 {
+                font-weight: bold;
+                overflow: hidden;
+            }
+
+            .points {
+                flex: 1;
+                border: .1em dotted #fff;
+                margin: 0 10px;
+            }
+
+            p {
+                font-size:1.3em;
+                font-weight: bold;
+                margin-right: .8em;
+                color:#fff;
+            }
+
+            .play-button {
+                font-size:2em;
+                color: #fff;
+                border: none;
+                padding: 5px 10px;
+                cursor: pointer;
+                border-radius: 5px;
+
+                &:hover {
+                    background-color: #0056b3;
+                }
+            }
+        }
+    }
+    @media screen and (min-width: 860px) {
+    .main-show-album {
+        display: flex;
+        flex-wrap:nowrap;
+        flex-direction: column;
+        align-items: center;
+    }
+    .album-header {
+        img {
+            max-width:70%;
+        }
+    }
+    .song-container {
+        width: 70%; // Largeur maximale pour les tablettes et les ordinateurs
+    }
+}
+
+}
+
+

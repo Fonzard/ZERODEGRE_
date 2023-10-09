@@ -1,4 +1,6 @@
-Username
-Password
-Host
-Dbname
+
+username=
+password=
+host=
+db_name=
+

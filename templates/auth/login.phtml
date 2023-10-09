@@ -1,0 +1,30 @@
+<main class="main-login">   
+    <form id="login-form" action="login" method="post">
+        <h2>Connexion</h2>
+        <p class="register-done">
+            <?php
+                if(!empty($data['errors']))
+                    echo "<p class='errors-message'>". $data["errors"][0]. "</p>";
+            ?>
+            <?php 
+                if(!empty($data['message']))
+                    echo"<p class='login-message'>". $data["message"][0] ."</p>";
+            ?>
+        </p>
+        <fieldset>
+            <label for="login-form">Email</label>
+            <input type="text" id="login-email" name="login-email">
+        </fieldset>
+        <fieldset>
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" name="login-password">
+        </fieldset>
+        <fieldset>
+            <button type="submit">
+                Connecte-toi 
+            </button>
+        </fieldset>
+        <input type="hidden" name="login-form" id="login-form" value="login"/>
+        <a href="register">Inscription</a>
+    </form> 
+</main> 

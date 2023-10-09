@@ -1,0 +1,30 @@
+.main-legal-notice {
+    display:flex;
+    flex-direction:column;
+    max-width: 800px;
+    margin: 2em auto;
+    background: #333;
+    padding: 2em;
+    border-radius: 20px;
+    section {
+        h3 {
+            color: #fff;
+            margin-top: 20px;
+        }
+        p {
+            padding:1em;
+            color: #fff;
+        }
+     
+        ul {
+            list-style: disc;
+            margin-left: 20px;
+            padding:1em;
+            li {
+                color: #fff;
+                line-height: 1.5;
+            }
+        }
+
+    }
+}

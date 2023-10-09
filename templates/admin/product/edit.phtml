@@ -1,0 +1,69 @@
+<main id="edit-product" class="admin-form"> 
+    
+    <?php $product = $data['product']; 
+        $media = $data['media'];
+    ?>
+    <form action="/ZERODEGRE_/admin/product/edit&id=<?= $_GET['id'] ?>" method="post">
+        <h2>Modifier un produit</h2>
+        <p class="message">
+            <?php
+                if(isset($_SESSION['message'])) {
+                    echo $_SESSION['message'];
+                    unset($_SESSION['message']); 
+                }
+            ?>
+        </p>
+        <fieldset>
+            <label for="product-name"> Nom du produit</label>
+            <input type="text" name="product-name" id="product-name" value="<?= $product->getName() ?>"/>
+        </fieldset>
+        <fieldset>
+            <label for="product-price"> Prix </label>
+            <input type="number" name="product-price" id="product-price" value="<?= $product->getPrice() ?>"/>
+        </fieldset>
+        <fieldset>
+            <label for="product-description"> Description </label>
+            <textarea name="product-description" id="product-description"><?= $product->getDescription() ?></textarea>
+        </fieldset>
+        <fieldset>
+            <label for="product-quantity"> Quantité </label>
+            <input type="number" name="product-quantity" id="product-quantity" value="<?= $product->getQuantity() ?>"/>
+        </fieldset>
+        <fieldset>
+            <label for="product-categoryId"> Choisir la catégorie </label>
+            <select name="product-categoryId" id="product-categoryId">
+                <?php foreach($data['categories'] as $category) : ?>
+                <option value="<?=$category->getId()?>"> <?= $category->getName(); ?> </option>
+                <?php endforeach; ?>
+            </select>
+        </fieldset>
+
+        <h3>Modifier Media</h3>
+        <?php if (!empty($data['media'])) : ?>
+        <fieldset>
+            <label for="product-url"> Url</label>
+            <input type="text" name="product-url" id="product-url" value="<?= $data['media']->getUrl() ?>">
+        </fieldset>
+        <fieldset>
+            <label for="product-altText">Texte descriptif</label>
+            <input type="text" name="product-altText" id="product-altText" placeholder="Texte alternatif" value="<?= $data['media']->getAltText() ?>"/>
+            <input type="hidden" name="productMediaId" value="<?= $data['media']->getId() ?>">
+        </fieldset>
+        <?php else : ?>
+        <fieldset>
+            <label for="product-url"> Url</label>
+            <input type="text" name="product-url" id="post-url">
+        </fieldset>
+        <fieldset>
+            <label for="product-altText">Texte descriptif</label>
+            <input type="text" name="product-altText" id="product-altText" placeholder="Texte alternatif"/>
+            <input type="hidden" name="productMediaId" value="">
+        </fieldset>
+        <?php endif ; ?>
+        <fieldset>
+            <button type="submit"> Modifier le produit </button>
+        </fieldset>
+         <input type="hidden" name="product-edit-form" value="submit"/>
+    </form>
+</main> 
+

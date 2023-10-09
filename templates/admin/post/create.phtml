@@ -1,0 +1,45 @@
+<main id="create-post" class="admin-form">
+    <!-- Formulaire de création d'article -->
+    <form action="/ZERODEGRE_/admin/post/create" method="post">
+        <h2>Créer un nouvel article</h2>
+        <fieldset>
+            <label for="post-title">Titre :</label>
+            <input type="text" name="post-title" required>
+        </fieldset>
+        <fieldset>
+            <label for="post-content">Contenu :</label>
+            <textarea name="post-content" required></textarea>
+        </fieldset>
+        <fieldset>
+            <label for="post-date">Date :</label>
+            <input type="date" name="post-date" required>
+        </fieldset>
+        <fieldset>
+            <label for="post-author">Auteur :</label>
+            <input type="text" name="post-author" required>
+        </fieldset>
+
+        <fieldset>
+            <label for="post-categoryId"> Choisir la catégorie :</label>
+            <!--Offrir la possibilité de créer un categorie sous forme de fenetre modale ??-->
+            <select name="post-categoryId" id="post-categoryId">
+                <?php foreach($data['categories'] as $category) : ?>
+                <option value="<?=$category->getId()?>"> <?= $category->getName(); ?> </option>
+                <?php endforeach; ?>
+            </select>
+        </fieldset>
+        <h3>Ajouter un média</h3>
+        <fieldset>
+            <label for="post-url"> Url </label>
+            <input type="text" name="post-url" id="post-url" placeholder="Chemin/de/l'image">
+        </fieldset>
+        <fieldset>
+            <label for="post-altText"> Texte descriptif </label>
+            <input type="text" name="post-altText" id="post-altText" placeholder="Text alternatif"/>
+        </fieldset>
+        <input type="hidden" name="post-form"  value="submit"/>
+        <fieldset>
+            <button type="submit"> Créer l'article </button>
+        </fieldset>
+    </form>
+</main>

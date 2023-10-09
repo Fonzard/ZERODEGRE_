@@ -1,0 +1,35 @@
+Page d'accueil :
+
+/
+
+Route pour l'authentification :
+
+/register
+
+/login
+
+/logout
+
+ADMIN 
+
+/admin
+
+Route pour admin User :
+
+/admin/user
+/admin/user/edit&id=
+/admin/user/delete&id=
+
+Route pour admin Product :
+
+/admin/product
+/admin/product/create
+/admin/product/edit&id=
+/admin/product/delete&id=
+
+Route pour admin Album :
+
+/admin/album
+/admin/album/create
+/admin/album/edit&id=
+/admin/album/delete&id=

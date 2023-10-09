@@ -1,0 +1,45 @@
+.modal 
+{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 3;
+    .modal-content 
+    {
+        background-color: white;
+        width: 300px;
+        padding: 20px;
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 5px;
+        p {
+            color:#000;
+            margin-bottom:5px;
+        }
+        button {
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff; 
+            padding: 10px; 
+            border-radius: 10px; 
+            transition: background-color 0.3s ease-in-out; 
+            &:hover {
+                background-color: #0056b3; 
+            }
+        }
+    }
+}
+
+
+.album-toggle {
+    cursor: pointer;
+}
+.album-dropdown {
+    display: none;
+}  

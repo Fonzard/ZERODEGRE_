@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Site pour la mise en avant du label de rap Zéro Degré">
+    <title>ZERODEGRE_</title>
+    <link rel="stylesheet" href="/ZERODEGRE_/assets/styles/css/style.css">
+    <script src="https://kit.fontawesome.com/051e0c28d9.js" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/png" sizes="96x96" href="/ZERODEGRE_/assets/img/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/ZERODEGRE_/assets/img/favicon/favicon-16x16.png">
+</head>
+<body>
+<nav class="invisible-menu">
+    <ul>
+        <li><a title="Click to go to artist page" href="/ZERODEGRE_/artist" tabindex="0">Label</a></li>
+        <li><a title="Click to go to album page" href="/ZERODEGRE_/album" tabindex="0">Mixtape</a></li>
+        <li><a title="Click to go to post page" href="/ZERODEGRE_/post" tabindex="0">Blog</a></li>
+        <li><a title="Click to go to product page" href="/ZERODEGRE_/product" tabindex="0">Merch</a></li>
+        <?php 
+        if(isset($_SESSION['user'])){
+        ?>
+        <li><a title="Click to go to logout" href="/ZERODEGRE_/logout" tabindex="0">Deconnexion</a></li> 
+        <?php } else { ?>
+        <li><a title="Click to go to login form" href="/ZERODEGRE_/login" tabindex="0">Connexion</a></li>
+        <li><a title="Click to go to register form" href="/ZERODEGRE_/register" tabindex="0">Inscription</a></li>
+        <?php } ?>
+         <?php if(isset($_SESSION["role"]) && $_SESSION["role"] === "Admin") : ?>
+        <li><a href="/ZERODEGRE_/admin/dashboard" tabindex="0"s>Admin</a></li>
+        <?php endif?>
+    </ul>
+</nav>
+    <?php 
+        if(isset($_SESSION["role"]) && $_SESSION["role"] === "Admin")
+        {
+            require 'templates/admin/partials/_header.phtml';
+        } else {
+            require 'templates/partials/_header.phtml';
+        }
+    ?>
+
+    <?php require "templates/$template.phtml"; ?>
+    
+    <?php         
+                require 'partials/_footer.phtml';
+    ?>
+
+</body>
+<script src="/ZERODEGRE_/assets/js/admin_toggle.js"></script>
+</html>
